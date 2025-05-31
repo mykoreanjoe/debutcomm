@@ -1,0 +1,295 @@
+import React from 'react';
+import ElementaryRoadmapTable from './elementary-roadmap-table';
+import ElementaryLevelChart from './elementary-level-chart';
+import ElementaryRegularCourse from './elementary-regular-course';
+import ElementaryIntensiveCourse from './elementary-intensive-course';
+import MiddleSchoolRegularCourse from './middle-school-regular-course';
+import MiddleSchoolLevelChart from './middle-school-level-chart';
+import MiddleSchoolCourseDetailsTable from './middle-school-course-details-table';
+import SchoolRecordProcess from './school-record-process';
+import ReviewCycleDisplay from './review-cycle-display';
+import TripleCareSystem from './triple-care-system';
+import StudyBook from './study-book';
+
+// 초등 정규 과정 데이터
+const elementaryCourseData = {
+  title: '4.1 D 초등 정규 과정',
+  targetAudience: '초등 1~5학년',
+  classOverview: {
+    items: [
+      { label: "수업", description: "단어시험/과제검사 → Lecture → Activity" },
+      { label: "어휘", description: "자체 단어장, 외부" },
+      { label: "컨텐츠", description: "교재 + 서플리먼트" },
+      { label: "온라인", description: "AI 학습 플랫폼 사용" },
+      { label: "스터디매니저", description: "학생 개별 미션 케어" },
+      { label: "완성학습", description: "스터디 매니저와 수업 전 or 후로 선택하여 30분 or 1시간 진행" },
+    ],
+  },
+  monWedFriClass: {
+    title: "월수금 클래스",
+    columns: ["시간", "레벨"],
+    rows: [
+      { level: "DK ~ D4", time: "2:30 ~ 4:05", teacher: "" },
+      { level: "D3 ~ D6", time: "4:10 ~ 5:45", teacher: "" },
+      { level: "초등 인텐시브 코스", time: "6:00 ~ 7:35", teacher: "" },
+    ],
+    recommendation: "추천대상: 주3회 수업으로 학습 노출을 여러번 해야 하는 학생에게 적합",
+  },
+  tueThuClass: {
+    title: "화목 클래스",
+    columns: ["시간", "레벨"],
+    rows: [
+      { level: "D3 ~ D7", time: "화목 3:00 ~ 5:25", teacher: "" },
+      { level: "초등 인텐시브", time: "화목 600 ~ 8:30", teacher: "" },
+    ],
+    recommendation: "추천대상: 주2회 수업으로 학습 노출을 여러번 해야 하는 학생에게 적합",
+    completionStudyPoints: [
+      "학생생의 특성에 따라 학원 스케줄은 앞 또는 뒤에 고정하여 루틴 진행",
+      "시간: 30분 or 1시간 진행",
+      "완성도에 따라 좀더 빨리 끝날수 있습니다"
+    ],
+  },
+  debutDay: '데뷰 데이: 월 1회 토요일 (이벤트 행사로 진행)',
+  integratedLearning: {
+    description: '데뷰 영어학원의 초등 프로그램은 파닉스부터 시작해 중3 수능 대비까지 연결됩니다.',
+    coreCompetencies: ['어휘량의 확장', '각 영역별 영어 스킬 내재화'],
+    emphasis: '영역별 특성과 학습 방식, 흥미도·성취도가 다르기 때문에 통합형 수업이 중요합니다. 단일 영역 학습은 언어 균형을 해치며, 실력 편차를 만들 수 있습니다.',
+    caseStudy: {
+      title: '실제 사례',
+      content: '유명 영어 도서관 프로그램에서 리딩 위주 학습만 한 학생들은 어휘량은 많지만, Speaking, Writing, 문법 영역의 약점으로 인해 어학원 출신과 큰 격차를 보이곤 합니다.',
+    },
+  },
+  activitiesAndProjects: {
+    title: '활동과 프로젝트 (Fun Activities and Projects)',
+    points: [
+      '암기만으로 실력이 느는 것은 맞지만, 흥미가 없다면 정체기 발생',
+      '초등 저학년일수록 수업과 활동/프로젝트의 연계가 매우 중요함',
+      '컴프리헨시브 커리큘럼 기반 수업 진행',
+      '주제별 리딩 스킬 + 연계 인클래스 액티비티 + 프로젝트 학습',
+      '집중력이 낮은 학생들도 즐기며 실력 향상 가능',
+    ],
+  },
+  skillBasedLearning: {
+    title: '스킬 베이스 러닝 (Skill-Based Learning)',
+    methods: [
+      '픽션/논픽션 학습 방식',
+      '직독직해 + 의역 → 문제 풀이 접근',
+      '사고력을 요구하는 문항 대비',
+      '추론, 순서 배열, 목적 찾기 등',
+      '수능 킬러 문항 유형 기반 구성',
+    ],
+    exampleTopics: [
+        '동의어·반의어 개념',
+        '품사 개념 정리',
+        '3S QR 등 리딩 스킬 습득',
+    ],
+    summary: '쉬운 개념부터 점진적으로 난이도를 높이며, 활동과 프로젝트를 통해 사고력 + 어휘력 동시 강화를 실현합니다.',
+  },
+};
+
+// 초등 인텐시브 과정 데이터
+const elementaryIntensiveCourseData = {
+  title: '4.2 DI 초등 인텐시브',
+  description: '초등 고학년 (5~6학년) 시기는 중학교 영어 학습을 대비하는 데 매우 중요한 시기입니다. 이 단계에서 영어의 기초가 제대로 다져지지 않으면 중학교에서 겪을 어려움이 커질 수 있습니다.',
+  targetAudience: '초5~6',
+  mainSubjects: ['리딩 & 스피킹', '문법 & 하브루타'],
+  schedule: [
+    { type: "월수금 주3회", time: "6:00 ~ 7:35", duration: "(95분)" },
+    { type: "화목 주2회", time: "6:00 ~ 8:25", duration: "(285분)" },
+  ],
+  tuition: '수강료: 월 32만원 + 온라인비 1만원 > 총 33만원',
+  textbookInfo: '교재: 자체/외부 교재 구성',
+  debutDay: '데뷰 데이: 월 1회 토요일 (이벤트 행사로 진행)',
+  completionStudy: '완성학습: 학생마다 과제를 수행해야할시, 학원 스케줄은 앞 또는 뒤에 고정하여 루틴으로 진행합니다.',
+};
+
+// 중등 정규 과정 데이터
+const middleSchoolCourseData = {
+  title: "중등 정규 과정",
+  introduction: "중학교는 영어 학습에서 결정적인 전환점이 되는 시기입니다. 단순히 더 어려운 문법과 단어를 배우는 시기를 넘어서, 학생의 영어에 대한 태도와 정체성, 그리고 장기적인 실력의 기반이 형성되는 시기이기 때문입니다. 중학교 영어는 단순히 '중간 단계'가 아니라, 성패를 가르는 결정적 시기임이 분명 합니다.",
+  comparisonTable: {
+    title: "중학교 vs 고등학교 영어 비교표",
+    columns: ["항목", "중학교 영어", "고등학교 영어"],
+    rows: [
+      {
+        item: "학습 목적",
+        middleSchool: "기초 문법·어휘 습득, 영어의 흥미 유지",
+        highSchool: "수능·내신 대비 중심, 실전 문제 해결 능력 강화",
+      },
+      {
+        item: "교과서 난이도",
+        middleSchool: "일상 대화와 기본적인 설명 중심",
+        highSchool: "추상적 주제, 학문적 어휘 포함 (ex. 철학, 과학, 사회 등)",
+      },
+      {
+        item: "어휘 수준",
+        middleSchool: "초등 연계 + 기초 중등어휘 (~3,000단어 수준)",
+        highSchool: "고급 어휘 + 수능 어휘 (~6,000단어 이상)",
+      },
+      {
+        item: "문법 범위",
+        middleSchool: "시제, 조동사, 접속사, 관계대명사 등 기초 문법",
+        highSchool: "가정법, 도치, 강조, 준동사 등 심화 문법",
+      },
+      {
+        item: "평가 유형",
+        middleSchool: "객관식 + 서술형 중심, 기본 독해·듣기 포함",
+        highSchool: "복합 사고, 비판, 순서 배열, 간접쓰기 등 고난도 유형",
+      },
+      {
+        item: "지문 길이 및 난이도",
+        middleSchool: "짧고 생활문 정보 중심 (150~250단어 내외)",
+        highSchool: "장문, 다층적 구조 (400~700단어 이상)",
+      },
+      {
+        item: "듣기 평가",
+        middleSchool: "일상·어휘 사용 듣기, 난이도 낮음",
+        highSchool: "수능 스타일의 심층 듣기, 고난이도 의사소통 상황",
+      },
+      {
+        item: "쓰기/말하기 활동",
+        middleSchool: "수행평가 중심, 짧은 문장 표현",
+        highSchool: "수행평가 또는 에세이에 기반, 구조화된 논리적 글쓰기",
+      },
+      {
+        item: "학습 전략",
+        middleSchool: "반복·암기 기반 학습 + 흥미 유도 활동",
+        highSchool: "유형 분석 + 시간 관리 + 집중 독해 및 문법 전략",
+      },
+      {
+        item: "수업 방식",
+        middleSchool: "게임, 활동, 조별 수업 등 참여형 수업",
+        highSchool: "문제 풀이 중심, 수능 대비식 수업 비중 ↑",
+      },
+      {
+        item: "자기주도학습 필요성",
+        middleSchool: "낮은 편 (학원·학교 주도)",
+        highSchool: "매우 높음 (자기 학습·오답 관리 필수)",
+      },
+      {
+        item: "성적 변별력",
+        middleSchool: "상대적으로 낮음",
+        highSchool: "매우 높음 - 수시·정시 모두 영어에 반영",
+      },
+    ],
+  },
+  timeTable: {
+    title: "시간표",
+    monFriClass: {
+      title: "월금 클래스",
+      columns: ["레벨", "시간", "담당T"],
+      rows: [
+        { level: "중등 Master", time: "5:00 ~ 8:00 (수업후 30분 완성학습 의무)", teacher: "원장 직강" },
+        { level: "고등 Inter", time: "7:00 ~ 10:00 (수업전 30분 완성학습 의무)", teacher: "원장 직강" },
+      ],
+    },
+    tueThuClass: {
+      title: "화목 클래스",
+      columns: ["레벨", "시간", "담당T"],
+      rows: [
+        { level: "중등 Master", time: "5:00 - 8:00 (수업후 30분 완성학습 의무)", teacher: "원장 직강" },
+        { level: "고등 Master", time: "7:00 ~ 10:00 (수업전 30분 완성학습 의무)", teacher: "원장 직강" },
+      ],
+    },
+    additionalInfo: [
+      "수업 프로세스: 어휘시험 → Lecture → 1:1 검사 발표 → 밴드 과제",
+      "완성학습: 스터디 매니저와 수업 전 or 후로 선택하여 30분 or 1시간 진행",
+      "수요 클리닉: 실력 부족의 학생들은 수요일 의무 참석 (시간은 학생에 따라 다름)",
+    ],
+    wednesdayClinic: {
+      title: "수요 클리닉",
+      columns: ["레벨", "시간", "담당T"],
+      rows: [
+        { level: "무레벨제", time: "5:00 ~ 10:00", teacher: "원장 직강" },
+      ],
+      recommendation: "추천 대상: 주2회 수업으로 학습 노출을 여러번 해야 하는 학생에게 적합/부족한 학생들은 수요일 or 다른 요일에 필수 참여",
+    },
+  },
+};
+
+export default function CurriculumPage() {
+  return (
+    <main className="container mx-auto px-4 py-8 md:px-6 md:py-12">
+      <h1 className="text-4xl font-bold text-center mb-2 text-blue-600">커리큘럼</h1>
+      <p className="text-lg text-gray-600 text-center mb-12 md:mb-16 max-w-3xl mx-auto">
+        세심한 강사, 가장 정확한 온라인 AI, 꼼꼼한 스터디 매니저의 3중 관리로 우리 학생에게 꼭 필요한 학습을 완성해 갑니다
+      </p>
+
+      <section className="mb-12">
+        <h2 className="text-2xl font-semibold text-gray-800 mb-6 text-center">
+          제공 과정
+        </h2>
+        <div className="bg-slate-50 p-6 md:p-8 rounded-lg shadow-sm">
+          <p className="text-xl text-center text-gray-700 mb-4">
+            초등 정규 / 초등 인텐시브 / 중등 정규
+          </p>
+          <div className="text-center text-gray-600 space-y-2">
+            <p>• 콘텐츠: 아래 제공되는 레벨표와 차트를 참고해주세요.</p> 
+            <p>• 각 과정은 하단을 통해 확인 가능합니다.</p>
+          </div>
+        </div>
+      </section>
+
+      {/* 초등 과정 공통 테이블/차트 섹션 */}
+      <section id="elementary-common-info" className="mb-16 space-y-12">
+        <div>
+          <ElementaryRoadmapTable />
+        </div>
+        <div>
+          <ElementaryLevelChart />
+        </div>
+      </section>
+
+      {/* 초등 정규 과정 섹션 */}
+      <ElementaryRegularCourse {...elementaryCourseData} />
+
+      {/* 초등 인텐시브 과정 섹션 */}
+      <ElementaryIntensiveCourse {...elementaryIntensiveCourseData} />
+      
+      {/* 중등 과정 공통 테이블/차트 섹션 */}
+      <section id="middleschool-common-info" className="my-16 space-y-12">
+        <h2 className="text-2xl md:text-3xl font-bold text-center text-gray-800 mb-8 pt-8 border-t border-gray-200">
+          중등부 공통 안내
+        </h2>
+        <div>
+          <MiddleSchoolLevelChart />
+        </div>
+        <div>
+          <MiddleSchoolCourseDetailsTable />
+        </div>
+      </section>
+
+      {/* 중등 정규 과정 섹션 */}
+      <MiddleSchoolRegularCourse {...middleSchoolCourseData} />
+
+      {/* 내신 과정 섹션 (추가) */}
+      <section id="school-record-process" className="my-16">
+         <SchoolRecordProcess />
+      </section>
+
+      {/* 복습 과정 섹션 추가 */}
+      <section id="review-process" className="mb-16">
+        <ReviewCycleDisplay />
+      </section>
+
+      {/* 3중 관리 완성 학습 섹션 추가 */}
+      <section id="triple-care" className="mb-16">
+        <TripleCareSystem />
+      </section>
+
+      {/* 스터디북 섹션 추가 */}
+      <section id="study-book-info" className="mb-16">
+        <StudyBook />
+      </section>
+      
+      <footer className="text-center mt-12">
+        <p className="text-gray-600">
+          💬 각 과정 하단에는 &quot;이 과정 상담받기&quot; 버튼이 제공될 예정이며, 카카오 상담톡으로 연동됩니다.
+        </p>
+        <p className="text-sm text-gray-500 mt-1">
+          (현재 &quot;초등 정규 과정&quot; 및 &quot;초등 인텐시브 과정&quot;에 예시 버튼이 적용되어 있습니다.)
+        </p>
+      </footer>
+    </main>
+  );
+} 
