@@ -17,7 +17,7 @@ const navItems = [
 
 export default function Header() {
   // TODO: 모바일 메뉴 상태 관리 로직 추가 (useState 사용)
-  // const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
 
   return (
     <header className="bg-white shadow-md sticky top-0 z-50">
@@ -27,8 +27,8 @@ export default function Header() {
             <Image
               src="/debutlogo.png"
               alt="데뷰 영어 학원 로고"
-              width={150} // 로고 크기는 필요에 따라 조절해주세요.
-              height={50} // 로고 크기는 필요에 따라 조절해주세요.
+              width={120} // 로고 크기는 필요에 따라 조절해주세요.
+              height={40} // 로고 크기는 필요에 따라 조절해주세요.
               priority
             />
           </Link>
@@ -47,28 +47,28 @@ export default function Header() {
         <div className="md:hidden flex items-center">
           <button 
             className="outline-none mobile-menu-button"
-            // onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} // TODO: 모바일 메뉴 토글 로직 연결
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} // TODO: 모바일 메뉴 토글 로직 연결
           >
             <Menu className="w-6 h-6 text-gray-500 hover:text-[#13588f]" />
           </button>
         </div>
       </nav>
       {/* 모바일 메뉴 (isMobileMenuOpen 상태에 따라 표시) */}
-      {/* <div className={`md:hidden ${isMobileMenuOpen ? 'block' : 'hidden'} mobile-menu`}>
+      <div className={`md:hidden ${isMobileMenuOpen ? 'block' : 'hidden'} mobile-menu`}>
         <ul className="mt-2 space-y-2 px-2 py-3">
           {navItems.map((item) => (
             <li key={item.name}>
               <Link 
                 href={item.href} 
                 className="block px-3 py-2 rounded-md text-base font-medium text-[#7fa6c3] hover:text-[#13588f] hover:bg-gray-50"
-                // onClick={() => setIsMobileMenuOpen(false)} // TODO: 메뉴 아이템 클릭 시 모바일 메뉴 닫기
+                onClick={() => setIsMobileMenuOpen(false)} // TODO: 메뉴 아이템 클릭 시 모바일 메뉴 닫기
               >
                 {item.name}
               </Link>
             </li>
           ))}
         </ul>
-      </div> */}
+      </div>
     </header>
   );
 } 
