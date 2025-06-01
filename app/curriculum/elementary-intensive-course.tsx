@@ -103,6 +103,11 @@ const ElementaryIntensiveCourse: React.FC<IntensiveCourseInfoProps> = ({
         <div className="grid md:grid-cols-1 gap-8 mb-10">
           <div className="bg-white p-6 rounded-lg shadow-md">
             <h3 className="text-xl font-semibold text-purple-600 mb-4 flex items-center">
+              <BookUser className="w-6 h-6 mr-2" /> 코스 대상
+            </h3>
+            <p className="text-gray-600">{targetAudience}</p>
+            
+            <h3 className="text-xl font-semibold text-purple-600 mt-6 mb-4 flex items-center">
               <BookMarked className="w-6 h-6 mr-2" /> 주요 학습 내용
             </h3>
             <ul className="space-y-2 text-sm">
@@ -168,42 +173,6 @@ const ElementaryIntensiveCourse: React.FC<IntensiveCourseInfoProps> = ({
           </div>
         </div>
 
-        {/* 기존 코스 대상, 시간표 등 정보 */}
-        <div className="grid md:grid-cols-2 gap-8 mb-10">
-          <div>
-            <h3 className="text-xl font-semibold text-gray-700 mb-3 flex items-center"><BookUser className="w-6 h-6 mr-2 text-[#ff8f00]" />코스 대상</h3>
-            <p className="text-gray-600 bg-amber-50 p-3 rounded-md">{targetAudience}</p>
-          </div>
-          <div>
-            <h3 className="text-xl font-semibold text-gray-700 mb-3 flex items-center"><Layers className="w-6 h-6 mr-2 text-[#ff8f00]" />주요 과목</h3>
-            <p className="text-gray-600 bg-amber-50 p-3 rounded-md">{mainSubjects.join(', ')}</p>
-          </div>
-        </div>
-
-        <div className="space-y-6 mb-10">
-          <div className="flex items-start p-4 bg-slate-50 rounded-lg shadow-sm">
-            <BookCopy className="w-6 h-6 mr-3 text-[#ff8f00] flex-shrink-0 mt-1" />
-            <div>
-              <h4 className="font-semibold text-gray-700">교재 구성</h4>
-              <p className="text-sm text-gray-600">{textbookInfo}</p>
-            </div>
-          </div>
-          <div className="flex items-start p-4 bg-slate-50 rounded-lg shadow-sm">
-            <Landmark className="w-6 h-6 mr-3 text-[#ff8f00] flex-shrink-0 mt-1" />
-            <div>
-              <h4 className="font-semibold text-gray-700">데뷰 데이</h4>
-              <p className="text-sm text-gray-600">{debutDay}</p>
-            </div>
-          </div>
-          <div className="flex items-start p-4 bg-slate-50 rounded-lg shadow-sm">
-            <TrendingUp className="w-6 h-6 mr-3 text-[#ff8f00] flex-shrink-0 mt-1" />
-            <div>
-              <h4 className="font-semibold text-gray-700">완성학습</h4>
-              <p className="text-sm text-gray-600">{completionStudy}</p>
-            </div>
-          </div>
-        </div>
-        
         {/* 초등 인텐시브 클래스 주요 특징 섹션 추가 */}
         <div className="mt-10 pt-8 border-t border-gray-200">
           <h3 className="text-2xl font-semibold text-[#ff8f00] mb-6 text-center flex items-center justify-center">
