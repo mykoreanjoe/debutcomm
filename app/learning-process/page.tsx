@@ -8,7 +8,7 @@ const learningStages = [
   {
     id: "discover",
     name: "DISCOVER",
-    mainTitle: "D — DISCOVER 발견하다",
+    mainTitle: "DISCOVER 발견하다",
     icon: Lightbulb,
     subtitle: "새로운 환경에 적응하며 아이의 강점과 약점을 발견하는 시간",
     details: (
@@ -24,7 +24,7 @@ const learningStages = [
   {
     id: "engage",
     name: "ENGAGE",
-    mainTitle: "E — ENGAGE 참여하다",
+    mainTitle: "ENGAGE 참여하다",
     icon: Zap,
     subtitle: "본격적으로 수업에 몰입하며 기초 실력을 다지는 시기",
     details: (
@@ -55,7 +55,7 @@ const learningStages = [
   {
     id: "boost",
     name: "BOOST",
-    mainTitle: "B — BOOST 신장시키다",
+    mainTitle: "BOOST 신장시키다",
     icon: Rocket,
     subtitle: "학습 내용을 자기 것으로 다지는 과정",
     details: (
@@ -85,7 +85,7 @@ const learningStages = [
   {
     id: "unfold",
     name: "UNFOLD",
-    mainTitle: "U — UNFOLD 펼치다",
+    mainTitle: "UNFOLD 펼치다",
     icon: BookOpen,
     subtitle: "읽기, 쓰기, 말하기 등 통합 학습을 통해 자신의 실력을 펼치는 과정",
     details: (
@@ -113,7 +113,7 @@ const learningStages = [
   {
     id: "train",
     name: "TRAIN",
-    mainTitle: "T — TRAIN 훈련하다",
+    mainTitle: "TRAIN 훈련하다",
     icon: Target,
     subtitle: "시험, 실전 문제풀이, 결과 점검을 통해 학습을 완성하는 마무리 단계",
     details: (
@@ -122,8 +122,6 @@ const learningStages = [
           <h4 className="font-semibold text-sm mb-1">주요 구성 요소:</h4>
           <ul className="space-y-1 pl-2">
             <li><strong>완성수업:</strong> 전체 학습 내용을 실전처럼 정리 및 점검</li>
-            <li><strong>데뷰데이:</strong> 매월 성장을 시각화하고, 함께 축하하는 날</li>
-            <li><strong>챔피언 & 데뷰인 칭호 수여:</strong> 결과 + 과정을 모두 인정하는 영예 시스템</li>
           </ul>
         </div>
         <div className="mt-2 pt-2 border-t border-indigo-300">
