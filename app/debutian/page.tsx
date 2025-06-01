@@ -126,7 +126,7 @@ const DebutianPage = () => {
       <section className="py-12 bg-slate-50">
         <div className="container mx-auto px-4 text-center">
           <a
-            href="#" // TODO: 실제 네이버 블로그 URL로 교체해주세요. (예: https://blog.naver.com/your_blog_id)
+            href="https://blog.naver.com/ourdebut"
             target="_blank" 
             rel="noopener noreferrer"
             className="inline-block bg-green-500 text-white font-bold text-lg py-4 px-8 rounded-lg shadow-md hover:bg-green-600 transition-colors duration-300 ease-in-out transform hover:-translate-y-1"
