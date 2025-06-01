@@ -1,6 +1,8 @@
 import React from 'react';
-import { SignedOut, SignInButton } from '@clerk/nextjs';
-import { BookHeadphones, Lock } from 'lucide-react';
+import { SignedOut, SignInButton, SignedIn } from '@clerk/nextjs';
+import { BookHeadphones, Lock, ArrowRight } from 'lucide-react';
+import Link from 'next/link';
+import { Button } from '@/components/ui/button';
 
 const StudyRoomPage = () => {
   return (
@@ -13,7 +15,6 @@ const StudyRoomPage = () => {
         </p>
       </div>
 
-      {/* TODO: 스터디룸 관련 내용 추가 (예: 이용 안내, 예약 시스템 등) */}
       <div className="bg-white p-8 md:p-10 rounded-xl shadow-lg max-w-3xl mx-auto mb-12">
         <h2 className="text-2xl font-semibold text-gray-800 mb-4">스터디룸 주요 특징</h2>
         <ul className="list-disc list-inside space-y-2 text-gray-700">
@@ -23,6 +24,17 @@ const StudyRoomPage = () => {
           <li>학습 분위기 유지를 위한 관리</li>
         </ul>
       </div>
+
+      {/* 스터디룸 들어가기 버튼 (로그인 시 보임) */}
+      <SignedIn>
+        <div className="text-center mb-12">
+          <Button asChild size="lg" className="bg-blue-600 hover:bg-blue-700 text-white">
+            <Link href="/"> {/* TODO: 실제 스터디룸 메인 페이지 경로로 변경 */} 
+              스터디룸 바로가기 <ArrowRight className="ml-2 h-5 w-5" />
+            </Link>
+          </Button>
+        </div>
+      </SignedIn>
 
       <div className="mt-12 p-6 bg-amber-50 border border-amber-200 rounded-lg text-center max-w-xl mx-auto">
         <Lock className="w-8 h-8 text-amber-500 mx-auto mb-3" />
