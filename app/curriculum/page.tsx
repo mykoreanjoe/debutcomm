@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import { MessageSquare, BookOpen, Rocket, GraduationCap, Target, CalendarDays, BookCopy, Users, Zap, Brain, TrendingUp, LucideIcon, type ElementType } from 'lucide-react'; // TrendingUp 아이콘 추가 및 LucideIcon, ElementType 추가
+import { MessageSquare, BookOpen, Rocket, GraduationCap, Target, CalendarDays, BookCopy, Users, Zap, Brain, TrendingUp, LucideIcon } from 'lucide-react';
 import ElementaryRoadmapTable from './elementary-roadmap-table';
 import ElementaryLevelChart from './elementary-level-chart';
 import ElementaryRegularCourse from './elementary-regular-course';
@@ -17,7 +17,7 @@ import StudyBook from './study-book';
 interface CurriculumCardProps {
   title: string;
   description: string;
-  icon?: LucideIcon | ElementType;
+  icon?: LucideIcon | React.ElementType;
   bgColorClass?: string;
   textColorClass?: string;
   buttonText?: string;
@@ -308,7 +308,7 @@ const middleSchoolCourseData = {
 
 export default function CurriculumPage() {
   return (
-    <div className="container mx-auto px-4 py-8 md:px-6 md:py-12">
+    <main className="container mx-auto px-4 py-8 md:px-6 md:py-12">
       <section className="text-center mb-12 md:mb-16">
         <h1 className="text-4xl md:text-5xl font-bold text-gray-800 mb-6">
           데뷰 영어 커리큘럼
@@ -330,7 +330,22 @@ export default function CurriculumPage() {
         </div>
       </section>
 
-      {/* 초등 정규 과정 상세 내용 섹션 */}
+      {/* 초등 과정 공통 테이블/차트 섹션 */}
+      <section id="elementary-common-info" className="mb-16 space-y-12">
+        <div>
+          <ElementaryRoadmapTable />
+        </div>
+        <div>
+          <ElementaryLevelChart />
+        </div>
+      </section>
+
+      {/* 초등 정규 과정 상세 내용 섹션 (기존 코드 유지 또는 elementaryCourseData 기반으로 ElementaryRegularCourse 사용) */}
+      {/* 기존 상세 섹션이 이미 elementaryCourseData 내용을 포함하고 있다면 ElementaryRegularCourse 컴포넌트 호출이 중복될 수 있습니다. */}
+      {/* 여기서는 기존 상세 섹션을 유지하고, 필요시 ElementaryRegularCourse를 별도로 활용하거나 대체하는 것을 고려할 수 있습니다. */}
+      {/* <ElementaryRegularCourse {...elementaryCourseData} /> */}
+      
+      {/* 초등 정규 과정 상세 내용 섹션 (ID로 연결된 기존 섹션) */}
       <section id="elementary-regular-details" className="pt-16 pb-12 bg-blue-50 rounded-xl shadow-lg">
         <div className="container mx-auto px-4 md:px-6">
           <header className="mb-12 text-center">
@@ -341,7 +356,7 @@ export default function CurriculumPage() {
           <div className="grid md:grid-cols-2 gap-8 lg:gap-12 items-start">
             <div className="bg-white p-6 rounded-lg shadow-md">
               <h3 className="text-2xl font-semibold text-blue-700 mb-4 flex items-center">
-                <CalendarDays size={24} className="mr-3" /> 시간표 & 수업 구성
+                <CalendarDays size={24} className="mr-3" /> 시간표 &amp; 수업 구성
               </h3>
               <div className="overflow-x-auto mb-6">
                 <table className="w-full text-sm text-left text-gray-700">
@@ -401,10 +416,10 @@ export default function CurriculumPage() {
                   <li>영역별 스킬의 통합 내재화 (리딩, 문법, 스피킹, 라이팅 등)</li>
                 </ol>
                 <blockquote className="border-l-4 border-blue-500 pl-4 py-2 my-4 bg-blue-50 text-gray-600 italic">
-                  영어가 어려운 이유는 '영역별 공부법'이 서로 다르고, 학생의 흥미·성취도도 영역마다 다르기 때문입니다.
+                  영어가 어려운 이유는 &apos;영역별 공부법&apos;이 서로 다르고, 학생의 흥미·성취도도 영역마다 다르기 때문입니다.
                 </blockquote>
                 <p className="text-gray-700 mb-2">
-                  단일 영역 중심 학습은 한계가 있으며, 통합형 수업을 통해 '절름발이 영어'를 예방하고 <strong>균형 잡힌 성장</strong>을 유도합니다.
+                  단일 영역 중심 학습은 한계가 있으며, 통합형 수업을 통해 &apos;절름발이 영어&apos;를 예방하고 <strong>균형 잡힌 성장</strong>을 유도합니다.
                 </p>
                 <p className="text-gray-700">
                   대표 사례: 영어 도서관만 다녔던 학생들은 어휘력은 있지만 말하기, 쓰기, 문법에서 큰 격차가 드러납니다.
@@ -416,16 +431,16 @@ export default function CurriculumPage() {
           <div className="mt-8 grid md:grid-cols-2 gap-8 lg:gap-12 items-start">
             <div className="bg-white p-6 rounded-lg shadow-md">
               <h3 className="text-2xl font-semibold text-blue-700 mb-4 flex items-center">
-                <Zap size={24} className="mr-3" /> 활동 & 프로젝트 중심 수업
+                <Zap size={24} className="mr-3" /> 활동 &amp; 프로젝트 중심 수업
               </h3>
               <blockquote className="border-l-4 border-blue-500 pl-4 py-2 my-4 bg-blue-50 text-gray-600 italic">
-                "그저 외우기만 하는 공부는 오래 가지 않습니다."
+                &quot;그저 외우기만 하는 공부는 오래 가지 않습니다.&quot;
               </blockquote>
               <p className="text-gray-700 mb-2">
                 특히 초등 저학년은 <strong>활동과 프로젝트를 통한 흥미 기반 수업</strong>이 핵심입니다.
               </p>
               <p className="text-gray-700 mb-2">
-                데뷰는 '컴프리헨시브 커리큘럼'을 통해 주제별 리딩 스킬과 <strong>인 클래스 액티비티</strong>, <strong>프로젝트 중심 실습</strong>을 연계하여 실력 향상을 유도합니다.
+                데뷰는 &apos;컴프리헨시브 커리큘럼&apos;을 통해 주제별 리딩 스킬과 <strong>인 클래스 액티비티</strong>, <strong>프로젝트 중심 실습</strong>을 연계하여 실력 향상을 유도합니다.
               </p>
               <p className="text-gray-700">
                 활동이 곧 학습이 되는 구조로, 집중력이 낮은 아이도 <strong>즐겁게 몰입</strong>할 수 있습니다.
@@ -449,7 +464,7 @@ export default function CurriculumPage() {
                 <li>문장 구조 패턴</li>
               </ul>
               <p className="text-gray-700">
-                쉬운 개념부터 시작해 점진적으로 확장하며, <strong>활동 & 프로젝트</strong>로 완전 내재화시킵니다.
+                쉬운 개념부터 시작해 점진적으로 확장하며, <strong>활동 &amp; 프로젝트</strong>로 완전 내재화시킵니다.
               </p>
             </div>
           </div>
@@ -527,10 +542,56 @@ export default function CurriculumPage() {
             </div>
           </div>
           {/* 초등부 레벨 차트 섹션 추가 끝 */}
-
         </div>
       </section>
-      {/* 다른 과정 상세 내용도 위와 유사한 형태로 추가 가능 */}
-    </div>
+
+      {/* 초등 인텐시브 과정 섹션 */}
+      <ElementaryIntensiveCourse {...elementaryIntensiveCourseData} />
+      
+      {/* 중등 과정 공통 테이블/차트 섹션 */}
+      <section id="middleschool-common-info" className="my-16 space-y-12">
+        <h2 className="text-2xl md:text-3xl font-bold text-center text-gray-800 mb-8 pt-8 border-t border-gray-200">
+          중등부 공통 안내
+        </h2>
+        <div>
+          <MiddleSchoolLevelChart />
+        </div>
+        <div>
+          <MiddleSchoolCourseDetailsTable />
+        </div>
+      </section>
+
+      {/* 중등 정규 과정 섹션 */}
+      <MiddleSchoolRegularCourse {...middleSchoolCourseData} />
+
+      {/* 내신 과정 섹션 */}
+      <section id="school-record-process" className="my-16">
+         <SchoolRecordProcess />
+      </section>
+
+      {/* 복습 과정 섹션 */}
+      <section id="review-process" className="mb-16">
+        <ReviewCycleDisplay />
+      </section>
+
+      {/* 3중 관리 완성 학습 섹션 */}
+      <section id="triple-care" className="mb-16">
+        <TripleCareSystem />
+      </section>
+
+      {/* 스터디북 섹션 */}
+      <section id="study-book-info" className="mb-16">
+        <StudyBook />
+      </section>
+      
+      <footer className="text-center mt-12">
+        <p className="text-gray-600">
+          💬 각 과정 하단에는 &quot;이 과정 상담받기&quot; 버튼이 제공될 예정이며, 카카오 상담톡으로 연동됩니다.
+        </p>
+        <p className="text-sm text-gray-500 mt-1">
+          (현재 &quot;초등 정규 과정&quot; 및 &quot;초등 인텐시브 과정&quot;에 예시 버튼이 적용되어 있습니다.)
+        </p>
+      </footer>
+    </main>
   );
 } 

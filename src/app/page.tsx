@@ -7,7 +7,7 @@ export default function HomePage() {
         데뷰 영어 학원
       </h1>
       <p className="mt-4 text-lg text-center text-[#7fa6c3]">
-        같이 완성, Let's Do It!
+        같이 완성, Let&apos;s Do It!
       </p>
       {/* 앞으로 여기에 히어로 섹션의 나머지 내용과 다른 섹션들이 추가될 예정입니다. */}
     </main>
