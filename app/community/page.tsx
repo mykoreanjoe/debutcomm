@@ -1,6 +1,6 @@
 import React from 'react';
 import { CheckCircle, Lock } from 'lucide-react';
-import { SignedOut, SignInButton } from '@clerk/nextjs';
+// import { SignedOut, SignInButton } from '@clerk/nextjs'; // Clerk 관련 import 주석 처리
 
 const CommunityPage = () => {
   const benefits = [
@@ -43,15 +43,8 @@ const CommunityPage = () => {
             <Lock className="w-8 h-8 text-amber-500 mx-auto mb-3" />
             <h3 className="text-xl font-semibold text-amber-700 mb-2">회원 전용 커뮤니티입니다</h3>
             <p className="text-amber-600 mb-6">
-              커뮤니티의 모든 게시판과 자료는 로그인한 데뷰 학생들만 이용 가능합니다.
+              커뮤니티의 모든 게시판과 자료는 데뷰 학생들만 이용 가능합니다. (추후 인증 방식 안내 예정)
             </p>
-            <SignedOut>
-              <SignInButton mode="modal">
-                <button className="px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow hover:bg-blue-700 transition-colors">
-                  로그인하고 커뮤니티 참여하기
-                </button>
-              </SignInButton>
-            </SignedOut>
           </div>
         </div>
       </div>

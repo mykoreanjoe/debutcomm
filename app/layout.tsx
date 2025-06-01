@@ -2,14 +2,10 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
-import {
-  ClerkProvider,
-  // SignInButton,
-  // SignUpButton,
-  // SignedIn,
-  // SignedOut,
-  // UserButton,
-} from "@clerk/nextjs";
+// ClerkProvider 및 관련 import 주석 처리 또는 삭제
+// import {
+//   ClerkProvider,
+// } from "@clerk/nextjs";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,26 +20,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ClerkProvider>
+    // <ClerkProvider> // ClerkProvider 제거
       <html lang="ko">
         <body className={inter.className}>
-          {/* <header className="bg-white shadow-md sticky top-0 z-50">
-            <nav className="container mx-auto px-6 py-3 flex justify-between items-center">
-              <div className="flex items-center space-x-4">
-                <SignedOut>
-                  <SignInButton />
-                  <SignUpButton />
-                </SignedOut>
-                <SignedIn>
-                  <UserButton afterSignOutUrl="/" />
-                </SignedIn>
-              </div>
-            </nav>
-          </header> */}
+          {/* Header 내 Clerk 관련 버튼은 Header 컴포넌트에서 직접 제거 예정 */}
           <Header />
           <main>{children}</main>
         </body>
       </html>
-    </ClerkProvider>
+    // </ClerkProvider> // ClerkProvider 제거
   );
 }
