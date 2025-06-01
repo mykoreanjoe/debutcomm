@@ -32,7 +32,7 @@ const curriculumData: CurriculumCardProps[] = [
     description: "탄탄한 기본기와 자기주도 학습 습관을 형성하는 과정입니다.",
     bgColorClass: "bg-blue-50",
     textColorClass: "text-blue-700",
-    buttonText: "초등 정규 과정 상담받기",
+    buttonText: "초등 정규 과정 알아보기",
     icon: BookOpen,
     anchorId: "elementary-regular-details",
   },
@@ -41,7 +41,7 @@ const curriculumData: CurriculumCardProps[] = [
     description: "심화 학습과 다양한 액티비티를 통해 영어 실력을 한 단계 높이는 집중 과정입니다.",
     bgColorClass: "bg-green-50",
     textColorClass: "text-green-700",
-    buttonText: "초등 인텐시브 과정 상담받기",
+    buttonText: "초등 인텐시브 과정 알아보기",
     icon: Rocket,
     anchorId: "elementary-intensive-details",
   },
@@ -50,7 +50,7 @@ const curriculumData: CurriculumCardProps[] = [
     description: "체계적인 학습과 내신 대비를 통해 학업 성취도를 극대화하는 과정입니다.",
     bgColorClass: "bg-yellow-50",
     textColorClass: "text-yellow-700",
-    buttonText: "중등 정규 과정 상담받기",
+    buttonText: "중등 정규 과정 알아보기",
     icon: GraduationCap,
     anchorId: "middle-regular-details",
   },
@@ -59,7 +59,7 @@ const curriculumData: CurriculumCardProps[] = [
     description: "학교별 맞춤 전략과 실전 훈련으로 내신 성적 향상을 목표하는 과정입니다.",
     bgColorClass: "bg-purple-50",
     textColorClass: "text-purple-700",
-    buttonText: "중등 내신 과정 상담받기",
+    buttonText: "중등 내신 과정 알아보기",
     icon: Target,
     anchorId: "middle-school-record-details", 
   },
@@ -71,7 +71,7 @@ const CurriculumCard: React.FC<CurriculumCardProps> = ({
   icon: Icon,
   bgColorClass = "bg-gray-50",
   textColorClass = "text-gray-700",
-  buttonText = "상담받기",
+  buttonText = "알아보기",
   onButtonClick,
   anchorId,
 }) => {
@@ -329,7 +329,7 @@ export default function CurriculumPage() {
           데뷰 영어 커리큘럼
         </h1>
         <p className="text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed">
-          가장 완성도 높은 커리큘럼이 세심한 강사, 가장 정확한 온라인 AI, 꼼꼼한 스터디 매니저와 함께, <br className="hidden md:inline" />우리 학생에게 꼭 필요한 학습을 만들어 갑니다.
+          강사, 온라인AI, 스터디 매니저의 3중 관리로 <br className="hidden md:inline" />우리 학생에게 꼭 필요한 학습을 만들어 갑니다.
         </p>
       </section>
 
