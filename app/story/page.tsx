@@ -3,25 +3,25 @@ import Image from 'next/image';
 import { MessagesSquare, ClipboardCheck, Award } from 'lucide-react';
 
 const learningDifficulties = [
-  { 
-    title: '학습 방법 혼란', 
-    tags: ['#교재', '#방법', '#영역별 초점'] 
+  {
+    title: "학습 방법 혼란",
+    description: "부적절한 교재 선정, 잘못된 학습 방법, 영역별 교수법 부재",
   },
-  { 
-    title: '동기 부여 문제', 
-    tags: ['#흥미', '#반복', '#목표 설정 밸런스'] 
+  {
+    title: "동기 부여 문제",
+    description: "흥미 미고려, 무작정한 반복 학습, 목표 설정 부재",
   },
-  { 
-    title: '학습 성과 가시성의 부족', 
-    tags: ['#단시간 결과 불가능', '#평가 정확성', '#평가 신뢰성'] 
+  {
+    title: "학습 성과 가시성의 부족",
+    tags: ["#단시간 결과 불가능", "#평가 정확성", "#평가 신뢰성"],
   },
-  { 
-    title: '적절한 환경 조성의 어려움', 
-    tags: ['#인풋 노출', '#부모 영어 실력'] 
+  {
+    title: "적절한 환경 조성의 어려움",
+    description: "다양한 인풋 미노출, 학부모의 영어 자신감 결여",
   },
-  { 
-    title: '학습 지속성과 장기 목표 설정의 어려움', 
-    tags: ['#사춘기', '#단기', '#장기 로드맵'] 
+  {
+    title: "학습 지속성과 장기 목표 설정의 어려움",
+    description: "단기 로드맵과 장기 로드맵의 부재",
   },
 ];
 
@@ -108,14 +108,19 @@ export default function StoryPage() {
           <ul className="space-y-4 mb-8">
             {learningDifficulties.map((item, index) => (
               <li key={index} className="p-4 bg-white rounded-md shadow-sm border border-gray-200">
-                <h3 className="font-semibold text-gray-700">{index + 1}. {item.title}</h3>
-                <div className="flex flex-wrap gap-2 mt-2">
-                  {item.tags.map(tag => (
-                    <span key={tag} className="text-xs bg-[#7fa6c3] text-white px-2 py-1 rounded-full">
-                      {tag}
-                    </span>
-                  ))}
-                </div>
+                <h3 className="font-semibold text-gray-700 mb-1">{index + 1}. {item.title}</h3>
+                {item.description && (
+                  <p className="text-sm text-gray-600">{item.description}</p>
+                )}
+                {item.tags && item.tags.length > 0 && (
+                  <div className="flex flex-wrap gap-2 mt-2">
+                    {item.tags.map(tag => (
+                      <span key={tag} className="text-xs bg-[#7fa6c3] text-white px-2 py-1 rounded-full">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                )}
               </li>
             ))}
           </ul>
