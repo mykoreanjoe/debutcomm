@@ -87,7 +87,7 @@ const DebutianPage = () => {
               <p className="text-sm text-gray-500">(월말 1위)</p>
             </div>
             <div className="md:w-3/4">
-              <p className="text-xl md:text-2xl font-semibold text-gray-800" style={{ fontFamily: "'Comic Sans MS', 'Comic Sans', cursive" }}>
+              <p className="text-xl md:text-2xl font-semibold text-gray-800">
                 Champions are not afraid of failure. They take calculated risks.
               </p>
               <blockquote className="mt-4 p-4 border-l-4 border-gray-300 bg-gray-50 rounded-r-lg">
