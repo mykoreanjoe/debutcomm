@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import FloatingInquiryButton from "@/components/FloatingInquiryButton";
 // ClerkProvider 및 관련 import 주석 처리 또는 삭제
 // import {
 //   ClerkProvider,
@@ -41,6 +42,7 @@ export default function RootLayout({
           <Header />
           <main>{children}</main>
           <Footer />
+          <FloatingInquiryButton />
         </body>
       </html>
     // </ClerkProvider> // ClerkProvider 제거
