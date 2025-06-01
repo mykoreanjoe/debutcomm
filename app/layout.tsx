@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 // ClerkProvider 및 관련 import 주석 처리 또는 삭제
 // import {
 //   ClerkProvider,
@@ -39,6 +40,7 @@ export default function RootLayout({
           {/* Header 내 Clerk 관련 버튼은 Header 컴포넌트에서 직접 제거 예정 */}
           <Header />
           <main>{children}</main>
+          <Footer />
         </body>
       </html>
     // </ClerkProvider> // ClerkProvider 제거
