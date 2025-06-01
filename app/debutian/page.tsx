@@ -1,5 +1,5 @@
 import React from 'react';
-import { Medal, BookOpen, MessageCircle, Sparkles, BookText, Target, Trophy } from 'lucide-react'; // Trophy 아이콘 추가
+import { Medal, BookOpen, MessageCircle, Sparkles, BookText, Target, Trophy, Star, UserCircle } from 'lucide-react'; // Star, UserCircle 아이콘 추가
 import Image from 'next/image';
 
 const DebutianPage = () => {
@@ -20,6 +20,39 @@ const DebutianPage = () => {
 
   return (
     <main className="flex flex-col min-h-screen">
+      {/* 데뷰후기 섹션 (페이지 최상단으로 이동) */}
+      <section id="reviews" className="w-full py-12 md:py-16 lg:py-20 bg-white">
+        <div className="container mx-auto px-4 md:px-6">
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-4 text-blue-600">생생한 데뷰후기</h2>
+          <p className="text-md md:text-lg text-gray-600 text-center mb-10 md:mb-12 max-w-2xl mx-auto">
+            데뷰 영어 학원은 주기적은 소통과 서비스 만족도 조사를 통해 학부모님께 최상의 교육 서비를 제공합니다.
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {[1, 2, 3].map((reviewId) => (
+              <div key={reviewId} className="bg-slate-50 p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
+                <div className="flex items-center mb-3">
+                  <UserCircle className="w-10 h-10 text-blue-500 mr-3" />
+                  <div>
+                    <h4 className="font-semibold text-gray-800">학부모님 {reviewId}</h4>
+                    <div className="flex items-center">
+                      {[...Array(5)].map((_, i) => (
+                        <Star key={i} className={`w-5 h-5 ${i < (reviewId % 3 === 0 ? 4 : 5) ? 'text-yellow-400' : 'text-gray-300'}`} fill="currentColor" />
+                      ))}
+                    </div>
+                  </div>
+                </div>
+                <p className="text-gray-600 text-sm leading-relaxed">
+                  {reviewId % 3 === 0 ? '선생님들이 너무 친절하시고 아이 눈높이에 맞춰 잘 가르쳐주셔서 만족스럽습니다. 아이가 영어를 즐겁게 배우고 있어요.' :
+                   reviewId % 2 === 0 ? '체계적인 커리큘럼과 꼼꼼한 관리 덕분에 아이의 영어 실력이 눈에 띄게 향상되었습니다. 특히 스피킹에 자신감이 많이 붙었어요.' :
+                   '상담도 잘해주시고, 아이의 학습 상황을 주기적으로 알려주셔서 안심이 됩니다. 앞으로도 잘 부탁드립니다.'
+                  }
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* 상단 데뷰인 소개 섹션 */}
       <section className="w-full py-12 md:py-20 lg:py-28 bg-gradient-to-b from-sky-300 to-sky-100">
         <div className="container mx-auto px-4 md:px-6 text-center">
