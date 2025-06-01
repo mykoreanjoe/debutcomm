@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import { MessageSquare, BookOpen, Rocket, GraduationCap, Target, CalendarDays, BookCopy, Users, Zap, Brain, TrendingUp, LucideIcon } from 'lucide-react';
+import { MessageSquare, BookOpen, Rocket, GraduationCap, Target, LucideIcon } from 'lucide-react';
 import ElementaryRoadmapTable from './elementary-roadmap-table';
 import ElementaryLevelChart from './elementary-level-chart';
 import ElementaryRegularCourse from './elementary-regular-course';
