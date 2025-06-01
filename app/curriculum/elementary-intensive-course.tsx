@@ -323,9 +323,6 @@ const ElementaryIntensiveCourse: React.FC<IntensiveCourseInfoProps> = ({
             <MessageCircle className="w-5 h-5 mr-2 inline-block" /> {/* 이 아이콘이 없으면 MessageSquare 또는 다른 것으로 대체해야 함 */}
             초등 인텐시브 과정 상담받기
           </button>
-          <p className="mt-3 text-sm text-gray-500">
-            (카카오톡 채널로 연결됩니다 - 현재 개발중)
-          </p>
         </div>
 
       </div>
