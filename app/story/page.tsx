@@ -205,7 +205,7 @@ export default function StoryPage() {
         <div className="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-12 bg-slate-50 p-6 md:p-10 rounded-lg shadow-sm">
           <div className="w-48 h-48 md:w-60 md:h-60 relative flex-shrink-0">
             <Image 
-              src="/debut_language_school_logo.png"
+              src="/images/debut_language_school_logo.png"
               alt="데뷰 영어 학원 마크"
               layout="fill"
               objectFit="contain"
