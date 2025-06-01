@@ -31,26 +31,31 @@ export default function HomePage() {
         신목초, 목동초, 목일중, 목동중 학생들을 전문으로 관리하고 있습니다.
       </p>
 
-      <div className="mt-10 flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
-        <Button asChild size="lg" className="bg-green-500 hover:bg-green-600 text-white">
+      <div className="mt-10 flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-4">
+        <Button asChild size="lg" className="bg-yellow-500 hover:bg-yellow-600 text-gray-800 font-semibold">
           <Link href="/reservation">테스트 예약</Link>
         </Button>
         {/* <Button asChild variant="outline" size="lg" className="border-[#13588f] text-[#13588f] hover:bg-[#13588f]/10">
           <Link href="/learning-process">학습과정 보기</Link>
         </Button> */}
-        <Button asChild variant="outline" size="lg" className="border-[#13588f] text-[#13588f] hover:bg-[#13588f]/10">
+        <Button asChild size="lg" className="bg-yellow-500 hover:bg-yellow-600 text-gray-800 font-semibold">
           <Link href="/consulting">상담 받기</Link>
         </Button>
-      </div>
-
-      {/* 네이버 블로그 바로가기 버튼 */}
-      <div className="mt-12">
-        <Button asChild size="lg" className="bg-green-500 hover:bg-green-600 text-white">
+        <Button asChild size="lg" className="bg-yellow-500 hover:bg-yellow-600 text-gray-800 font-semibold">
           <Link href="https://blog.naver.com/ourdebut" target="_blank" rel="noopener noreferrer">
             데뷰 블로그
           </Link>
         </Button>
       </div>
+
+      {/* 네이버 블로그 바로가기 버튼 - 위 div로 통합 */}
+      {/* <div className="mt-12">
+        <Button asChild size="lg" className="bg-green-500 hover:bg-green-600 text-white">
+          <Link href="https://blog.naver.com/ourdebut" target="_blank" rel="noopener noreferrer">
+            데뷰 블로그
+          </Link>
+        </Button>
+      </div> */}
     </main>
   );
 }

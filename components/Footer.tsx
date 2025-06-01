@@ -9,6 +9,7 @@ const Footer = () => {
     kakaoTalkUrl: "http://pf.kakao.com/_pGxkPn/chat",
     naverBlogUrl: "https://blog.naver.com/ourdebut",
     levelTestUrl: "https://booking.naver.com/booking/13/bizes/1068331",
+    phoneNumber: "02-6952-1131",
   };
 
   return (
@@ -27,6 +28,11 @@ const Footer = () => {
             <li><Edit3 className="inline-block w-4 h-4 mr-2 text-amber-400" />학원 등록 번호: {businessInfo.registrationNumber}</li>
             <li><ShoppingCart className="inline-block w-4 h-4 mr-2 text-amber-400" />사업자 번호: {businessInfo.businessNumber}</li>
             <li><MapPin className="inline-block w-4 h-4 mr-2 text-amber-400" />주소: {businessInfo.address}</li>
+            <li>
+              <a href={`tel:${businessInfo.phoneNumber.replace(/-/g, '')}`} className="hover:text-amber-400 transition-colors duration-300 flex items-center">
+                <Phone className="inline-block w-4 h-4 mr-2 text-amber-400" />전화번호: {businessInfo.phoneNumber}
+              </a>
+            </li>
           </ul>
         </div>
 
@@ -44,9 +50,9 @@ const Footer = () => {
               </Link>
             </li>
             <li>
-              <Link href={businessInfo.levelTestUrl} target="_blank" rel="noopener noreferrer" className="hover:text-amber-400 transition-colors duration-300 flex items-center">
-                <Phone className="inline-block w-4 h-4 mr-2 text-blue-400" /> 레벨 테스트 예약 (네이버)
-              </Link>
+              <a href={`tel:${businessInfo.phoneNumber.replace(/-/g, '')}`} className="hover:text-amber-400 transition-colors duration-300 flex items-center">
+                <Phone className="inline-block w-4 h-4 mr-2 text-blue-400" /> 전화 문의: {businessInfo.phoneNumber}
+              </a>
             </li>
           </ul>
         </div>
