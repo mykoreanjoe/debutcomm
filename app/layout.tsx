@@ -27,6 +27,29 @@ export const metadata: Metadata = {
     "폴리어학원 비교", "프라미스어학원 비교", "현재어학원 비교", "씨앤씨어학원 비교", 
     "특목고 영어 대비", "영어 학습 습관", "자기주도학습 영어", "소수정예 영어학원"
   ],
+  // OG 이미지 정보 추가
+  openGraph: {
+    title: "데뷰 영어 학원 | 같이 완성, Let's Do It!",
+    description: "목동, 양천구, 신정동 대표 영어학원. 초등 영어회화부터 중등 내신, 수능 대비까지. 데뷰에서 영어 실력을 완성하세요!",
+    url: "https://www.debutenglish.com", // 실제 웹사이트 URL로 변경 필요
+    siteName: "데뷰 영어 학원",
+    images: [
+      {
+        url: "/images/og-default.png", // '/public' 폴더 기준 경로
+        width: 1200,
+        height: 630,
+        alt: "데뷰 영어 학원 로고",
+      },
+    ],
+    locale: "ko_KR",
+    type: "website",
+  },
+  twitter: { // 트위터 카드 정보 (선택 사항이지만 권장)
+    card: "summary_large_image",
+    title: "데뷰 영어 학원 | 같이 완성, Let's Do It!",
+    description: "목동, 양천구, 신정동 대표 영어학원. 데뷰에서 영어 실력을 완성하세요!",
+    images: ["/images/og-default.png"], // 트위터용 이미지도 동일하게 사용
+  },
 };
 
 export default function RootLayout({
