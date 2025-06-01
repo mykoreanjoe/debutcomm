@@ -289,11 +289,11 @@ export default function LearningProcessPage() {
             더 알아보기
           </h2>
           <p className="text-lg md:text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
-            데뷰의 다양한 프로그램과 교육 철학에 대해 더 자세히 알아보세요.
+            데뷰 영어 학원의 커리큘럼과 클래스들을 더 자세히 알아 보세요.
           </p>
           <Link href="/curriculum"
             className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-8 rounded-lg text-lg transition-colors duration-300">
-            커리큘럼 보기
+            커리큘럼 바로 가기
           </Link>
         </section>
         
