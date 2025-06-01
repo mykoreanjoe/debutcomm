@@ -14,7 +14,7 @@ const CommunityPage = () => {
       <h1 className="text-4xl md:text-5xl font-bold text-center mb-10 text-blue-700">같이완성 커뮤니티</h1>
       <div className="bg-white p-8 md:p-10 rounded-xl shadow-lg max-w-3xl mx-auto">
         <p className="text-xl text-gray-800 leading-relaxed text-center">
-          데뷰 영어 학원의 <span className="font-semibold text-blue-600">'같이완성 커뮤니티'</span>에 오신 것을 환영합니다!
+          데뷰 영어 학원의 <span className="font-semibold text-blue-600">&apos;같이완성 커뮤니티&apos;</span>에 오신 것을 환영합니다!
         </p>
         <p className="mt-6 text-gray-700 text-center">
           이곳은 학습 정보 공유, 질문과 답변, 스터디 그룹 구성 등 자유롭게 소통하며 함께 성장하는 공간입니다.

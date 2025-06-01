@@ -1,6 +1,7 @@
 import React from 'react';
-import { Star, UserCircle, CheckCircle2, MessageSquareText } from 'lucide-react'; // 필요한 아이콘만 import
-import Image from 'next/image'; // Image 컴포넌트는 현재 후기 카드에서 사용되지 않으나, 추후 프로필 이미지 등에 사용될 수 있어 유지합니다.
+// import { UserCircle } from 'lucide-react'; // 사용되지 않으므로 주석 처리 또는 삭제
+// import Image from 'next/image'; // 사용되지 않으므로 주석 처리 또는 삭제
+import { Star, CheckCircle2, MessageSquareText } from 'lucide-react';
 
 const sampleReviews = [
   {

@@ -46,7 +46,7 @@ const DebutianPage = () => {
                 영어를 익히는 것이 쉬웠다면, 누구나 뛰어난 실력을 가졌을 것입니다. 
                 하지만 탁월한 영어 실력은 꾸준한 노력과 체계적인 관리가 뒷받침될 때 가능합니다. 
                 학습 과정이 결코 쉽진 않지만, 더 높은 목표를 정해 쉼 없이 노력하여 뛰어난 성취를 이룩한 이들을 
-                <span className="font-semibold text-blue-600">'데뷰인'</span>이라 부릅니다. 
+                <span className="font-semibold text-blue-600">&apos;데뷰인&apos;</span>이라 부릅니다. 
                 우리는 데뷰인들을 존경하고 기억 할 것입니다.
               </p>
             </div>
