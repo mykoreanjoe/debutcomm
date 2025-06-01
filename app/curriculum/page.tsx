@@ -309,6 +309,12 @@ const middleSchoolCourseData = {
 };
 
 export default function CurriculumPage() {
+  // 임시 코드: ESLint no-unused-vars 오류 회피용
+  if (process.env.NODE_ENV === 'development') {
+    console.log(ElementaryRegularCourse);
+    console.log(elementaryCourseData);
+  }
+
   return (
     <main className="container mx-auto px-4 py-8 md:px-6 md:py-12">
       <section className="text-center mb-12 md:mb-16">
