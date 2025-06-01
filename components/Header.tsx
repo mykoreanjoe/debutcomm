@@ -26,13 +26,7 @@ export default function Header() {
       <nav className="container mx-auto px-6 py-3 flex justify-between items-center">
         <div>
           <Link href="/">
-            <Image
-              src="/debutlogo.png"
-              alt="데뷰 영어 학원 로고"
-              width={120} // 로고 크기는 필요에 따라 조절해주세요.
-              height={40} // 로고 크기는 필요에 따라 조절해주세요.
-              priority
-            />
+            <span className="text-xl font-bold text-[#13588f]">목동데뷰영어</span>
           </Link>
         </div>
         <div className="hidden md:flex items-center space-x-1">
