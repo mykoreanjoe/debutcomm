@@ -25,7 +25,6 @@ interface IntensiveCourseInfoProps {
   title: string;
   targetAudience: string;
   mainSubjects: string[];
-  schedule?: ScheduleItem[]; // 타입 변경 -> schedule?: ScheduleItem[];
   textbookInfo: string;
   debutDay: string;
   completionStudy: string;
@@ -83,7 +82,6 @@ const ElementaryIntensiveCourse: React.FC<IntensiveCourseInfoProps> = ({
   title,
   targetAudience,
   mainSubjects,
-  schedule,
   textbookInfo,
   debutDay,
   completionStudy,
@@ -102,7 +100,7 @@ const ElementaryIntensiveCourse: React.FC<IntensiveCourseInfoProps> = ({
           {newDescription}
         </p>
 
-        <div className="grid md:grid-cols-2 gap-8 mb-10">
+        <div className="grid md:grid-cols-1 gap-8 mb-10">
           <div className="bg-white p-6 rounded-lg shadow-md">
             <h3 className="text-xl font-semibold text-purple-600 mb-4 flex items-center">
               <BookMarked className="w-6 h-6 mr-2" /> 주요 학습 내용
@@ -115,30 +113,6 @@ const ElementaryIntensiveCourse: React.FC<IntensiveCourseInfoProps> = ({
                 </li>
               ))}
             </ul>
-          </div>
-
-          <div className="bg-white p-6 rounded-lg shadow-md">
-            <h3 className="text-xl font-semibold text-purple-600 mb-4 flex items-center">
-              <Clock className="w-6 h-6 mr-2" /> 시간표
-            </h3>
-            <Table className="min-w-full text-sm">
-              <TableHeader>
-                <TableRow className="bg-purple-50">
-                  <TableHead className="py-2 px-3 font-semibold text-purple-700">구분</TableHead>
-                  <TableHead className="py-2 px-3 font-semibold text-purple-700">시간</TableHead>
-                  <TableHead className="py-2 px-3 font-semibold text-purple-700">수업시간</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {schedule?.map((item, index) => (
-                  <TableRow key={index} className={index % 2 === 0 ? 'bg-white' : 'bg-purple-50/50'}>
-                    <TableCell className="py-2 px-3">{item.type}</TableCell>
-                    <TableCell className="py-2 px-3">{item.time}</TableCell>
-                    <TableCell className="py-2 px-3">{item.duration}</TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
           </div>
         </div>
 
