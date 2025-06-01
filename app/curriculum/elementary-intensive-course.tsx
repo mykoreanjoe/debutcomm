@@ -173,27 +173,6 @@ const ElementaryIntensiveCourse: React.FC<IntensiveCourseInfoProps> = ({
           </div>
         </div>
 
-        {/* 초등 인텐시브 클래스 주요 특징 섹션 추가 */}
-        <div className="mt-10 pt-8 border-t border-gray-200">
-          <h3 className="text-2xl font-semibold text-[#ff8f00] mb-6 text-center flex items-center justify-center">
-            <Zap className="w-7 h-7 mr-2" /> 초등 인텐시브 클래스 주요 특징 
-          </h3>
-          <div className="grid md:grid-cols-3 gap-6 lg:grid-cols-5 text-center">
-            {[
-              { icon: UserCheck, label: '1인 담임제' },
-              { icon: BookHeart, label: '스터디매니저' },
-              { icon: NotebookText, label: '스터디북' },
-              { icon: Target, label: '완성학습' },
-              { icon: BrainCircuit, label: '온라인AI' },
-            ].map((feature, index) => (
-              <div key={index} className="flex flex-col items-center p-4 bg-amber-50 rounded-lg shadow-sm">
-                <feature.icon className="w-10 h-10 text-[#ff8f00] mb-3" />
-                <p className="font-semibold text-gray-700">{feature.label}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-        
         {/* ===== 새로운 정보 섹션 시작 ===== */}
         <div className="mt-12 pt-10 border-t border-gray-200 space-y-12">
 
