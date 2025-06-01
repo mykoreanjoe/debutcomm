@@ -340,10 +340,8 @@ export default function CurriculumPage() {
         </div>
       </section>
 
-      {/* 초등 정규 과정 상세 내용 섹션 (기존 코드 유지 또는 elementaryCourseData 기반으로 ElementaryRegularCourse 사용) */}
-      {/* 기존 상세 섹션이 이미 elementaryCourseData 내용을 포함하고 있다면 ElementaryRegularCourse 컴포넌트 호출이 중복될 수 있습니다. */}
-      {/* 여기서는 기존 상세 섹션을 유지하고, 필요시 ElementaryRegularCourse를 별도로 활용하거나 대체하는 것을 고려할 수 있습니다. */}
-      {/* <ElementaryRegularCourse {...elementaryCourseData} /> */}
+      {/* 초등 정규 과정 상세 내용 섹션 */}
+      <ElementaryRegularCourse {...elementaryCourseData} />
       
       {/* 초등 정규 과정 상세 내용 섹션 (ID로 연결된 기존 섹션) */}
       <section id="elementary-regular-details" className="pt-16 pb-12 bg-blue-50 rounded-xl shadow-lg">
