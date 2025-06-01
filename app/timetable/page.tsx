@@ -138,7 +138,7 @@ const SubHeading: React.FC<{ children: React.ReactNode }> = ({ children }) => (
 
 export default function TimetablePage() {
   // const mainText = "주간 학습 시간표"; // mainText 주석 처리
-  // const constPurpleBoxText = "시간표는 학사일정에 따라 변경될 수 있습니다."; // constPurpleBoxText 주석 처리
+  // const constPurpleBoxText = "시간표는 학사일정에 따라 변경될 수 있습니다."; // 올바르게 주석 처리
   return (
     <>
       <Head>

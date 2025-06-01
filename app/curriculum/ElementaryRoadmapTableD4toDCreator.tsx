@@ -39,8 +39,7 @@ const ElementaryRoadmapTableD4toDCreator = () => {
             <TableHead className="w-[150px] text-center font-semibold text-amber-700 border">하브루타 문법</TableHead>
           </TableRow>
         </TableHeader>
-        <TableBody>
-          {roadmapDataD4toDCreator.map((row, index) => (
+        <TableBody>{roadmapDataD4toDCreator.map((row, index) => (
             <TableRow key={index} className={index % 2 === 0 ? 'bg-white' : 'bg-amber-50/50'}>
               <TableCell className="font-medium text-center border px-2 py-3 text-xs align-top">{row.level}</TableCell>
               <TableCell className="text-center border px-2 py-3 text-xs align-top">{row.nationalLevel}</TableCell>
@@ -66,8 +65,7 @@ const ElementaryRoadmapTableD4toDCreator = () => {
               {index >= 4 && <TableCell className="border px-2 py-3 text-xs align-top"></TableCell>}
 
             </TableRow>
-          ))}
-        </TableBody>
+          ))}</TableBody>
       </Table>
       <p className="text-sm text-gray-500 mt-4 text-center">
         위 로드맵은 학습 방향을 안내하며, 학생의 레벨과 상황에 따라 맞춤 조절될 수 있습니다.
