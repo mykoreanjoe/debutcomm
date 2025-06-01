@@ -1,5 +1,6 @@
 import React from 'react';
-import { CheckCircle } from 'lucide-react';
+import { CheckCircle, Lock } from 'lucide-react';
+import { SignedOut, SignInButton } from '@clerk/nextjs';
 
 const CommunityPage = () => {
   const benefits = [
@@ -31,13 +32,27 @@ const CommunityPage = () => {
           </ul>
         </div>
 
-        {/* TODO: 추후 커뮤니티 기능 (게시판, 댓글 등) 추가 예정 */}
         <div className="mt-12 pt-8 border-t border-gray-200 text-center">
           <h3 className="text-xl font-semibold text-gray-700 mb-3">커뮤니티 기능 오픈 예정!</h3>
-          <p className="text-gray-600 italic max-w-md mx-auto">
+          <p className="text-gray-600 italic max-w-md mx-auto mb-10">
             현재 더 나은 소통 환경을 위해 열심히 준비 중입니다. 
             곧 다양한 기능과 함께 찾아뵙겠습니다. 많은 기대 부탁드립니다!
           </p>
+        
+          <div className="p-6 bg-amber-50 border border-amber-200 rounded-lg">
+            <Lock className="w-8 h-8 text-amber-500 mx-auto mb-3" />
+            <h3 className="text-xl font-semibold text-amber-700 mb-2">회원 전용 커뮤니티입니다</h3>
+            <p className="text-amber-600 mb-6">
+              커뮤니티의 모든 게시판과 자료는 로그인한 데뷰 학생들만 이용 가능합니다.
+            </p>
+            <SignedOut>
+              <SignInButton mode="modal">
+                <button className="px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow hover:bg-blue-700 transition-colors">
+                  로그인하고 커뮤니티 참여하기
+                </button>
+              </SignInButton>
+            </SignedOut>
+          </div>
         </div>
       </div>
     </main>
