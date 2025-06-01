@@ -2,7 +2,7 @@ import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from "@/components/ui/button";
-import { Star, CheckCircle2, BookOpenCheck } from "lucide-react";
+import { Star, CheckCircle2, BookOpenCheck, ExternalLink } from "lucide-react";
 
 export default function HomePage() {
   return (
@@ -12,43 +12,18 @@ export default function HomePage() {
         <div className="flex justify-center mb-4">
           <Star className="h-16 w-16 text-yellow-400 fill-yellow-400" />
         </div>
-        <h2 className="text-3xl md:text-5xl font-bold text-[#13588f] mb-6">
+        <h2 className="text-3xl md:text-5xl font-bold text-[#13588f] mb-4">
           최고의 학습 경험 (초등부)
         </h2>
-        <ul className="space-y-3 text-left inline-block mb-8">
-          <li className="flex items-center text-md md:text-lg text-gray-700">
-            <CheckCircle2 className="h-6 w-6 text-green-500 mr-3 flex-shrink-0" />
-            <span>매월 스피킹 발표</span>
-          </li>
-          <li className="flex items-center text-md md:text-lg text-gray-700">
-            <CheckCircle2 className="h-6 w-6 text-green-500 mr-3 flex-shrink-0" />
-            <span>학습 리워드</span>
-          </li>
-          <li className="flex items-center text-md md:text-lg text-gray-700">
-            <CheckCircle2 className="h-6 w-6 text-green-500 mr-3 flex-shrink-0" />
-            <span>영상 포트폴리오</span>
-          </li>
-          <li className="flex items-center text-md md:text-lg text-gray-700">
-            <CheckCircle2 className="h-6 w-6 text-green-500 mr-3 flex-shrink-0" />
-            <span>온라인 AI 학습 레포트</span>
-          </li>
-          <li className="flex items-center text-md md:text-lg text-gray-700">
-            <CheckCircle2 className="h-6 w-6 text-green-500 mr-3 flex-shrink-0" />
-            <span>데뷰카드</span>
-          </li>
-          <li className="flex items-center text-md md:text-lg text-gray-700">
-            <CheckCircle2 className="h-6 w-6 text-green-500 mr-3 flex-shrink-0" />
-            <span>참여형 클래스</span>
-          </li>
-          <li className="flex items-center text-md md:text-lg text-gray-700">
-            <CheckCircle2 className="h-6 w-6 text-green-500 mr-3 flex-shrink-0" />
-            <span>문법학습과 하브루타</span>
-          </li>
-        </ul>
+        <p className="text-md md:text-lg text-gray-600 mb-6 max-w-xl mx-auto">
+          놀이처럼 즐거운 학습, 탄탄한 기본기 형성! 데뷰 초등부는 아이들의 눈높이에 맞춘 재미있고 효과적인 프로그램을 제공합니다.
+        </p>
         <div>
-          <Link href="/learning-process" className="font-semibold text-[#13588f] hover:text-[#0f4a7b] text-lg">
-            데뷰 학습 경험 자세히 보기 &gt;
-          </Link>
+          <Button asChild size="lg" className="bg-[#13588f] hover:bg-[#0f4a7b] text-white">
+            <Link href="/learning-process#elementary">
+              초등부 학습 내용 자세히 보기 <ExternalLink className="ml-2 h-5 w-5" />
+            </Link>
+          </Button>
         </div>
       </section>
       {/* 학습경험 섹션 (초등부) 끝 */}
@@ -58,31 +33,18 @@ export default function HomePage() {
         <div className="flex justify-center mb-4">
           <BookOpenCheck className="h-16 w-16 text-blue-500" />
         </div>
-        <h2 className="text-3xl md:text-5xl font-bold text-[#13588f] mb-6">
+        <h2 className="text-3xl md:text-5xl font-bold text-[#13588f] mb-4">
           최고의 학습 경험 (중등부)
         </h2>
-        <ul className="space-y-3 text-left inline-block mb-8">
-          <li className="flex items-center text-md md:text-lg text-gray-700">
-            <CheckCircle2 className="h-6 w-6 text-green-500 mr-3 flex-shrink-0" />
-            <span>수능 대비 어휘 학습</span>
-          </li>
-          <li className="flex items-center text-md md:text-lg text-gray-700">
-            <CheckCircle2 className="h-6 w-6 text-green-500 mr-3 flex-shrink-0" />
-            <span>배경지식 학습</span>
-          </li>
-          <li className="flex items-center text-md md:text-lg text-gray-700">
-            <CheckCircle2 className="h-6 w-6 text-green-500 mr-3 flex-shrink-0" />
-            <span>수행평가 대비</span>
-          </li>
-          <li className="flex items-center text-md md:text-lg text-gray-700">
-            <CheckCircle2 className="h-6 w-6 text-green-500 mr-3 flex-shrink-0" />
-            <span>천일문 학습 등</span>
-          </li>
-        </ul>
+        <p className="text-md md:text-lg text-gray-600 mb-6 max-w-xl mx-auto">
+          목표 달성을 위한 체계적인 관리, 심화 학습으로 실력 완성! 데뷰 중등부는 내신부터 수능까지 빈틈없이 준비합니다.
+        </p>
         <div>
-          <Link href="/learning-process" className="font-semibold text-[#13588f] hover:text-[#0f4a7b] text-lg">
-            데뷰 학습 경험 자세히 보기 &gt;
-          </Link>
+          <Button asChild size="lg" className="bg-[#13588f] hover:bg-[#0f4a7b] text-white">
+            <Link href="/learning-process#middle">
+              중등부 학습 내용 자세히 보기 <ExternalLink className="ml-2 h-5 w-5" />
+            </Link>
+          </Button>
         </div>
       </section>
       {/* 학습경험 섹션 (중등부) 끝 */}

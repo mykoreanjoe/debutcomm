@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import { Lightbulb, Zap, Rocket, BookOpen, Target } from 'lucide-react';
+import { Lightbulb, Zap, Rocket, BookOpen, Target, CheckCircle2 } from 'lucide-react';
 // import ReviewCycleDisplay from "./review-cycle-display"; // 존재하지 않는 컴포넌트 import 주석 처리
 import Head from 'next/head';
 
@@ -60,6 +60,23 @@ const learningStages = [
     borderColor: "border-indigo-500",
     hoverBgColor: "hover:bg-indigo-200",
   },
+];
+
+const elementaryLearningItems = [
+  "매월 스피킹 발표",
+  "학습 리워드",
+  "영상 포트폴리오",
+  "온라인 AI 학습 레포트",
+  "데뷰카드",
+  "참여형 클래스",
+  "문법학습과 하브루타",
+];
+
+const middleSchoolLearningItems = [
+  "수능 대비 어휘 학습",
+  "배경지식 학습",
+  "수행평가 대비",
+  "천일문 학습 등",
 ];
 
 /* // 사용되지 않는 변수 주석 처리
@@ -127,16 +144,16 @@ export default function LearningProcessPage() {
     <>
       <Head>
         <title>학습 과정 | 데뷰</title>
-        <meta name="description" content="데뷰의 체계적인 학습 과정을 안내합니다." />
+        <meta name="description" content="데뷰의 체계적인 학습 과정과 초등부, 중등부 프로그램을 안내합니다." />
       </Head>
 
       <main className="container mx-auto px-4 py-8 md:py-16">
         <section className="text-center mb-12 md:mb-16">
           <h1 className="text-4xl md:text-5xl font-bold text-gray-800 mb-4">
-            데뷰 학습 과정
+            데뷰 학습 과정 및 프로그램
           </h1>
-          <p className="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto">
-            개념 이해부터 심화 학습까지, 데뷰는 학생들의 성공적인 학습 여정을 지원합니다.
+          <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">
+            개념 이해부터 심화 학습, 초등부와 중등부를 위한 맞춤형 프로그램까지, 데뷰는 학생들의 성공적인 학습 여정을 지원합니다.
           </p>
         </section>
 
@@ -155,6 +172,36 @@ export default function LearningProcessPage() {
               </p>
             </div>
           ))}
+        </section>
+
+        <section id="elementary" className="mb-16 md:mb-20 p-6 md:p-8 rounded-xl shadow-xl bg-sky-50 border border-sky-200">
+          <h2 className="text-3xl md:text-4xl font-bold text-sky-700 mb-3 text-center">초등부 집중 프로그램</h2>
+          <p className="text-center text-gray-600 mb-8 max-w-2xl mx-auto">
+            흥미와 실력을 동시에! 데뷰 초등부는 창의적이고 활동적인 학습 환경을 통해 영어의 기초를 단단히 다지고, 자신감을 키워줍니다.
+          </p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+            {elementaryLearningItems.map((item, index) => (
+              <div key={index} className="bg-white p-5 rounded-lg shadow-md hover:shadow-lg transition-shadow flex items-start">
+                <CheckCircle2 className="h-6 w-6 text-sky-500 mr-3 mt-1 flex-shrink-0" />
+                <span className="text-gray-700 text-md">{item}</span>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section id="middle" className="mb-16 md:mb-20 p-6 md:p-8 rounded-xl shadow-xl bg-indigo-50 border border-indigo-200">
+          <h2 className="text-3xl md:text-4xl font-bold text-indigo-700 mb-3 text-center">중등부 심화 프로그램</h2>
+          <p className="text-center text-gray-600 mb-8 max-w-2xl mx-auto">
+            내신부터 수능까지, 흔들림 없는 실력! 데뷰 중등부는 체계적인 학습 관리와 심도 있는 프로그램으로 학업 성취도를 극대화합니다.
+          </p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+            {middleSchoolLearningItems.map((item, index) => (
+              <div key={index} className="bg-white p-5 rounded-lg shadow-md hover:shadow-lg transition-shadow flex items-start">
+                <CheckCircle2 className="h-6 w-6 text-indigo-500 mr-3 mt-1 flex-shrink-0" />
+                <span className="text-gray-700 text-md">{item}</span>
+              </div>
+            ))}
+          </div>
         </section>
 
         <section className="text-center mb-12 md:mb-16">
