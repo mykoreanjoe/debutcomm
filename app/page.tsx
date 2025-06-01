@@ -2,52 +2,13 @@ import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from "@/components/ui/button";
-import { Star, CheckCircle2, BookOpenCheck, ExternalLink } from "lucide-react";
+import { ExternalLink } from "lucide-react";
 
 export default function HomePage() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-center p-6 md:p-24 text-center">
-      {/* 학습경험 섹션 (초등부) 시작 */}
-      <section className="mb-16 w-full max-w-2xl text-center">
-        <div className="flex justify-center mb-4">
-          <Star className="h-16 w-16 text-yellow-400 fill-yellow-400" />
-        </div>
-        <h2 className="text-3xl md:text-5xl font-bold text-[#13588f] mb-4">
-          최고의 학습 경험 (초등부)
-        </h2>
-        <p className="text-md md:text-lg text-gray-600 mb-6 max-w-xl mx-auto">
-          놀이처럼 즐거운 학습, 탄탄한 기본기 형성! 데뷰 초등부는 아이들의 눈높이에 맞춘 재미있고 효과적인 프로그램을 제공합니다.
-        </p>
-        <div>
-          <Button asChild size="lg" className="bg-[#13588f] hover:bg-[#0f4a7b] text-white">
-            <Link href="/learning-process#elementary">
-              초등부 학습 내용 자세히 보기 <ExternalLink className="ml-2 h-5 w-5" />
-            </Link>
-          </Button>
-        </div>
-      </section>
-      {/* 학습경험 섹션 (초등부) 끝 */}
-
-      {/* 학습경험 섹션 (중등부) 시작 */}
-      <section className="mb-16 w-full max-w-2xl text-center">
-        <div className="flex justify-center mb-4">
-          <BookOpenCheck className="h-16 w-16 text-blue-500" />
-        </div>
-        <h2 className="text-3xl md:text-5xl font-bold text-[#13588f] mb-4">
-          최고의 학습 경험 (중등부)
-        </h2>
-        <p className="text-md md:text-lg text-gray-600 mb-6 max-w-xl mx-auto">
-          목표 달성을 위한 체계적인 관리, 심화 학습으로 실력 완성! 데뷰 중등부는 내신부터 수능까지 빈틈없이 준비합니다.
-        </p>
-        <div>
-          <Button asChild size="lg" className="bg-[#13588f] hover:bg-[#0f4a7b] text-white">
-            <Link href="/learning-process#middle">
-              중등부 학습 내용 자세히 보기 <ExternalLink className="ml-2 h-5 w-5" />
-            </Link>
-          </Button>
-        </div>
-      </section>
-      {/* 학습경험 섹션 (중등부) 끝 */}
+      {/* 학습경험 섹션 (초등부) 삭제 */}
+      {/* 학습경험 섹션 (중등부) 삭제 */}
 
       <Link href="/">
         <Image 
