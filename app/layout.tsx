@@ -4,11 +4,11 @@ import "./globals.css";
 import Header from "@/components/Header";
 import {
   ClerkProvider,
-  SignInButton,
-  SignUpButton,
-  SignedIn,
-  SignedOut,
-  UserButton,
+  // SignInButton,
+  // SignUpButton,
+  // SignedIn,
+  // SignedOut,
+  // UserButton,
 } from "@clerk/nextjs";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -27,7 +27,7 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="ko">
         <body className={inter.className}>
-          <header className="bg-white shadow-md sticky top-0 z-50">
+          {/* <header className="bg-white shadow-md sticky top-0 z-50">
             <nav className="container mx-auto px-6 py-3 flex justify-between items-center">
               <div className="flex items-center space-x-4">
                 <SignedOut>
@@ -39,7 +39,7 @@ export default function RootLayout({
                 </SignedIn>
               </div>
             </nav>
-          </header>
+          </header> */}
           <Header />
           <main>{children}</main>
         </body>
