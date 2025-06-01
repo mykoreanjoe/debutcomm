@@ -1,6 +1,24 @@
 import React from 'react';
 import { Medal, BookOpen, MessageCircle, Sparkles, BookText, Target, Trophy } from 'lucide-react'; // Star, UserCircle, CheckCircle2, MessageSquareText 아이콘 삭제
 import Image from 'next/image';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: '데뷰인 | 데뷰 영어 학원',
+  description: '데뷰 영어 학원의 자랑스러운 데뷰인들을 소개합니다. 아카데믹 챔피언, 스스로학습 챔피언 등 다양한 성과를 확인하세요.',
+  openGraph: {
+    title: '데뷰인 | 데뷰 영어 학원',
+    description: '데뷰 영어 학원의 자랑스러운 데뷰인들을 소개합니다.',
+    images: [
+      {
+        url: "/images/og-debutian.png", // 데뷰인 페이지 전용 OG 이미지 (가정)
+        width: 1200,
+        height: 630,
+        alt: "데뷰인 페이지 OG 이미지",
+      },
+    ],
+  },
+};
 
 const DebutianPage = () => {
   // 각 항목을 위한 데이터 구조 (추후 이미지 경로 등 추가 가능)

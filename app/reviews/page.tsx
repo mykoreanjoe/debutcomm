@@ -2,6 +2,24 @@ import React from 'react';
 // import { UserCircle } from 'lucide-react'; // 사용되지 않으므로 주석 처리 또는 삭제
 // import Image from 'next/image'; // 사용되지 않으므로 주석 처리 또는 삭제
 import { Star, CheckCircle2, MessageSquareText } from 'lucide-react';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: '데뷰 후기 | 데뷰 영어 학원',
+  description: '데뷰 영어 학원 학생 및 학부모님들의 생생한 후기를 확인하세요. 만족도 높은 데뷰의 교육 서비스를 경험해보세요.',
+  openGraph: {
+    title: '데뷰 후기 | 데뷰 영어 학원',
+    description: '데뷰 영어 학원 학생 및 학부모님들의 생생한 후기를 확인하세요.',
+    images: [
+      {
+        url: "/images/og-reviews.png", // 데뷰 후기 페이지 전용 OG 이미지 (가정)
+        width: 1200,
+        height: 630,
+        alt: "데뷰 후기 페이지 OG 이미지",
+      },
+    ],
+  },
+};
 
 const sampleReviews = [
   {
