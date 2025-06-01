@@ -1,0 +1,72 @@
+import React from 'react';
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table"; // ShadCN Table 컴포넌트 import 경로 수정
+
+const roadmapData = [
+  { level: 'DK, DK*', nationalLevel: '초3', usLevel: 'PK', achievementTarget: '파닉스 마스터', vocabulary: '400+', curriculum: '미국 교과과정 (각 레벨 별 사고 과정 진행)', literature: '파닉스', nonLiterature: '', hebrewLiterature: '하브루타 문법 및 해설', project: '전 레벨에 걸친 어학 기본기의 강화 연계 프로젝트' },
+  { level: 'D1, D1*', nationalLevel: '초4~5', usLevel: 'G1', achievementTarget: '토셀 Starter 3~2급', vocabulary: '640+', curriculum: '', literature: '다양한 문학 시리즈 (ORT, Biscuit, Little Critter 등)', nonLiterature: '', hebrewLiterature: '', project: '' },
+  { level: 'D2, D2*', nationalLevel: '초5~6', usLevel: 'G2', achievementTarget: '토셀 Basic 3~2급', vocabulary: '800+', curriculum: '', literature: '', nonLiterature: 'Oxford Read and Discover 외 다양한 분야의 컨텐츠 (역사, 문화, 과학, 지리)', hebrewLiterature: '', project: '' },
+  { level: 'D3, D3*', nationalLevel: '초6~중1', usLevel: 'G3', achievementTarget: '토셀 Basic 2~1급', vocabulary: '800+', curriculum: '', literature: '', nonLiterature: '', hebrewLiterature: '', project: '' },
+  { level: 'D4, D4*', nationalLevel: '중1 ~ 중2', usLevel: 'G4', achievementTarget: '토셀 Junior 4~3급', vocabulary: '800+', curriculum: '', literature: '', nonLiterature: '', hebrewLiterature: '', project: '' },
+  { level: 'D5, D5*', nationalLevel: '중2 ~ 중3', usLevel: 'G5', achievementTarget: '토셀 Junior 3~2급', vocabulary: '800+', curriculum: '', literature: '', nonLiterature: '', hebrewLiterature: '', project: '' },
+  { level: 'D6, D6*', nationalLevel: '중3 ~ 고1', usLevel: 'G6', achievementTarget: '토셀 Junior 2~1급', vocabulary: '800+', curriculum: '', literature: '', nonLiterature: '', hebrewLiterature: '', project: '' },
+  { level: 'D7, D7*', nationalLevel: '고1 ~ 고2', usLevel: 'G6+', achievementTarget: '토셀 High Junior 3~2급', vocabulary: '1,000+', curriculum: '', literature: '', nonLiterature: '', hebrewLiterature: '', project: '' },
+  { level: 'D ELITE', nationalLevel: '고2 심화', usLevel: 'G7+', achievementTarget: '토플 Junior 수능 모의고사 3등급 이상', vocabulary: '1,000+', curriculum: '반복표에 따른 개별화', literature: '', nonLiterature: '', hebrewLiterature: '', project: '' },
+  { level: 'D CREATOR', nationalLevel: '수준 이상', usLevel: 'G7+', achievementTarget: '토플 Junior 수능 모의고사 3등급 이상', vocabulary: '1,000+', curriculum: '', literature: '', nonLiterature: '', hebrewLiterature: '', project: '' },
+];
+
+
+const ElementaryRoadmapTable = () => {
+  return (
+    <div className="overflow-x-auto bg-white p-4 rounded-lg shadow-lg mb-10">
+      <h3 className="text-2xl font-semibold text-amber-600 mb-6 text-center">
+        초등부 로드맵
+      </h3>
+      <Table>
+        <TableCaption className="mt-4">초등부 학습 과정 로드맵입니다. 각 레벨별 목표와 내용을 확인하세요.</TableCaption>
+        <TableHeader>
+          <TableRow>
+            <TableHead className="w-[100px] text-center bg-amber-100">레벨</TableHead>
+            <TableHead className="text-center bg-amber-100">국내수준</TableHead>
+            <TableHead className="text-center bg-amber-100">미국수준</TableHead>
+            <TableHead className="text-center bg-amber-100">성취 목표</TableHead>
+            <TableHead className="text-center bg-amber-100">어휘</TableHead>
+            <TableHead className="text-center bg-amber-100">교과</TableHead>
+            <TableHead className="text-center bg-amber-100">문학</TableHead>
+            <TableHead className="text-center bg-amber-100">비문학</TableHead>
+            <TableHead className="text-center bg-amber-100">하브루타 문법</TableHead>
+            <TableHead className="text-center bg-amber-100">프로젝트</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {roadmapData.map((row, index) => (
+            <TableRow key={index} className={index % 2 === 0 ? 'bg-amber-50' : ''}>
+              <TableCell className="font-medium text-center">{row.level}</TableCell>
+              <TableCell className="text-center">{row.nationalLevel}</TableCell>
+              <TableCell className="text-center">{row.usLevel}</TableCell>
+              <TableCell>{row.achievementTarget}</TableCell>
+              <TableCell className="text-center">{row.vocabulary}</TableCell>
+              <TableCell>{index === 0 ? row.curriculum : (row.curriculum || '')}</TableCell>
+              <TableCell>{index <= 1 ? row.literature : (row.literature || '')}</TableCell>
+              <TableCell>{index === 2 ? row.nonLiterature : (row.nonLiterature || '')}</TableCell>
+              <TableCell>{index === 0 ? row.hebrewLiterature : (row.hebrewLiterature || '')}</TableCell>
+              <TableCell>{index === 0 ? row.project : (row.project || '')}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+      <p className="text-sm text-gray-500 mt-4 text-center">
+        위 로드맵은 학습 방향을 안내하며, 학생의 레벨과 상황에 따라 맞춤 조절될 수 있습니다.
+      </p>
+    </div>
+  );
+};
+
+export default ElementaryRoadmapTable; 
