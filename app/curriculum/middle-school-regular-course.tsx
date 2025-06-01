@@ -50,7 +50,7 @@ interface MiddleSchoolCourseData {
     columns: string[];
     rows: ComparisonTableRow[];
   };
-  timeTable: TimeTableData; // 타입 수정
+  timeTable?: TimeTableData; // 타입 수정 -> timeTable?: TimeTableData;
 }
 
 const MiddleSchoolRegularCourse: React.FC<MiddleSchoolCourseData> = ({
@@ -108,22 +108,22 @@ const MiddleSchoolRegularCourse: React.FC<MiddleSchoolCourseData> = ({
 
         <div className="bg-white p-6 rounded-lg shadow-md">
           <h3 className="text-2xl font-semibold text-gray-700 mb-8 text-center flex items-center justify-center">
-            <Clock className="w-8 h-8 mr-3 text-gray-600" /> {timeTable.title}
+            <Clock className="w-8 h-8 mr-3 text-gray-600" /> {timeTable?.title}
           </h3>
 
           <div className="mb-8">
-            <h4 className="text-xl font-medium text-gray-700 mb-4">{timeTable.monFriClass.title}</h4>
+            <h4 className="text-xl font-medium text-gray-700 mb-4">{timeTable?.monFriClass.title}</h4>
             <div className="overflow-x-auto">
               <Table className="min-w-full border">
                 <TableHeader className="bg-gray-50">
                   <TableRow>
-                    {timeTable.monFriClass.columns.map((col, index) => (
+                    {timeTable?.monFriClass.columns.map((col, index) => (
                       <TableHead key={index} className="py-3 px-4 font-semibold text-gray-600 text-xs uppercase tracking-wider ${index === 0 ? 'w-1/3' : (index === 1 ? 'w-1/2' : 'w-1/6')}">{col}</TableHead>
                     ))}
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {timeTable.monFriClass.rows.map((row, rowIndex) => (
+                  {timeTable?.monFriClass.rows.map((row, rowIndex) => (
                     <TableRow key={rowIndex} className={rowIndex % 2 === 0 ? 'bg-white' : 'bg-gray-50/50'}>
                       <TableCell className="py-3 px-4 text-sm text-gray-700 border-r">{row.level}</TableCell>
                       <TableCell className="py-3 px-4 text-sm text-gray-700 border-r whitespace-pre-line">{row.time}</TableCell>
@@ -136,18 +136,18 @@ const MiddleSchoolRegularCourse: React.FC<MiddleSchoolCourseData> = ({
           </div>
 
           <div className="mb-8">
-            <h4 className="text-xl font-medium text-gray-700 mb-4">{timeTable.tueThuClass.title}</h4>
+            <h4 className="text-xl font-medium text-gray-700 mb-4">{timeTable?.tueThuClass.title}</h4>
             <div className="overflow-x-auto">
               <Table className="min-w-full border">
                 <TableHeader className="bg-gray-50">
                   <TableRow>
-                    {timeTable.tueThuClass.columns.map((col, index) => (
+                    {timeTable?.tueThuClass.columns.map((col, index) => (
                       <TableHead key={index} className="py-3 px-4 font-semibold text-gray-600 text-xs uppercase tracking-wider ${index === 0 ? 'w-1/3' : (index === 1 ? 'w-1/2' : 'w-1/6')}">{col}</TableHead>
                     ))}
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {timeTable.tueThuClass.rows.map((row, rowIndex) => (
+                  {timeTable?.tueThuClass.rows.map((row, rowIndex) => (
                     <TableRow key={rowIndex} className={rowIndex % 2 === 0 ? 'bg-white' : 'bg-gray-50/50'}>
                       <TableCell className="py-3 px-4 text-sm text-gray-700 border-r">{row.level}</TableCell>
                       <TableCell className="py-3 px-4 text-sm text-gray-700 border-r whitespace-pre-line">{row.time}</TableCell>
@@ -164,7 +164,7 @@ const MiddleSchoolRegularCourse: React.FC<MiddleSchoolCourseData> = ({
               <ListChecks className="w-6 h-6 mr-2 text-blue-600" /> 추가 안내
             </h4>
             <ul className="list-none space-y-2 pl-1 text-sm text-gray-600">
-              {timeTable.additionalInfo.map((info, index) => (
+              {timeTable?.additionalInfo.map((info, index) => (
                 <li key={index} className="flex items-start">
                   <CheckCircle className="w-4 h-4 mr-2 mt-1 text-green-500 flex-shrink-0" /> 
                   <span>{info}</span>
@@ -173,7 +173,7 @@ const MiddleSchoolRegularCourse: React.FC<MiddleSchoolCourseData> = ({
             </ul>
           </div>
 
-          {timeTable.wednesdayClinic && (
+          {timeTable?.wednesdayClinic && (
             <div className="pt-6 border-t border-gray-200">
               <h4 className="text-xl font-medium text-gray-700 mb-4 flex items-center">
                 <CalendarPlus className="w-7 h-7 mr-2 text-teal-600" /> {timeTable.wednesdayClinic.title}

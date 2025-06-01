@@ -18,7 +18,7 @@ const Footer = () => {
         
         <div>
           <h3 className="text-xl font-semibold text-white mb-4">데뷰 영어학원</h3>
-          <p className="text-sm">같이 완성, Let's Do It!</p>
+          <p className="text-sm">같이 완성, Let&apos;s Do It!</p>
           <p className="text-sm mt-2">목동, 양천구, 신정동 대표 영어학원</p>
         </div>
 

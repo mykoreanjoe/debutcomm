@@ -25,7 +25,7 @@ interface IntensiveCourseInfoProps {
   title: string;
   targetAudience: string;
   mainSubjects: string[];
-  schedule: ScheduleItem[]; // 타입 변경
+  schedule?: ScheduleItem[]; // 타입 변경 -> schedule?: ScheduleItem[];
   tuition: string;
   textbookInfo: string;
   debutDay: string;
@@ -132,7 +132,7 @@ const ElementaryIntensiveCourse: React.FC<IntensiveCourseInfoProps> = ({
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {schedule.map((item, index) => (
+                {schedule?.map((item, index) => (
                   <TableRow key={index} className={index % 2 === 0 ? 'bg-white' : 'bg-purple-50/50'}>
                     <TableCell className="py-2 px-3">{item.type}</TableCell>
                     <TableCell className="py-2 px-3">{item.time}</TableCell>

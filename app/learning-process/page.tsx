@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import { Lightbulb, Zap, Rocket, BookOpen, Target, CheckCircle2, ExternalLink } from 'lucide-react';
+import { Lightbulb, Zap, Rocket, BookOpen, Target, ExternalLink } from 'lucide-react';
 // import ReviewCycleDisplay from "./review-cycle-display"; // 존재하지 않는 컴포넌트 import 주석 처리
 import Head from 'next/head';
 
@@ -39,7 +39,7 @@ const learningStages = [
           </ul>
         </div>
         <div className="mt-2 pt-2 border-t border-amber-300">
-          <p className="text-xs font-semibold mb-1">"같이 완성"의 핵심인 몰입을 설명합니다.</p>
+          <p className="text-xs font-semibold mb-1">&quot;같이 완성&quot;의 핵심인 몰입을 설명합니다.</p>
           <p className="text-xs mb-1 font-medium">분기 구조:</p>
           <ul className="space-y-1 pl-2">
             <li><Link href="/debut-class#elementary" className="hover:underline text-amber-800 flex items-center text-xs">초등 정규 과정 <ExternalLink size={12} className="ml-1" /></Link></li>

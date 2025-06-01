@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import { MessageSquare, BookOpen, Rocket, GraduationCap, Target, LucideIcon, CheckCircle2 } from 'lucide-react';
+import { MessageSquare, BookOpen, Rocket, GraduationCap, Target, LucideIcon, CheckCircle2, ArrowUpCircle } from 'lucide-react';
 import ElementaryRoadmapTable from './elementary-roadmap-table';
 import ElementaryLevelChart from './elementary-level-chart';
 import ElementaryRegularCourse from './elementary-regular-course';
@@ -111,9 +111,27 @@ const CurriculumCard: React.FC<CurriculumCardProps> = ({
   return cardContent;
 };
 
+const ScrollToTopButton = () => {
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  };
+
+  return (
+    <div className="text-center mt-8 mb-4">
+      <Button onClick={scrollToTop} variant="outline" size="sm" className="text-gray-600 hover:text-gray-800 border-gray-300 hover:border-gray-400">
+        <ArrowUpCircle size={18} className="mr-2" />
+        맨 위로 가기
+      </Button>
+    </div>
+  );
+};
+
 const elementaryCourseData = {
-  title: '4.1 D 초등 정규 과정',
-  targetAudience: '초등 1~5학년',
+  title: '초등 정규 과정',
+  targetAudience: '대상: 초등 1~5학년',
   classOverview: {
     items: [
       { label: "수업", description: "단어시험/과제검사 → Lecture → Activity" },
@@ -122,30 +140,6 @@ const elementaryCourseData = {
       { label: "온라인", description: "AI 학습 플랫폼 사용" },
       { label: "스터디매니저", description: "학생 개별 미션 케어" },
       { label: "완성학습", description: "스터디 매니저와 수업 전 or 후로 선택하여 30분 or 1시간 진행" },
-    ],
-  },
-  monWedFriClass: {
-    title: "월수금 클래스",
-    columns: ["시간", "레벨"],
-    rows: [
-      { level: "DK ~ D4", time: "2:30 ~ 4:05", teacher: "" },
-      { level: "D3 ~ D6", time: "4:10 ~ 5:45", teacher: "" },
-      { level: "초등 인텐시브 코스", time: "6:00 ~ 7:35", teacher: "" },
-    ],
-    recommendation: "추천대상: 주3회 수업으로 학습 노출을 여러번 해야 하는 학생에게 적합",
-  },
-  tueThuClass: {
-    title: "화목 클래스",
-    columns: ["시간", "레벨"],
-    rows: [
-      { level: "D3 ~ D7", time: "화목 3:00 ~ 5:25", teacher: "" },
-      { level: "초등 인텐시브", time: "화목 600 ~ 8:30", teacher: "" },
-    ],
-    recommendation: "추천대상: 주2회 수업으로 학습 노출을 여러번 해야 하는 학생에게 적합",
-    completionStudyPoints: [
-      "학생생의 특성에 따라 학원 스케줄은 앞 또는 뒤에 고정하여 루틴 진행",
-      "시간: 30분 or 1시간 진행",
-      "완성도에 따라 좀더 빨리 끝날수 있습니다"
     ],
   },
   debutDay: '데뷰 데이: 월 1회 토요일 (이벤트 행사로 진행)',
@@ -191,10 +185,6 @@ const elementaryIntensiveCourseData = {
   description: '초등 고학년 (5~6학년) 시기는 중학교 영어 학습을 대비하는 데 매우 중요한 시기입니다. 이 단계에서 영어의 기초가 제대로 다져지지 않으면 중학교에서 겪을 어려움이 커질 수 있습니다.',
   targetAudience: '초5~6',
   mainSubjects: ['리딩 & 스피킹', '문법 & 하브루타'],
-  schedule: [
-    { type: "월수금 주3회", time: "6:00 ~ 7:35", duration: "(95분)" },
-    { type: "화목 주2회", time: "6:00 ~ 8:25", duration: "(285분)" },
-  ],
   tuition: '수강료: 월 32만원 + 온라인비 1만원 > 총 33만원',
   textbookInfo: '교재: 자체/외부 교재 구성',
   debutDay: '데뷰 데이: 월 1회 토요일 (이벤트 행사로 진행)',
@@ -270,38 +260,6 @@ const middleSchoolCourseData = {
       },
     ],
   },
-  timeTable: {
-    title: "시간표",
-    monFriClass: {
-      title: "월금 클래스",
-      columns: ["레벨", "시간", "담당T"],
-      rows: [
-        { level: "중등 Master", time: "5:00 ~ 8:00 (수업후 30분 완성학습 의무)", teacher: "원장 직강" },
-        { level: "고등 Inter", time: "7:00 ~ 10:00 (수업전 30분 완성학습 의무)", teacher: "원장 직강" },
-      ],
-    },
-    tueThuClass: {
-      title: "화목 클래스",
-      columns: ["레벨", "시간", "담당T"],
-      rows: [
-        { level: "중등 Master", time: "5:00 - 8:00 (수업후 30분 완성학습 의무)", teacher: "원장 직강" },
-        { level: "고등 Master", time: "7:00 ~ 10:00 (수업전 30분 완성학습 의무)", teacher: "원장 직강" },
-      ],
-    },
-    additionalInfo: [
-      "수업 프로세스: 어휘시험 → Lecture → 1:1 검사 발표 → 밴드 과제",
-      "완성학습: 스터디 매니저와 수업 전 or 후로 선택하여 30분 or 1시간 진행",
-      "수요 클리닉: 실력 부족의 학생들은 수요일 의무 참석 (시간은 학생에 따라 다름)",
-    ],
-    wednesdayClinic: {
-      title: "수요 클리닉",
-      columns: ["레벨", "시간", "담당T"],
-      rows: [
-        { level: "무레벨제", time: "5:00 ~ 10:00", teacher: "원장 직강" },
-      ],
-      recommendation: "추천 대상: 주2회 수업으로 학습 노출을 여러번 해야 하는 학생에게 적합/부족한 학생들은 수요일 or 다른 요일에 필수 참여",
-    },
-  },
 };
 
 const elementaryLearningItems = [
@@ -323,8 +281,8 @@ const middleSchoolLearningItems = [
 
 export default function CurriculumPage() {
   return (
-    <main className="container mx-auto px-4 py-8 md:px-6 md:py-12">
-      <section className="text-center mb-12 md:mb-16">
+    <main className="container mx-auto px-4 py-12 md:py-16">
+      <section className="text-center mb-12 md:mb-20">
         <h1 className="text-4xl md:text-5xl font-bold text-gray-800 mb-6">
           데뷰 영어 커리큘럼
         </h1>
@@ -333,108 +291,92 @@ export default function CurriculumPage() {
         </p>
       </section>
 
-      <section className="mb-16">
-        <h2 className="text-3xl font-bold text-center text-gray-700 mb-10">과정 안내</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
-          {curriculumData.map((curriculum) => (
-            <CurriculumCard
-              key={curriculum.title}
-              {...curriculum}
-            />
-          ))}
-        </div>
+      <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 mb-16 md:mb-20">
+        {curriculumData.map((item) => (
+          <CurriculumCard key={item.title} {...item} />
+        ))}
       </section>
+      <ScrollToTopButton />
 
-      <section id="elementary-common-info" className="mb-16 space-y-12">
-        <h2 className="text-2xl md:text-3xl font-bold text-center text-gray-800 mb-8 pt-8 border-t border-gray-200">
-          초등부 공통 안내
-        </h2>
-        <div>
-          <ElementaryRoadmapTable />
-        </div>
-        <div>
-          <ElementaryLevelChart />
-        </div>
-      </section>
+      <ElementaryRoadmapTable />
+      <ScrollToTopButton />
 
-      <section id="elementary-regular-details" className="mb-16">
+      <ElementaryLevelChart />
+      <ScrollToTopButton />
+
+      <section id="elementary-regular-details" className="pt-16 -mt-16">
         <ElementaryRegularCourse {...elementaryCourseData} />
+        <ScrollToTopButton />
       </section>
-      
-      <section id="elementary-intensive-details" className="mb-16">
+
+      <section id="elementary-intensive-details" className="pt-16 -mt-16">
         <ElementaryIntensiveCourse {...elementaryIntensiveCourseData} />
+        <ScrollToTopButton />
       </section>
-      
-      <section id="middleschool-common-info" className="my-16 space-y-12">
-        <h2 className="text-2xl md:text-3xl font-bold text-center text-gray-800 mb-8 pt-8 border-t border-gray-200">
-          중등부 공통 안내
+
+      <section className="my-16 md:my-20">
+        <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-8">
+          중등부 커리큘럼 개요
         </h2>
-        <div>
-          <MiddleSchoolLevelChart />
-        </div>
-        <div>
-          <MiddleSchoolCourseDetailsTable />
-        </div>
-      </section>
-
-      <section id="middle-regular-details" className="mb-16">
         <MiddleSchoolRegularCourse {...middleSchoolCourseData} />
+        <ScrollToTopButton />
       </section>
 
-      <section id="middle-school-record-details" className="my-16">
-         <SchoolRecordProcess />
+      <MiddleSchoolLevelChart />
+      <ScrollToTopButton />
+
+      <MiddleSchoolCourseDetailsTable />
+      <ScrollToTopButton />
+      
+      <section id="middle-school-record-details" className="pt-16 -mt-16">
+        <SchoolRecordProcess />
+        <ScrollToTopButton />
       </section>
 
-      <section id="review-process" className="mb-16">
-        <ReviewCycleDisplay />
-      </section>
+      <ReviewCycleDisplay />
+      <ScrollToTopButton />
 
-      <section id="triple-care" className="mb-16">
-        <TripleCareSystem />
-      </section>
+      <TripleCareSystem />
+      <ScrollToTopButton />
 
-      <section id="study-book-info" className="mb-16">
-        <StudyBook />
-      </section>
+      <StudyBook />
+      <ScrollToTopButton />
 
       <section id="elementary-program" className="my-16 md:my-20 p-6 md:p-8 rounded-xl shadow-xl bg-sky-50 border border-sky-200">
-        <h2 className="text-3xl md:text-4xl font-bold text-sky-700 mb-3 text-center">초등부 집중 프로그램</h2>
-        <p className="text-center text-gray-600 mb-8 max-w-2xl mx-auto">
-          흥미와 실력을 동시에! 데뷰 초등부는 창의적이고 활동적인 학습 환경을 통해 영어의 기초를 단단히 다지고, 자신감을 키워줍니다.
-        </p>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+        <div className="text-center mb-8">
+          <h2 className="text-3xl md:text-4xl font-bold text-sky-700 mb-3">초등부 집중 프로그램</h2>
+          <p className="text-gray-600 max-w-2xl mx-auto">
+            흥미와 실력을 동시에! 데뷰 초등부는 창의적이고 활동적인 학습 환경을 통해 영어의 기초를 단단히 다지고, 자신감을 키워줍니다.
+          </p>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-4">
           {elementaryLearningItems.map((item, index) => (
-            <div key={index} className="bg-white p-5 rounded-lg shadow-md hover:shadow-lg transition-shadow flex items-start">
-              <CheckCircle2 className="h-6 w-6 text-sky-500 mr-3 mt-1 flex-shrink-0" />
-              <span className="text-gray-700 text-md">{item}</span>
+            <div key={index} className="bg-white p-4 rounded-lg shadow hover:shadow-md transition-shadow flex items-start">
+              <CheckCircle2 className="h-5 w-5 text-sky-500 mr-2.5 mt-0.5 flex-shrink-0" />
+              <span className="text-gray-700 text-sm">{item}</span>
             </div>
           ))}
         </div>
+        <ScrollToTopButton />
       </section>
 
-      <section id="middle-school-program" className="my-16 md:my-20 p-6 md:p-8 rounded-xl shadow-xl bg-indigo-50 border border-indigo-200">
-        <h2 className="text-3xl md:text-4xl font-bold text-indigo-700 mb-3 text-center">중등부 심화 프로그램</h2>
-        <p className="text-center text-gray-600 mb-8 max-w-2xl mx-auto">
-          내신부터 수능까지, 흔들림 없는 실력! 데뷰 중등부는 체계적인 학습 관리와 심도 있는 프로그램으로 학업 성취도를 극대화합니다.
-        </p>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+      <section id="middle-program" className="my-16 md:my-20 p-6 md:p-8 rounded-xl shadow-xl bg-indigo-50 border border-indigo-200">
+        <div className="text-center mb-8">
+          <h2 className="text-3xl md:text-4xl font-bold text-indigo-700 mb-3">중등부 심화 프로그램</h2>
+          <p className="text-gray-600 max-w-2xl mx-auto">
+            내신부터 수능까지, 흔들림 없는 실력! 데뷰 중등부는 체계적인 학습 관리와 심도 있는 프로그램으로 학업 성취도를 극대화합니다.
+          </p>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-4">
           {middleSchoolLearningItems.map((item, index) => (
-            <div key={index} className="bg-white p-5 rounded-lg shadow-md hover:shadow-lg transition-shadow flex items-start">
-              <CheckCircle2 className="h-6 w-6 text-indigo-500 mr-3 mt-1 flex-shrink-0" />
-              <span className="text-gray-700 text-md">{item}</span>
+            <div key={index} className="bg-white p-4 rounded-lg shadow hover:shadow-md transition-shadow flex items-start">
+              <CheckCircle2 className="h-5 w-5 text-indigo-500 mr-2.5 mt-0.5 flex-shrink-0" />
+              <span className="text-gray-700 text-sm">{item}</span>
             </div>
           ))}
         </div>
+        <ScrollToTopButton />
       </section>
-
-      <footer className="text-center mt-12">
-        <p className="text-gray-600">
-          💬 각 과정 하단에는 &quot;이 과정 상담받기&quot; 버튼이 제공될 예정이며, 카카오 상담톡으로 연동됩니다.
-        </p>
-        <p className="text-sm text-gray-500 mt-1">
-          (현재 &quot;초등 정규 과정&quot; 및 &quot;초등 인텐시브 과정&quot;에 예시 버튼이 적용되어 있습니다.)
-        </p>
-      </footer>
     </main>
   );
 } 
