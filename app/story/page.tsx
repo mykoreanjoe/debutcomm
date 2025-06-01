@@ -139,7 +139,7 @@ export default function StoryPage() {
           <div className="md:w-1/3 text-center flex-shrink-0">
             <div className="relative w-60 h-60 md:w-72 md:h-72 mx-auto shadow-lg rounded-lg overflow-hidden">
               <Image 
-                src="/images/joseph_choi_profile.jpg"
+                src="/images/joseph_choi.jpg"
                 alt="Joseph Choi 원장 프로필 사진"
                 layout="fill"
                 objectFit="cover"
