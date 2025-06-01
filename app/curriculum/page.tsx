@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import { MessageSquare, BookOpen, Rocket, GraduationCap, Target, LucideIcon, CheckCircle2, ArrowUpCircle } from 'lucide-react';
+import { MessageSquare, BookOpen, Rocket, GraduationCap, Target, LucideIcon, ArrowUpCircle } from 'lucide-react';
 import ElementaryRoadmapTable from './elementary-roadmap-table';
 import ElementaryLevelChart from './elementary-level-chart';
 import ElementaryRegularCourse from './elementary-regular-course';
@@ -11,7 +11,6 @@ import MiddleSchoolRegularCourse from './middle-school-regular-course';
 import MiddleSchoolLevelChart from './middle-school-level-chart';
 import MiddleSchoolCourseDetailsTable from './middle-school-course-details-table';
 import SchoolRecordProcess from './school-record-process';
-import ReviewCycleDisplay from './review-cycle-display';
 import TripleCareSystem from './triple-care-system';
 import ScrollToTopButton from '@/components/ScrollToTopButton';
 
@@ -111,24 +110,6 @@ const CurriculumCard: React.FC<CurriculumCardProps> = ({
   return cardContent;
 };
 
-const ScrollToTopButton = () => {
-  const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth'
-    });
-  };
-
-  return (
-    <div className="text-center mt-8 mb-4">
-      <Button onClick={scrollToTop} variant="outline" size="sm" className="text-gray-600 hover:text-gray-800 border-gray-300 hover:border-gray-400">
-        <ArrowUpCircle size={18} className="mr-2" />
-        맨 위로 가기
-      </Button>
-    </div>
-  );
-};
-
 const elementaryCourseData = {
   title: '초등 정규 과정',
   targetAudience: '대상: 초등 1~5학년',
@@ -160,6 +141,12 @@ const elementaryCourseData = {
       '컴프리헨시브 커리큘럼 기반 수업 진행',
       '주제별 리딩 스킬 + 연계 인클래스 액티비티 + 프로젝트 학습',
       '집중력이 낮은 학생들도 즐기며 실력 향상 가능',
+      '매월 스피킹 발표',
+      '학습 리워드',
+      '영상 포트폴리오',
+      '온라인 AI 학습 레포트',
+      '데뷰카드',
+      '참여형 클래스',
     ],
   },
   skillBasedLearning: {
@@ -170,6 +157,7 @@ const elementaryCourseData = {
       '사고력을 요구하는 문항 대비',
       '추론, 순서 배열, 목적 찾기 등',
       '수능 킬러 문항 유형 기반 구성',
+      '문법학습과 하브루타',
     ],
     exampleTopics: [
         '동의어·반의어 개념',
@@ -188,6 +176,13 @@ const elementaryIntensiveCourseData = {
   textbookInfo: '교재: 자체/외부 교재 구성',
   debutDay: '데뷰 데이: 월 1회 토요일 (이벤트 행사로 진행)',
   completionStudy: '완성학습: 학생마다 과제를 수행해야할시, 학원 스케줄은 앞 또는 뒤에 고정하여 루틴으로 진행합니다.',
+  additionalFeatures: [
+    '심화 문법 학습 및 적용 훈련',
+    '고학년 수준의 어휘 확장 및 활용',
+    '참여형 수업 및 토론 활동 강화',
+    '학습 리워드 시스템 적용',
+    '온라인 AI 학습 레포트를 통한 심층 분석',
+  ],
 };
 
 const middleSchoolCourseData = {
@@ -259,24 +254,14 @@ const middleSchoolCourseData = {
       },
     ],
   },
+  learningFocusPoints: [
+    "수능 대비 어휘 학습 (고교 수준 선행)",
+    "다양한 주제의 배경지식 학습 (독해력 향상)",
+    "학교별 수행평가 완벽 대비 (쓰기, 말하기 중심)",
+    "체계적인 문법 학습 (천일문 등 활용)",
+    "정기적인 모의고사를 통한 실전 감각 배양",
+  ]
 };
-
-const elementaryLearningItems = [
-  "매월 스피킹 발표",
-  "학습 리워드",
-  "영상 포트폴리오",
-  "온라인 AI 학습 레포트",
-  "데뷰카드",
-  "참여형 클래스",
-  "문법학습과 하브루타",
-];
-
-const middleSchoolLearningItems = [
-  "수능 대비 어휘 학습",
-  "배경지식 학습",
-  "수행평가 대비",
-  "천일문 학습 등",
-];
 
 export default function CurriculumPage() {
   return (
@@ -332,47 +317,8 @@ export default function CurriculumPage() {
         <ScrollToTopButton />
       </section>
 
-      <ReviewCycleDisplay />
-      <ScrollToTopButton />
-
       <TripleCareSystem />
       <ScrollToTopButton />
-
-      <section id="elementary-program" className="my-16 md:my-20 p-6 md:p-8 rounded-xl shadow-xl bg-sky-50 border border-sky-200">
-        <div className="text-center mb-8">
-          <h2 className="text-3xl md:text-4xl font-bold text-sky-700 mb-3">초등부 집중 프로그램</h2>
-          <p className="text-gray-600 max-w-2xl mx-auto">
-            흥미와 실력을 동시에! 데뷰 초등부는 창의적이고 활동적인 학습 환경을 통해 영어의 기초를 단단히 다지고, 자신감을 키워줍니다.
-          </p>
-        </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-4">
-          {elementaryLearningItems.map((item, index) => (
-            <div key={index} className="bg-white p-4 rounded-lg shadow hover:shadow-md transition-shadow flex items-start">
-              <CheckCircle2 className="h-5 w-5 text-sky-500 mr-2.5 mt-0.5 flex-shrink-0" />
-              <span className="text-gray-700 text-sm">{item}</span>
-            </div>
-          ))}
-        </div>
-        <ScrollToTopButton />
-      </section>
-
-      <section id="middle-program" className="my-16 md:my-20 p-6 md:p-8 rounded-xl shadow-xl bg-indigo-50 border border-indigo-200">
-        <div className="text-center mb-8">
-          <h2 className="text-3xl md:text-4xl font-bold text-indigo-700 mb-3">중등부 심화 프로그램</h2>
-          <p className="text-gray-600 max-w-2xl mx-auto">
-            내신부터 수능까지, 흔들림 없는 실력! 데뷰 중등부는 체계적인 학습 관리와 심도 있는 프로그램으로 학업 성취도를 극대화합니다.
-          </p>
-        </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-4">
-          {middleSchoolLearningItems.map((item, index) => (
-            <div key={index} className="bg-white p-4 rounded-lg shadow hover:shadow-md transition-shadow flex items-start">
-              <CheckCircle2 className="h-5 w-5 text-indigo-500 mr-2.5 mt-0.5 flex-shrink-0" />
-              <span className="text-gray-700 text-sm">{item}</span>
-            </div>
-          ))}
-        </div>
-        <ScrollToTopButton />
-      </section>
     </main>
   );
 } 
