@@ -121,6 +121,47 @@ const DebutDayDetailsSection = () => {
             </a>
         </div>
 
+        <div className="mt-16 pt-12 border-t border-amber-200">
+          <div className="text-center mb-10 md:mb-12">
+            <CalendarDays className="w-12 h-12 text-amber-600 mx-auto mb-4" />
+            <h3 className="text-3xl font-bold text-amber-700">데뷰데이 연간 타임라인</h3>
+          </div>
+          <div className="overflow-x-auto bg-white shadow-lg rounded-lg p-6">
+            <table className="min-w-full text-sm text-left text-gray-700">
+              <thead className="bg-amber-100 text-amber-800 uppercase">
+                <tr>
+                  <th scope="col" className="px-6 py-3 rounded-tl-lg">월</th>
+                  <th scope="col" className="px-6 py-3">주요 활동</th>
+                  <th scope="col" className="px-6 py-3 rounded-tr-lg">핵심 테마</th>
+                </tr>
+              </thead>
+              <tbody>
+                {[
+                  { month: "1월", activity: "교재 마스터 챌린지", theme: "준비 / 새출발" },
+                  { month: "2월", activity: "중등 내신 암기 세미나, 오픈 클래스", theme: "전략적 실전 학습" },
+                  { month: "3월", activity: "디즈니 데이, 스터디 위드미", theme: "친구와 함께 / 학습 습관" },
+                  { month: "4월", activity: "스터디 프로젝트", theme: "습관 형성 및 루틴" },
+                  { month: "5월", activity: "로드맵 상담", theme: "성장 점검 및 감성" },
+                  { month: "6월", activity: "Speaking Day, 내신 스터디", theme: "발표력 및 자신감" },
+                  { month: "7월", activity: "CHAT-GPT 스피킹 컨테스트", theme: "자기 표현력 및 창의성" },
+                  { month: "8월", activity: "여름 특강", theme: "복습 및 실력 강화" },
+                  { month: "9월", activity: "대개강 이벤트", theme: "동기 부여 및 새출발" },
+                  { month: "10월", activity: "공포의 영어방탈출", theme: "재미있는 학습 체험" },
+                  { month: "11월", activity: "로드맵 상담", theme: "학습 완성도 평가" },
+                  { month: "12월", activity: "의대생 공부법 특강", theme: "멘토링 및 미래 대비" },
+                ].map((item, index) => (
+                  <tr key={index} className={`border-b border-amber-100 ${index % 2 === 0 ? 'bg-amber-50' : 'bg-white'} hover:bg-amber-100 transition-colors duration-150`}>
+                    <td className="px-6 py-4 font-medium text-amber-900 whitespace-nowrap">{item.month}</td>
+                    <td className="px-6 py-4">{item.activity}</td>
+                    <td className="px-6 py-4">{item.theme}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <p className="mt-4 text-xs text-gray-600 text-center">*시점에 따라 달라 질 수 있음</p>
+        </div>
+
       </div>
     </section>
   );
