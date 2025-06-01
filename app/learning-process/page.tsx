@@ -150,10 +150,10 @@ export default function LearningProcessPage() {
       <main className="container mx-auto px-4 py-8 md:py-16">
         <section className="text-center mb-12 md:mb-16">
           <h1 className="text-4xl md:text-5xl font-bold text-gray-800 mb-4">
-            데뷰 학습 과정 및 프로그램
+            D.E.B.U.T 학습 과정
           </h1>
           <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">
-            개념 이해부터 심화 학습, 초등부와 중등부를 위한 맞춤형 프로그램까지, 데뷰는 학생들의 성공적인 학습 여정을 지원합니다.
+            개념 이해부터 심화 학습, 초등부와 중등부를 위한 맞춤형 프로그램까지, 데뷰는 학생들의 성공적인 학습을 지원합니다.
           </p>
         </section>
 
