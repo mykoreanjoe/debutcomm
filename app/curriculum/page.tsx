@@ -181,11 +181,10 @@ const elementaryCourseData = {
 };
 
 const elementaryIntensiveCourseData = {
-  title: '4.2 DI 초등 인텐시브',
+  title: '초등 인텐시브',
   description: '초등 고학년 (5~6학년) 시기는 중학교 영어 학습을 대비하는 데 매우 중요한 시기입니다. 이 단계에서 영어의 기초가 제대로 다져지지 않으면 중학교에서 겪을 어려움이 커질 수 있습니다.',
-  targetAudience: '초5~6',
+  targetAudience: '대상: 초5 ~ 초6',
   mainSubjects: ['리딩 & 스피킹', '문법 & 하브루타'],
-  tuition: '수강료: 월 32만원 + 온라인비 1만원 > 총 33만원',
   textbookInfo: '교재: 자체/외부 교재 구성',
   debutDay: '데뷰 데이: 월 1회 토요일 (이벤트 행사로 진행)',
   completionStudy: '완성학습: 학생마다 과제를 수행해야할시, 학원 스케줄은 앞 또는 뒤에 고정하여 루틴으로 진행합니다.',

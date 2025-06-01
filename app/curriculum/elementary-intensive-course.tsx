@@ -26,7 +26,6 @@ interface IntensiveCourseInfoProps {
   targetAudience: string;
   mainSubjects: string[];
   schedule?: ScheduleItem[]; // 타입 변경 -> schedule?: ScheduleItem[];
-  tuition: string;
   textbookInfo: string;
   debutDay: string;
   completionStudy: string;
@@ -85,7 +84,6 @@ const ElementaryIntensiveCourse: React.FC<IntensiveCourseInfoProps> = ({
   targetAudience,
   mainSubjects,
   schedule,
-  tuition,
   textbookInfo,
   debutDay,
   completionStudy,
@@ -149,10 +147,6 @@ const ElementaryIntensiveCourse: React.FC<IntensiveCourseInfoProps> = ({
             <Info className="w-6 h-6 mr-2" /> 추가 정보
           </h3>
           <ul className="space-y-3">
-            <li className="flex items-start">
-              <strong className="w-28 flex-shrink-0 text-purple-800">수강료:</strong>
-              <span className="text-gray-700">{tuition}</span>
-            </li>
             <li className="flex items-start">
               <strong className="w-28 flex-shrink-0 text-purple-800">{textbookInfo.split(':')[0]}:</strong> 
               <span className="text-gray-700">{textbookInfo.split(':')[1]?.trim()}</span>
