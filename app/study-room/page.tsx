@@ -54,6 +54,7 @@ const StudyRoomPage = () => {
             throw new Error(`HTTP error! status: ${response.status}`);
           }
           const data: Video[] = await response.json();
+          console.log("Fetched videos data:", JSON.stringify(data, null, 2));
           setVideos(data);
         } catch (err) {
           console.error("Failed to fetch videos:", err);

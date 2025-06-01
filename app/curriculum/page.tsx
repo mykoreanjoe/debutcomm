@@ -1,28 +1,30 @@
 "use client";
 
 import React from 'react';
+import AnimatedSection from '@/components/AnimatedSection';
+import { BookOpen, GraduationCap, Target, MessageSquare, Rocket } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { MessageSquare, BookOpen, Rocket, GraduationCap, Target, LucideIcon, ArrowUpCircle } from 'lucide-react';
-import ElementaryRoadmapTable from './elementary-roadmap-table';
-import ElementaryLevelChart from './elementary-level-chart';
-import ElementaryRegularCourse from './elementary-regular-course';
-import ElementaryIntensiveCourse from './elementary-intensive-course';
-import MiddleSchoolRegularCourse from './middle-school-regular-course';
-import MiddleSchoolLevelChart from './middle-school-level-chart';
+import ElementaryRoadmapTableDKtoD3 from './ElementaryRoadmapTableDKtoD3';
+import ElementaryRoadmapTableD4toDCreator from './ElementaryRoadmapTableD4toDCreator';
 import MiddleSchoolCourseDetailsTable from './middle-school-course-details-table';
+import ElementaryLevelChart from './elementary-level-chart';
+import MiddleSchoolLevelChart from './middle-school-level-chart';
 import SchoolRecordProcess from './school-record-process';
 import TripleCareSystem from './triple-care-system';
 import ScrollToTopButton from '@/components/ScrollToTopButton';
+import ElementaryRegularCourse from './elementary-regular-course';
+import ElementaryIntensiveCourse from './elementary-intensive-course';
+import MiddleSchoolRegularCourse from './middle-school-regular-course';
 
 interface CurriculumCardProps {
   title: string;
   description: string;
-  icon?: LucideIcon | React.ElementType;
-  bgColorClass?: string;
-  textColorClass?: string;
-  buttonText?: string;
+  bgColorClass: string;
+  textColorClass: string;
+  buttonText: string;
+  icon: React.ElementType;
+  anchorId: string;
   onButtonClick?: () => void;
-  anchorId?: string;
 }
 
 const curriculumData: CurriculumCardProps[] = [
@@ -31,16 +33,16 @@ const curriculumData: CurriculumCardProps[] = [
     description: "탄탄한 기본기와 자기주도 학습 습관을 형성하는 과정입니다.",
     bgColorClass: "bg-blue-50",
     textColorClass: "text-blue-700",
-    buttonText: "초등 정규 과정 알아보기",
+    buttonText: "과정 알아보기",
     icon: BookOpen,
     anchorId: "elementary-regular-details",
   },
   {
-    title: "초등 인텐시브 과정",
-    description: "심화 학습과 다양한 액티비티를 통해 영어 실력을 한 단계 높이는 집중 과정입니다.",
-    bgColorClass: "bg-green-50",
-    textColorClass: "text-green-700",
-    buttonText: "초등 인텐시브 과정 알아보기",
+    title: "초등부 인텐시브 과정",
+    description: "중등 영어 학습을 완벽하게 대비하는 초등 고학년 집중 과정입니다. 문법, 독해, 어휘력을 균형있게 강화합니다.",
+    bgColorClass: "bg-purple-50",
+    textColorClass: "text-purple-700",
+    buttonText: "과정 알아보기",
     icon: Rocket,
     anchorId: "elementary-intensive-details",
   },
@@ -49,7 +51,7 @@ const curriculumData: CurriculumCardProps[] = [
     description: "체계적인 학습과 내신 대비를 통해 학업 성취도를 극대화하는 과정입니다.",
     bgColorClass: "bg-yellow-50",
     textColorClass: "text-yellow-700",
-    buttonText: "중등 정규 과정 알아보기",
+    buttonText: "과정 알아보기",
     icon: GraduationCap,
     anchorId: "middle-regular-details",
   },
@@ -58,7 +60,7 @@ const curriculumData: CurriculumCardProps[] = [
     description: "학교별 맞춤 전략과 실전 훈련으로 내신 성적 향상을 목표하는 과정입니다.",
     bgColorClass: "bg-purple-50",
     textColorClass: "text-purple-700",
-    buttonText: "중등 내신 과정 알아보기",
+    buttonText: "과정 알아보기",
     icon: Target,
     anchorId: "middle-school-record-details", 
   },
@@ -75,6 +77,13 @@ const CurriculumCard: React.FC<CurriculumCardProps> = ({
   anchorId,
 }) => {
   const handleButtonClickInternal = () => {
+    if (anchorId) {
+      const element = document.getElementById(anchorId);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+        return;
+      }
+    }
     console.log(`${title} 상담 버튼 클릭`);
     if (onButtonClick) {
       onButtonClick();
@@ -95,17 +104,13 @@ const CurriculumCard: React.FC<CurriculumCardProps> = ({
       </div>
       <Button 
         onClick={handleButtonClickInternal} 
-        className="w-full mt-auto bg-slate-700 hover:bg-slate-800 text-white"
+        className="w-full mt-auto bg-slate-700 hover:bg-slate-800 text-white btn-apple-style"
       >
         <MessageSquare size={18} className="mr-2" /> 
         {buttonText}
       </Button>
     </div>
   );
-
-  if (anchorId) {
-    return <a href={`#${anchorId}`} className="block h-full">{cardContent}</a>;
-  }
 
   return cardContent;
 };
@@ -125,7 +130,7 @@ const elementaryCourseData = {
   },
   debutDay: '데뷰 데이: 월 1회 토요일 (이벤트 행사로 진행)',
   integratedLearning: {
-    description: '데뷰 영어학원의 초등 프로그램은 파닉스부터 시작해 중3 수능 대비까지 연결됩니다.',
+    description: '데뷰 영어의 초등 프로그램은 파닉스부터 시작해 중3 수능 대비까지 연결됩니다.',
     coreCompetencies: ['어휘량의 확장', '각 영역별 영어 스킬 내재화'],
     emphasis: '영역별 특성과 학습 방식, 흥미도·성취도가 다르기 때문에 통합형 수업이 중요합니다. 단일 영역 학습은 언어 균형을 해치며, 실력 편차를 만들 수 있습니다.',
     caseStudy: {
@@ -238,11 +243,6 @@ const middleSchoolCourseData = {
         highSchool: "유형 분석 + 시간 관리 + 집중 독해 및 문법 전략",
       },
       {
-        item: "수업 방식",
-        middleSchool: "게임, 활동, 조별 수업 등 참여형 수업",
-        highSchool: "문제 풀이 중심, 수능 대비식 수업 비중 ↑",
-      },
-      {
         item: "자기주도학습 필요성",
         middleSchool: "낮은 편 (학원·학교 주도)",
         highSchool: "매우 높음 (자기 학습·오답 관리 필수)",
@@ -264,61 +264,61 @@ const middleSchoolCourseData = {
 };
 
 export default function CurriculumPage() {
+  const handleConsultationRequest = (courseTitle: string) => {
+    console.log(`${courseTitle} 과정 상담 요청`);
+    // 예: router.push('/consult'); 또는 모달 열기
+  };
+
   return (
-    <main className="container mx-auto px-4 py-12 md:py-16">
-      <section className="text-center mb-12 md:mb-20">
-        <h1 className="text-4xl md:text-5xl font-bold text-gray-800 mb-6">
-          데뷰 영어 커리큘럼
-        </h1>
-        <p className="text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed">
-          강사, 온라인AI, 스터디 매니저의 3중 관리로 <br className="hidden md:inline" />우리 학생에게 꼭 필요한 학습을 만들어 갑니다.
-        </p>
-      </section>
+    <div className="bg-slate-50">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20">
+        <AnimatedSection delay={0}>
+          <div className="text-center mb-16 md:mb-20">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-gray-800 leading-tight">
+              데뷰 영어 <span className="text-blue-600">커리큘럼</span>
+            </h1>
+            <p className="mt-6 text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto">
+              초등부터 중등까지, 개인의 성장과 목표에 맞춘 데뷰만의 체계적인 학습 로드맵을 확인하세요. 함께하면 영어 실력, 완성할 수 있습니다!
+            </p>
+          </div>
+        </AnimatedSection>
 
-      <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 mb-16 md:mb-20">
-        {curriculumData.map((item) => (
-          <CurriculumCard key={item.title} {...item} />
-        ))}
-      </section>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 mb-16 md:mb-20">
+          {curriculumData.map((card, index) => (
+            <AnimatedSection delay={0} key={index}>
+              <CurriculumCard {...card} onButtonClick={() => handleConsultationRequest(card.title)} />
+            </AnimatedSection>
+          ))}
+        </div>
+        
+        <AnimatedSection delay={0}>
+          <h2 className="text-3xl sm:text-4xl font-bold text-center text-blue-600 mb-12 md:mb-16">초등부 과정</h2>
+        </AnimatedSection>
+        
+        <AnimatedSection delay={0.1}><ElementaryRoadmapTableDKtoD3 /></AnimatedSection>
+        <AnimatedSection delay={0.1}><ElementaryRoadmapTableD4toDCreator /></AnimatedSection>
+        <AnimatedSection delay={0.1}><ElementaryLevelChart /></AnimatedSection>
+
+        <AnimatedSection delay={0.2}><ElementaryRegularCourse {...elementaryCourseData} id="elementary-regular-details" /></AnimatedSection>
+        <AnimatedSection delay={0.2}><ElementaryIntensiveCourse {...elementaryIntensiveCourseData} id="elementary-intensive-details" /></AnimatedSection>
+
+        <AnimatedSection delay={0}>
+          <h2 className="text-3xl sm:text-4xl font-bold text-center text-purple-600 mt-16 md:mt-24 mb-12 md:mb-16">중등부 과정</h2>
+        </AnimatedSection>
+
+        <AnimatedSection delay={0.1}><MiddleSchoolLevelChart /></AnimatedSection>
+        <AnimatedSection delay={0.1}><MiddleSchoolCourseDetailsTable /></AnimatedSection>
+
+        <AnimatedSection delay={0.2}><MiddleSchoolRegularCourse {...middleSchoolCourseData} id="middle-regular-details" /></AnimatedSection>
+        <AnimatedSection delay={0.2}><SchoolRecordProcess id="middle-school-record-details" /></AnimatedSection>
+        
+        <AnimatedSection delay={0}>
+          <h2 className="text-3xl sm:text-4xl font-bold text-center text-teal-600 mt-16 md:mt-24 mb-12 md:mb-16">학습 관리 시스템</h2>
+        </AnimatedSection>
+        <AnimatedSection delay={0.1}><TripleCareSystem /></AnimatedSection>
+
+      </div>
       <ScrollToTopButton />
-
-      <ElementaryRoadmapTable />
-      <ScrollToTopButton />
-
-      <ElementaryLevelChart />
-      <ScrollToTopButton />
-
-      <section id="elementary-regular-details" className="pt-16 -mt-16">
-        <ElementaryRegularCourse {...elementaryCourseData} />
-        <ScrollToTopButton />
-      </section>
-
-      <section id="elementary-intensive-details" className="pt-16 -mt-16">
-        <ElementaryIntensiveCourse {...elementaryIntensiveCourseData} />
-        <ScrollToTopButton />
-      </section>
-
-      <section className="my-16 md:my-20">
-        <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-8">
-          중등부 커리큘럼 개요
-        </h2>
-        <MiddleSchoolRegularCourse {...middleSchoolCourseData} />
-        <ScrollToTopButton />
-      </section>
-
-      <MiddleSchoolLevelChart />
-      <ScrollToTopButton />
-
-      <MiddleSchoolCourseDetailsTable />
-      <ScrollToTopButton />
-      
-      <section id="middle-school-record-details" className="pt-16 -mt-16">
-        <SchoolRecordProcess />
-        <ScrollToTopButton />
-      </section>
-
-      <TripleCareSystem />
-      <ScrollToTopButton />
-    </main>
+    </div>
   );
 } 

@@ -8,7 +8,7 @@ const TripleCareSystem = () => {
         <div className="text-center mb-10 md:mb-12">
           <Users className="w-12 h-12 text-purple-600 mx-auto mb-4" />
           <h2 className="text-3xl md:text-4xl font-bold text-purple-700 mb-3">
-            4.5 3중 관리 완성 학습
+            스터디 매니저
           </h2>
           <p className="text-lg md:text-xl text-gray-700 max-w-2xl mx-auto">
             강사, 온라인AI, 스터디 매니저가 함께하여 한 학생의 학습을 관리 합니다.

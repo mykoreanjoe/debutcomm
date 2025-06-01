@@ -2,8 +2,7 @@
 
 import React from 'react';
 import {
-  BookUser, /* CalendarClock, */ /* Users, */ Landmark, /* CircleDollarSign, */ BookCopy, Zap, TrendingUp, UserCheck, BookHeart, NotebookText, Target, BrainCircuit, Info,
-  BookOpenText, MessageCircle, Edit3, ClipboardCheck, Lightbulb, /* Users2, */ Mic2, BookMarked, Award, /* FileText, */ AlertCircle, /* CheckCircle2, */ Layers, Clock, /* BookOpen, */ /* CalendarDays, */ CheckCircle, /* Newspaper, */ /* BarChart2, */ Star, /* Shield, */ /* MessageSquare, */ AlertTriangle
+  GraduationCap, Info, BookOpenText, MessageCircle as MessageCircleIcon, Edit3, ClipboardCheck, Lightbulb, Mic2, BookMarked, Award, AlertCircle, CheckCircle, Star, AlertTriangle
 } from 'lucide-react';
 import {
   Table,
@@ -15,19 +14,20 @@ import {
 } from "@/components/ui/table";
 
 // 업데이트된 schedule 구조에 맞춘 타입
-interface ScheduleItem {
-  type: string;
-  time: string;
-  duration: string;
-}
+// interface ScheduleItem {
+//   type: string;
+//   time: string;
+//   duration: string;
+// }
 
-interface IntensiveCourseInfoProps {
+export interface IntensiveCourseInfoProps {
   title: string;
   targetAudience: string;
   mainSubjects: string[];
   textbookInfo: string;
   debutDay: string;
   completionStudy: string;
+  id?: string;
 }
 
 const comparisonData = [
@@ -78,18 +78,13 @@ const comparisonData = [
   },
 ];
 
-const ElementaryIntensiveCourse: React.FC<IntensiveCourseInfoProps> = ({
-  title,
-  targetAudience,
-  mainSubjects,
-  textbookInfo,
-  debutDay,
-  completionStudy,
-}) => {
+const ElementaryIntensiveCourse = (props: IntensiveCourseInfoProps) => {
+  const { title, targetAudience, mainSubjects, textbookInfo, debutDay, completionStudy, id } = props;
+
   const newDescription = "초등 고학년(5~6학년) 시기는 중학교 영어 학습을 대비하는 데 매우 중요한 시기입니다. 이 단계에서 영어의 기초가 제대로 다져지지 않으면 중학교에서 겪을 어려움이 커질 수 있습니다.";
 
   return (
-    <section id="elementary-intensive" className="py-12 md:py-16 bg-gradient-to-br from-purple-50 to-pink-100 rounded-lg shadow-xl p-6 md:p-10 mb-12">
+    <section id={id} className="py-12 md:py-16 bg-gradient-to-br from-purple-50 to-pink-100 rounded-lg shadow-xl p-6 md:p-10 mb-12">
       <div className="max-w-4xl mx-auto">
         <h2 className="text-3xl md:text-4xl font-bold text-center text-purple-700 mb-4 flex items-center justify-center">
           <Star className="w-10 h-10 mr-3" /> {title}
@@ -103,7 +98,7 @@ const ElementaryIntensiveCourse: React.FC<IntensiveCourseInfoProps> = ({
         <div className="grid md:grid-cols-1 gap-8 mb-10">
           <div className="bg-white p-6 rounded-lg shadow-md">
             <h3 className="text-xl font-semibold text-purple-600 mb-4 flex items-center">
-              <BookUser className="w-6 h-6 mr-2" /> 코스 대상
+              <GraduationCap className="w-6 h-6 mr-2" /> 코스 대상
             </h3>
             <p className="text-gray-600">{targetAudience}</p>
             
@@ -190,7 +185,7 @@ const ElementaryIntensiveCourse: React.FC<IntensiveCourseInfoProps> = ({
                 </ul>
               </div>
               <div className="p-4 bg-sky-50 rounded-lg shadow">
-                <h4 className="font-semibold text-sky-700 mb-2 flex items-center"><MessageCircle className="w-5 h-5 mr-2"/>수업</h4>
+                <h4 className="font-semibold text-sky-700 mb-2 flex items-center"><MessageCircleIcon className="w-5 h-5 mr-2"/>수업</h4>
                 <ul className="list-disc list-inside text-gray-700 space-y-1 pl-2">
                   <li>구문 직독직해</li>
                   <li>문제 풀이 {'>'} 틀린 문제 분석</li>
@@ -299,7 +294,7 @@ const ElementaryIntensiveCourse: React.FC<IntensiveCourseInfoProps> = ({
             className="bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white font-semibold py-3 px-8 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 transform hover:scale-105"
             onClick={() => console.log("초등 인텐시브 과정 상담 문의")}
           >
-            <MessageCircle className="w-5 h-5 mr-2 inline-block" /> {/* 이 아이콘이 없으면 MessageSquare 또는 다른 것으로 대체해야 함 */}
+            <MessageCircleIcon className="w-5 h-5 mr-2 inline-block" /> {/* 이 아이콘이 없으면 MessageSquare 또는 다른 것으로 대체해야 함 */}
             초등 인텐시브 과정 상담받기
           </button>
         </div>

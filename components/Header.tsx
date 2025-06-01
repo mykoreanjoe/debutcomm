@@ -15,7 +15,7 @@ import { Menu } from 'lucide-react';
 
 const navItems = [
   { name: '스토리', href: '/story' },
-  { name: '학습과정', href: '/learning-process' },
+  { name: 'WHY DEBUT', href: '/why-debut' },
   { name: '커리큘럼', href: '/curriculum' },
   { name: '시간표', href: '/timetable' },
   // { name: '학습경험', href: '/learning-experience' }, // 이 링크는 현재 404, 필요시 복원

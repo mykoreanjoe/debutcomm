@@ -49,11 +49,6 @@ const Footer = () => {
                 <Users className="inline-block w-4 h-4 mr-2 text-green-400" /> 네이버 블로그
               </Link>
             </li>
-            <li>
-              <a href={`tel:${businessInfo.phoneNumber.replace(/-/g, '')}`} className="hover:text-amber-400 transition-colors duration-300 flex items-center">
-                <Phone className="inline-block w-4 h-4 mr-2 text-blue-400" /> 전화 문의: {businessInfo.phoneNumber}
-              </a>
-            </li>
           </ul>
         </div>
       </div>

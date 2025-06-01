@@ -1,5 +1,6 @@
 import React from 'react';
 import { CalendarCheck, BookText, FileText, BookOpen, Target, Search, CheckSquare } from 'lucide-react';
+import AnimatedSection from '@/components/AnimatedSection';
 
 interface ProcessStepProps {
   phase: string;
@@ -38,7 +39,13 @@ const ProcessStep: React.FC<ProcessStepProps> = ({ phase, phaseColor, items, pha
   );
 };
 
-const SchoolRecordProcess = () => {
+export interface SchoolRecordProcessProps {
+  id?: string;
+}
+
+const SchoolRecordProcess = (props: SchoolRecordProcessProps) => {
+  const { id } = props;
+
   const processData: ProcessStepProps[] = [
     {
       phase: "내신 4주전",
@@ -52,7 +59,7 @@ const SchoolRecordProcess = () => {
         },
         {
           title: "교과서 암기",
-          description: "중등하교 내신 시험 핵심인 교과서 본문암기 진행, 미통과 시 무한 학습 트레이닝 진행",
+          description: "중등하교 내신 시험 핵심인 교과서 본문암기 진행, 미통과 시 무한 반복 진행",
           icon: BookText
         },
         {
@@ -96,16 +103,16 @@ const SchoolRecordProcess = () => {
   const targetSchools = ["목일중", "목동중", "문래중"];
 
   return (
-    <section className="py-12 md:py-16 bg-gradient-to-b from-blue-50 to-indigo-100">
+    <section id={id} className="py-12 md:py-16 bg-purple-50 rounded-lg shadow-lg mb-12 md:mb-16">
       <div className="container mx-auto px-4 md:px-6">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600 mb-3">
-            어려운 시험에서도 빛나는 데뷰 내신
-          </h2>
-          <p className="text-md md:text-lg text-gray-700">
-            대상 학교: {targetSchools.join(', ')}
-          </p>
-        </div>
+        <AnimatedSection delay={0}>
+          <div className="text-center mb-10 md:mb-16">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-blue-600">
+              데뷰 내신 프렙 과정
+            </h2>
+            <p className="mt-3 text-base sm:text-lg text-gray-600">대상 학교: {targetSchools.join(', ')}</p>
+          </div>
+        </AnimatedSection>
 
         <div className="max-w-4xl mx-auto">
           {processData.map((step, index) => (

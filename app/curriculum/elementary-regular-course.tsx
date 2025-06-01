@@ -32,7 +32,7 @@ interface ClassSchedule {
   completionStudyPoints?: string[]; // 추가
 }
 
-interface CourseInfoProps {
+export interface CourseInfoProps {
   title: string;
   targetAudience: string;
   classOverview?: { items: ClassOverviewItem[] }; // Optional로 변경하고 타입 수정
@@ -66,23 +66,15 @@ interface CourseInfoProps {
     exampleTopics: string[];
     summary: string;
   };
+  id?: string; // id prop 추가
 }
 
-const ElementaryRegularCourse: React.FC<CourseInfoProps> = ({
-  title,
-  targetAudience,
-  classOverview,
-  monWedFriClass,
-  tueThuClass,
-  debutDay,
-  // completionStudyDescription, // 제거
-  integratedLearning, 
-  activitiesAndProjects,
-  skillBasedLearning,
-  // completionStudy, // 더 이상 직접 사용하지 않음
-}) => {
+const ElementaryRegularCourse = (props: CourseInfoProps) => { // props 전체를 받도록 수정 가능성 고려
+  // props에서 id를 추출하여 사용
+  const { title, targetAudience, classOverview, monWedFriClass, tueThuClass, debutDay, integratedLearning, activitiesAndProjects, skillBasedLearning, id } = props;
+
   return (
-    <section id="elementary-regular" className="py-12 md:py-16 bg-gradient-to-br from-blue-50 to-sky-100 rounded-lg shadow-xl p-6 md:p-10 mb-12">
+    <section id={id} className="py-12 md:py-16 bg-gradient-to-br from-blue-50 to-sky-100 rounded-lg shadow-xl p-6 md:p-10 mb-12">
       <div className="max-w-4xl mx-auto">
         <h2 className="text-3xl md:text-4xl font-bold text-center text-sky-700 mb-4 flex items-center justify-center">
           <Newspaper className="w-10 h-10 mr-3" /> {title}

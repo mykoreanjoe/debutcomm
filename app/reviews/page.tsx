@@ -1,12 +1,11 @@
 import React from 'react';
-// import { UserCircle } from 'lucide-react'; // 사용되지 않으므로 주석 처리 또는 삭제
-// import Image from 'next/image'; // 사용되지 않으므로 주석 처리 또는 삭제
-import { Star, CheckCircle2, MessageSquareText } from 'lucide-react';
+// import Head from 'next/head';
+// import AnimatedSection from '@/components/AnimatedSection';
+import { Star, MessageSquare, CheckCircle } from 'lucide-react';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: '데뷰 후기 | 데뷰 영어 학원',
-  description: '데뷰 영어 학원 학생 및 학부모님들의 생생한 후기를 확인하세요. 만족도 높은 데뷰의 교육 서비스를 경험해보세요.',
+  title: '데뷰 수강생 리얼 후기 | 데뷰 영어 학원',
   openGraph: {
     title: '데뷰 후기 | 데뷰 영어 학원',
     description: '데뷰 영어 학원 학생 및 학부모님들의 생생한 후기를 확인하세요.',
@@ -58,7 +57,7 @@ const surveyItems = [
   '학습 기간이 어떻게 될까요? (기간을 선택해주세요.)',
   '강사진에 대해서 어떻게 생각하시나요?',
   '교재에 대해 어떻게 생각하시나요?',
-  '학습 트레이닝 관리 프로그램에 대해 어떻게 생각하시나요?',
+  '관리 프로그램에 대해 어떻게 생각하시나요?',
   '온라인 프로그램 (리딩앤, 원아워)에 대해 어떻게 생각하시나요?',
   '학원비에 대해 어떻게 생각하시나요?',
   '방학특강 (여름, 겨울)에 대해 어떻게 생각하시나요?',
@@ -74,14 +73,14 @@ const ReviewsPage = () => {
         <div className="container mx-auto px-4 md:px-6">
           <h1 className="text-4xl md:text-5xl font-bold text-center mb-6 text-blue-700">생생한 데뷰후기</h1>
           <p className="text-lg md:text-xl text-gray-700 text-center mb-12 md:mb-16 max-w-3xl mx-auto">
-            데뷰 영어 학원은 주기적은 소통과 서비스 만족도 조사를 통해 학부모님께 최상의 교육 서비를 제공합니다. 
+            데뷰 영어 학원은 주기적인 소통과 서비스 만족도 조사를 통해 학부모님께 최상의 교육 서비스를 제공합니다. 
             실제 학부모님들이 작성해주신 소중한 후기들을 확인해보세요.
           </p>
 
           {/* 만족도 조사 주요 항목 */}
           <div className="mb-16 md:mb-20 p-8 rounded-2xl shadow-xl bg-white border border-blue-100">
             <h2 className="text-2xl md:text-3xl font-semibold text-center mb-8 text-blue-600">데뷰 영어 학원 교육서비스 만족도 조사</h2>
-            <p className="text-center text-gray-600 mb-8">학부모님의 목소리를 귀담아듣고, 더 나은 교육 환경을 만들기 위해 노력합니다. 다음은 주요 설문 항목입니다.</p>
+            <p className="text-center text-gray-600 mb-8">학부모님의 목소리를 귀담아듣고 더 나은 교육 환경을 만들기 위해 노력합니다. 다음은 주요 설문 항목입니다.</p>
             <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-4 text-gray-700">
               {surveyItems.map((item, index) => (
                 <li key={index} className="pl-2 flex items-start">
@@ -121,10 +120,10 @@ const ReviewsPage = () => {
                     <div className="flex flex-wrap gap-2">
                       {review.tags.map(tag => (
                         <span key={tag} className="px-3 py-1.5 text-xs font-semibold rounded-full bg-sky-50 text-sky-700 border border-sky-200 flex items-center shadow-sm">
-                          {tag.includes('열정적') ? <CheckCircle2 className="w-3.5 h-3.5 mr-1.5 text-red-400" /> :
-                           tag.includes('체계적') ? <CheckCircle2 className="w-3.5 h-3.5 mr-1.5 text-green-400" /> :
-                           tag.includes('소통') ? <MessageSquareText className="w-3.5 h-3.5 mr-1.5 text-blue-400" /> : 
-                           <CheckCircle2 className="w-3.5 h-3.5 mr-1.5 text-sky-400" />}
+                          {tag.includes('열정적') ? <CheckCircle className="w-3.5 h-3.5 mr-1.5 text-red-400" /> :
+                           tag.includes('체계적') ? <CheckCircle className="w-3.5 h-3.5 mr-1.5 text-green-400" /> :
+                           tag.includes('소통') ? <MessageSquare className="w-3.5 h-3.5 mr-1.5 text-blue-400" /> : 
+                           <CheckCircle className="w-3.5 h-3.5 mr-1.5 text-sky-400" />}
                           {tag}
                         </span>
                       ))}

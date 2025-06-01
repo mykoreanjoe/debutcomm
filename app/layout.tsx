@@ -1,3 +1,4 @@
+// "use client"; // 최상단 "use client" 제거
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
@@ -8,6 +9,9 @@ import FloatingInquiryButton from "@/components/FloatingInquiryButton";
 // import {
 //   ClerkProvider,
 // } from "@clerk/nextjs";
+// import { usePathname } from 'next/navigation'; // 제거
+// import { useEffect, useState } from 'react'; // 제거
+import PageTransitionWrapper from '@/components/PageTransitionWrapper'; // 새로 추가
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -57,13 +61,27 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // const pathname = usePathname(); // 제거
+  // const [transitioning, setTransitioning] = useState(false); // 제거
+  // const [key, setKey] = useState(pathname); // 제거
+
+  // useEffect(() => { // 제거
+  //   if (pathname !== key) {
+  //     setTransitioning(true);
+  //     setTimeout(() => {
+  //       setKey(pathname);
+  //       setTransitioning(false);
+  //     }, 300);
+  //   }
+  // }, [pathname, key]); // 제거
+
   return (
     // <ClerkProvider> // ClerkProvider 제거
       <html lang="ko">
         <body className={inter.className}>
           {/* Header 내 Clerk 관련 버튼은 Header 컴포넌트에서 직접 제거 예정 */}
           <Header />
-          <main>{children}</main>
+          <PageTransitionWrapper>{children}</PageTransitionWrapper> {/* PageTransitionWrapper 사용 */}
           <Footer />
           <FloatingInquiryButton />
         </body>

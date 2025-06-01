@@ -43,7 +43,7 @@ const CommunityPage = () => {
             <Lock className="w-8 h-8 text-amber-500 mx-auto mb-3" />
             <h3 className="text-xl font-semibold text-amber-700 mb-2">회원 전용 커뮤니티입니다</h3>
             <p className="text-amber-600 mb-6">
-              커뮤니티의 모든 게시판과 자료는 데뷰 학생들만 이용 가능합니다. (추후 인증 방식 안내 예정)
+              커뮤니티의 모든 게시판과 자료는 데뷰 학생들만 이용 가능합니다. 추후 인증 방식에 대해 안내해 드릴 예정입니다.
             </p>
           </div>
         </div>

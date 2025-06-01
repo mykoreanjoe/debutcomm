@@ -18,10 +18,10 @@ const DebutDayDetailsSection = () => {
   const highlightImages = [
     { src: "/images/debut_day/debut_day_highlight_01.jpg", alt: "ChatGPT 스피킹 컨테스트 포스터", caption: "ChatGPT 스피킹 컨테스트" },
     { src: "/images/debut_day/debut_day_highlight_02.jpg", alt: "할로윈 데이 장식", caption: "할로윈 데이 이벤트" },
-    { src: "/images/debut_day/debut_day_highlight_03.jpg", alt: "중학교 수학 공부법 안내", caption: "학습 전략 특강" },
+    { src: "/images/debut_day/debut_day_highlight_03.jpg", alt: "학습 전략 특강", caption: "학습 전략 특강" },
     { src: "/images/debut_day/debut_day_highlight_04.jpg", alt: "데뷰 영어학원 간식", caption: "즐거운 간식 시간" },
     { src: "/images/debut_day/debut_day_highlight_05.jpg", alt: "공부법 특강 후기", caption: "특강 참여 후기" },
-    { src: "/images/debut_day/debut_day_highlight_06.jpg", alt: "Welcome Debut Day 보드", caption: "웰컴 데뷰데이!" },
+    { src: "/images/debut_day/debut_day_highlight_06.jpg", alt: "데뷰데이 환영 보드", caption: "웰컴 데뷰데이!" },
     { src: "/images/debut_day/debut_day_highlight_07.jpg", alt: "데뷰데이 활동 기록 보드", caption: "함께 만든 추억" },
     { src: "/images/debut_day/debut_day_highlight_08.jpg", alt: "데뷰 영어학원 할로윈 작품 전시", caption: "학생 작품 전시" },
   ];
@@ -37,8 +37,8 @@ const DebutDayDetailsSection = () => {
             데뷰데이!
           </h2>
           <p className="text-lg md:text-xl text-gray-700 max-w-3xl mx-auto leading-relaxed">
-            데뷰 데이는 정규 학습 과정을 제외한, 토요 클리닉, 1:1 간담회 등 학습 동기를 부여하며, 학부모님과 소통하는 데뷰만의 날입니다. <br />
-            진로, 재미, 챌린지, 컨테스트, 특강 등 데뷰가 걸어온 다양한 활동을 확인할 수 있습니다.
+            데뷰데이는 정규 수업 외에 토요 클리닉, 1:1 간담회 등을 통해 학습 동기를 부여하고 학부모님과 소통하는 데뷰만의 특별한 날입니다. <br />
+            진로 탐색, 재미있는 이벤트, 도전적인 챌린지, 실력 발휘 컨테스트, 유익한 특강 등 데뷰가 지금까지 진행해온 다채로운 활동들을 소개합니다.
           </p>
         </div>
 
@@ -159,7 +159,7 @@ const DebutDayDetailsSection = () => {
               </tbody>
             </table>
           </div>
-          <p className="mt-4 text-xs text-gray-600 text-center">*시점에 따라 달라 질 수 있음</p>
+          <p className="mt-4 text-xs text-gray-600 text-center">* 위 내용은 시기에 따라 변경될 수 있습니다.</p>
         </div>
 
       </div>

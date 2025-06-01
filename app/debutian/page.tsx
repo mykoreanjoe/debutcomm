@@ -48,7 +48,7 @@ const DebutianPage = () => {
             최고의 노력과 성과!
           </p>
           <p className="text-lg md:text-xl text-white/80 mb-10">
-            데뷰 학부모 선생님 학생들의 인정 받은 1인
+            데뷰의 학부모, 선생님, 학생들이 인정한 최고의 인재
           </p>
           
           {/* TODO: 트로피 이미지를 public/images/trophy.png 와 같이 준비해주세요. */}
@@ -56,16 +56,16 @@ const DebutianPage = () => {
           <Trophy className="w-32 h-32 md:w-40 md:h-40 text-yellow-400 mx-auto mb-8 drop-shadow-lg" />
 
           <div className="max-w-3xl mx-auto">
-            <h2 className="text-3xl md:text-4xl font-bold text-yellow-500 mb-4" style={{ textShadow: '1px 1px 2px rgba(0,0,0,0.2)' }}>
-              10000만 포인트, 상장, 데뷰인 등극
-            </h2>
+            {/* <h2 className="text-3xl md:text-4xl font-bold text-yellow-500 mb-4" style={{ textShadow: '1px 1px 2px rgba(0,0,0,0.2)' }}>
+              10,000 포인트 달성 시 상장 수여 및 &apos;데뷰인&apos; 등극
+            </h2> */}
             <div className="bg-white/50 p-6 rounded-lg shadow-xl backdrop-blur-sm">
               <p className="text-md md:text-lg text-gray-700 leading-relaxed text-left">
-                영어를 익히는 것이 쉬웠다면, 누구나 뛰어난 실력을 가졌을 것입니다. 
+                영어를 익히는 과정이 순탄했다면 누구나 뛰어난 실력을 갖출 수 있었을 것입니다. 
                 하지만 탁월한 영어 실력은 꾸준한 노력과 체계적인 관리가 뒷받침될 때 가능합니다. 
-                학습 과정이 결코 쉽진 않지만, 더 높은 목표를 정해 쉼 없이 노력하여 뛰어난 성취를 이룩한 이들을 
+                학습 과정이 결코 쉽지 않음에도 불구하고, 더 높은 목표를 향해 쉼 없이 나아가 뛰어난 성취를 이룬 이들을 
                 <span className="font-semibold text-blue-600">&apos;데뷰인&apos;</span>이라 부릅니다. 
-                우리는 데뷰인들을 존경하고 기억 할 것입니다.
+                우리는 데뷰인들을 존경하고 기억할 것입니다.
               </p>
             </div>
           </div>
@@ -92,8 +92,8 @@ const DebutianPage = () => {
               </p>
               <blockquote className="mt-4 p-4 border-l-4 border-gray-300 bg-gray-50 rounded-r-lg">
                 <p className="text-md text-gray-600 italic leading-relaxed">
-                  &quot;챔피언들은 실패를 두려워 하지 않습니다. <br />
-                  그들은 위험과 어려움이 따른다는것을 알면서도, <br />
+                  &quot;챔피언은 실패를 두려워하지 않습니다. <br />
+                  그들은 위험과 어려움이 따른다는 것을 알면서도, <br />
                   끝까지 최선을 다해 노력합니다.&quot;
                 </p>
               </blockquote>
@@ -106,7 +106,7 @@ const DebutianPage = () => {
           <div className="flex items-center mb-1">
             <span className="bg-green-400 text-white px-3 py-1 rounded-full text-sm font-semibold mr-3">초등</span>
             <h3 className="text-2xl md:text-3xl font-bold text-orange-500">
-              스스로보하 챔피언
+              스스보하 챔피언
             </h3>
           </div>
           <div className="mt-1 mb-6 border-b-4 border-orange-400 w-40"></div>
@@ -125,7 +125,7 @@ const DebutianPage = () => {
           <div className="flex items-center mb-1">
             <span className="bg-blue-400 text-white px-3 py-1 rounded-full text-sm font-semibold mr-3">중등</span>
             <h3 className="text-2xl md:text-3xl font-bold text-orange-500">
-              스스로내하 챔피언
+              스내보하 챔피언
             </h3>
           </div>
           <div className="mt-1 mb-6 border-b-4 border-orange-400 w-40"></div>
