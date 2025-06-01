@@ -21,10 +21,10 @@ export default function HomePage() {
       </Link>
 
       <h1 className="text-3xl md:text-5xl font-bold mt-8">
-        가장 완성도 높은 영어 학원.
+        가장 완성도 높은 영어
       </h1>
       <h2 className="text-2xl md:text-4xl font-bold mt-2 text-[#13588f]">
-        그 여정을 데뷰 영어는 같이 합니다.
+        같이 완성합니다
       </h2>
       
       <p className="mt-8 text-md md:text-lg text-gray-600">
@@ -32,14 +32,14 @@ export default function HomePage() {
       </p>
 
       <div className="mt-10 flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
-        <Button asChild size="lg" className="bg-[#13588f] hover:bg-[#0f4a7b] text-white">
+        <Button asChild size="lg" className="bg-green-500 hover:bg-green-600 text-white">
           <Link href="/reservation">테스트 예약</Link>
         </Button>
-        <Button asChild variant="outline" size="lg" className="border-[#13588f] text-[#13588f] hover:bg-[#13588f]/10">
+        {/* <Button asChild variant="outline" size="lg" className="border-[#13588f] text-[#13588f] hover:bg-[#13588f]/10">
           <Link href="/learning-process">학습과정 보기</Link>
-        </Button>
+        </Button> */}
         <Button asChild variant="outline" size="lg" className="border-[#13588f] text-[#13588f] hover:bg-[#13588f]/10">
-          <Link href="/consulting">상담하기</Link>
+          <Link href="/consulting">상담 받기</Link>
         </Button>
       </div>
 
@@ -47,7 +47,7 @@ export default function HomePage() {
       <div className="mt-12">
         <Button asChild size="lg" className="bg-green-500 hover:bg-green-600 text-white">
           <Link href="https://blog.naver.com/ourdebut" target="_blank" rel="noopener noreferrer">
-            네이버 블로그 바로가기
+            데뷰 블로그
           </Link>
         </Button>
       </div>
