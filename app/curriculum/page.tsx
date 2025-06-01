@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button';
 import { MessageSquare, BookOpen, Rocket, GraduationCap, Target, CalendarDays, BookCopy, Users, Zap, Brain, TrendingUp, LucideIcon } from 'lucide-react';
 import ElementaryRoadmapTable from './elementary-roadmap-table';
 import ElementaryLevelChart from './elementary-level-chart';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import ElementaryRegularCourse from './elementary-regular-course';
 import ElementaryIntensiveCourse from './elementary-intensive-course';
 import MiddleSchoolRegularCourse from './middle-school-regular-course';
@@ -111,6 +112,7 @@ const CurriculumCard: React.FC<CurriculumCardProps> = ({
 };
 
 // 초등 정규 과정 데이터
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const elementaryCourseData = {
   title: '4.1 D 초등 정규 과정',
   targetAudience: '초등 1~5학년',
