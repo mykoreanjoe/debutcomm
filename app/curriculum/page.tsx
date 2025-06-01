@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import { MessageSquare, BookOpen, Rocket, GraduationCap, Target, LucideIcon } from 'lucide-react';
+import { MessageSquare, BookOpen, Rocket, GraduationCap, Target, LucideIcon, CheckCircle2 } from 'lucide-react';
 import ElementaryRoadmapTable from './elementary-roadmap-table';
 import ElementaryLevelChart from './elementary-level-chart';
 import ElementaryRegularCourse from './elementary-regular-course';
@@ -304,6 +304,23 @@ const middleSchoolCourseData = {
   },
 };
 
+const elementaryLearningItems = [
+  "매월 스피킹 발표",
+  "학습 리워드",
+  "영상 포트폴리오",
+  "온라인 AI 학습 레포트",
+  "데뷰카드",
+  "참여형 클래스",
+  "문법학습과 하브루타",
+];
+
+const middleSchoolLearningItems = [
+  "수능 대비 어휘 학습",
+  "배경지식 학습",
+  "수행평가 대비",
+  "천일문 학습 등",
+];
+
 export default function CurriculumPage() {
   return (
     <main className="container mx-auto px-4 py-8 md:px-6 md:py-12">
@@ -379,7 +396,37 @@ export default function CurriculumPage() {
       <section id="study-book-info" className="mb-16">
         <StudyBook />
       </section>
-      
+
+      <section id="elementary-program" className="my-16 md:my-20 p-6 md:p-8 rounded-xl shadow-xl bg-sky-50 border border-sky-200">
+        <h2 className="text-3xl md:text-4xl font-bold text-sky-700 mb-3 text-center">초등부 집중 프로그램</h2>
+        <p className="text-center text-gray-600 mb-8 max-w-2xl mx-auto">
+          흥미와 실력을 동시에! 데뷰 초등부는 창의적이고 활동적인 학습 환경을 통해 영어의 기초를 단단히 다지고, 자신감을 키워줍니다.
+        </p>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+          {elementaryLearningItems.map((item, index) => (
+            <div key={index} className="bg-white p-5 rounded-lg shadow-md hover:shadow-lg transition-shadow flex items-start">
+              <CheckCircle2 className="h-6 w-6 text-sky-500 mr-3 mt-1 flex-shrink-0" />
+              <span className="text-gray-700 text-md">{item}</span>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section id="middle-school-program" className="my-16 md:my-20 p-6 md:p-8 rounded-xl shadow-xl bg-indigo-50 border border-indigo-200">
+        <h2 className="text-3xl md:text-4xl font-bold text-indigo-700 mb-3 text-center">중등부 심화 프로그램</h2>
+        <p className="text-center text-gray-600 mb-8 max-w-2xl mx-auto">
+          내신부터 수능까지, 흔들림 없는 실력! 데뷰 중등부는 체계적인 학습 관리와 심도 있는 프로그램으로 학업 성취도를 극대화합니다.
+        </p>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+          {middleSchoolLearningItems.map((item, index) => (
+            <div key={index} className="bg-white p-5 rounded-lg shadow-md hover:shadow-lg transition-shadow flex items-start">
+              <CheckCircle2 className="h-6 w-6 text-indigo-500 mr-3 mt-1 flex-shrink-0" />
+              <span className="text-gray-700 text-md">{item}</span>
+            </div>
+          ))}
+        </div>
+      </section>
+
       <footer className="text-center mt-12">
         <p className="text-gray-600">
           💬 각 과정 하단에는 &quot;이 과정 상담받기&quot; 버튼이 제공될 예정이며, 카카오 상담톡으로 연동됩니다.
