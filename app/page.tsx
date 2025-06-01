@@ -13,20 +13,36 @@ export default function HomePage() {
           <Star className="h-16 w-16 text-yellow-400 fill-yellow-400" />
         </div>
         <h2 className="text-3xl md:text-5xl font-bold text-[#13588f] mb-6">
-          최고의 학습 경험
+          최고의 학습 경험 (초등부)
         </h2>
         <ul className="space-y-3 text-left inline-block mb-8">
           <li className="flex items-center text-md md:text-lg text-gray-700">
             <CheckCircle2 className="h-6 w-6 text-green-500 mr-3 flex-shrink-0" />
-            <span>체계적이고 효과적인 <b>학습 시스템</b> 제공</span>
+            <span>매월 스피킹 발표</span>
           </li>
           <li className="flex items-center text-md md:text-lg text-gray-700">
             <CheckCircle2 className="h-6 w-6 text-green-500 mr-3 flex-shrink-0" />
-            <span>개인별 필요에 맞춘 <b>맞춤형 학습 계획</b></span>
+            <span>학습 리워드</span>
           </li>
           <li className="flex items-center text-md md:text-lg text-gray-700">
             <CheckCircle2 className="h-6 w-6 text-green-500 mr-3 flex-shrink-0" />
-            <span><b>전문 강사진</b>의 세심한 지도와 동기 부여</span>
+            <span>영상 포트폴리오</span>
+          </li>
+          <li className="flex items-center text-md md:text-lg text-gray-700">
+            <CheckCircle2 className="h-6 w-6 text-green-500 mr-3 flex-shrink-0" />
+            <span>온라인 AI 학습 레포트</span>
+          </li>
+          <li className="flex items-center text-md md:text-lg text-gray-700">
+            <CheckCircle2 className="h-6 w-6 text-green-500 mr-3 flex-shrink-0" />
+            <span>데뷰카드</span>
+          </li>
+          <li className="flex items-center text-md md:text-lg text-gray-700">
+            <CheckCircle2 className="h-6 w-6 text-green-500 mr-3 flex-shrink-0" />
+            <span>참여형 클래스</span>
+          </li>
+          <li className="flex items-center text-md md:text-lg text-gray-700">
+            <CheckCircle2 className="h-6 w-6 text-green-500 mr-3 flex-shrink-0" />
+            <span>문법학습과 하브루타</span>
           </li>
         </ul>
         <div>
