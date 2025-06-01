@@ -13,7 +13,7 @@ import MiddleSchoolCourseDetailsTable from './middle-school-course-details-table
 import SchoolRecordProcess from './school-record-process';
 import ReviewCycleDisplay from './review-cycle-display';
 import TripleCareSystem from './triple-care-system';
-import StudyBook from './study-book';
+import ScrollToTopButton from '@/components/ScrollToTopButton';
 
 interface CurriculumCardProps {
   title: string;
@@ -336,9 +336,6 @@ export default function CurriculumPage() {
       <ScrollToTopButton />
 
       <TripleCareSystem />
-      <ScrollToTopButton />
-
-      <StudyBook />
       <ScrollToTopButton />
 
       <section id="elementary-program" className="my-16 md:my-20 p-6 md:p-8 rounded-xl shadow-xl bg-sky-50 border border-sky-200">
