@@ -1,4 +1,8 @@
+"use client";
+
 import React from 'react';
+import { Button } from '@/components/ui/button';
+import { MessageSquare, BookOpen, Rocket, GraduationCap, Target, LucideIcon } from 'lucide-react';
 import ElementaryRoadmapTable from './elementary-roadmap-table';
 import ElementaryLevelChart from './elementary-level-chart';
 import ElementaryRegularCourse from './elementary-regular-course';
@@ -11,7 +15,102 @@ import ReviewCycleDisplay from './review-cycle-display';
 import TripleCareSystem from './triple-care-system';
 import StudyBook from './study-book';
 
-// 초등 정규 과정 데이터
+interface CurriculumCardProps {
+  title: string;
+  description: string;
+  icon?: LucideIcon | React.ElementType;
+  bgColorClass?: string;
+  textColorClass?: string;
+  buttonText?: string;
+  onButtonClick?: () => void;
+  anchorId?: string;
+}
+
+const curriculumData: CurriculumCardProps[] = [
+  {
+    title: "초등 정규 과정",
+    description: "탄탄한 기본기와 자기주도 학습 습관을 형성하는 과정입니다.",
+    bgColorClass: "bg-blue-50",
+    textColorClass: "text-blue-700",
+    buttonText: "초등 정규 과정 상담받기",
+    icon: BookOpen,
+    anchorId: "elementary-regular-details",
+  },
+  {
+    title: "초등 인텐시브 과정",
+    description: "심화 학습과 다양한 액티비티를 통해 영어 실력을 한 단계 높이는 집중 과정입니다.",
+    bgColorClass: "bg-green-50",
+    textColorClass: "text-green-700",
+    buttonText: "초등 인텐시브 과정 상담받기",
+    icon: Rocket,
+    anchorId: "elementary-intensive-details",
+  },
+  {
+    title: "중등 정규 과정",
+    description: "체계적인 학습과 내신 대비를 통해 학업 성취도를 극대화하는 과정입니다.",
+    bgColorClass: "bg-yellow-50",
+    textColorClass: "text-yellow-700",
+    buttonText: "중등 정규 과정 상담받기",
+    icon: GraduationCap,
+    anchorId: "middle-regular-details",
+  },
+  {
+    title: "중등 내신 과정",
+    description: "학교별 맞춤 전략과 실전 훈련으로 내신 성적 향상을 목표하는 과정입니다.",
+    bgColorClass: "bg-purple-50",
+    textColorClass: "text-purple-700",
+    buttonText: "중등 내신 과정 상담받기",
+    icon: Target,
+    anchorId: "middle-school-record-details", 
+  },
+];
+
+const CurriculumCard: React.FC<CurriculumCardProps> = ({
+  title,
+  description,
+  icon: Icon,
+  bgColorClass = "bg-gray-50",
+  textColorClass = "text-gray-700",
+  buttonText = "상담받기",
+  onButtonClick,
+  anchorId,
+}) => {
+  const handleButtonClickInternal = () => {
+    console.log(`${title} 상담 버튼 클릭`);
+    if (onButtonClick) {
+      onButtonClick();
+    }
+    // window.open('YOUR_KAKAO_TALK_CHANNEL_LINK', '_blank');
+  };
+
+  const cardContent = (
+    <div className={`rounded-xl shadow-lg p-6 md:p-8 flex flex-col justify-between ${bgColorClass} border border-gray-200 hover:shadow-xl transition-shadow duration-300 h-full`}>
+      <div>
+        {Icon && (
+          <div className="mb-4">
+            <Icon className={`w-12 h-12 ${textColorClass}`} />
+          </div>
+        )}
+        <h3 className={`text-2xl font-bold mb-3 ${textColorClass}`}>{title}</h3>
+        <p className="text-gray-600 text-base mb-6 min-h-[4.5rem]">{description}</p>
+      </div>
+      <Button 
+        onClick={handleButtonClickInternal} 
+        className="w-full mt-auto bg-slate-700 hover:bg-slate-800 text-white"
+      >
+        <MessageSquare size={18} className="mr-2" /> 
+        {buttonText}
+      </Button>
+    </div>
+  );
+
+  if (anchorId) {
+    return <a href={`#${anchorId}`} className="block h-full">{cardContent}</a>;
+  }
+
+  return cardContent;
+};
+
 const elementaryCourseData = {
   title: '4.1 D 초등 정규 과정',
   targetAudience: '초등 1~5학년',
@@ -87,7 +186,6 @@ const elementaryCourseData = {
   },
 };
 
-// 초등 인텐시브 과정 데이터
 const elementaryIntensiveCourseData = {
   title: '4.2 DI 초등 인텐시브',
   description: '초등 고학년 (5~6학년) 시기는 중학교 영어 학습을 대비하는 데 매우 중요한 시기입니다. 이 단계에서 영어의 기초가 제대로 다져지지 않으면 중학교에서 겪을 어려움이 커질 수 있습니다.',
@@ -103,7 +201,6 @@ const elementaryIntensiveCourseData = {
   completionStudy: '완성학습: 학생마다 과제를 수행해야할시, 학원 스케줄은 앞 또는 뒤에 고정하여 루틴으로 진행합니다.',
 };
 
-// 중등 정규 과정 데이터
 const middleSchoolCourseData = {
   title: "중등 정규 과정",
   introduction: "중학교는 영어 학습에서 결정적인 전환점이 되는 시기입니다. 단순히 더 어려운 문법과 단어를 배우는 시기를 넘어서, 학생의 영어에 대한 태도와 정체성, 그리고 장기적인 실력의 기반이 형성되는 시기이기 때문입니다. 중학교 영어는 단순히 '중간 단계'가 아니라, 성패를 가르는 결정적 시기임이 분명 합니다.",
@@ -210,28 +307,31 @@ const middleSchoolCourseData = {
 export default function CurriculumPage() {
   return (
     <main className="container mx-auto px-4 py-8 md:px-6 md:py-12">
-      <h1 className="text-4xl font-bold text-center mb-2 text-blue-600">커리큘럼</h1>
-      <p className="text-lg text-gray-600 text-center mb-12 md:mb-16 max-w-3xl mx-auto">
-        세심한 강사, 가장 정확한 온라인 AI, 꼼꼼한 스터디 매니저의 3중 관리로 우리 학생에게 꼭 필요한 학습을 완성해 갑니다
-      </p>
+      <section className="text-center mb-12 md:mb-16">
+        <h1 className="text-4xl md:text-5xl font-bold text-gray-800 mb-6">
+          데뷰 영어 커리큘럼
+        </h1>
+        <p className="text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed">
+          가장 완성도 높은 커리큘럼이 세심한 강사, 가장 정확한 온라인 AI, 꼼꼼한 스터디 매니저와 함께, <br className="hidden md:inline" />우리 학생에게 꼭 필요한 학습을 만들어 갑니다.
+        </p>
+      </section>
 
-      <section className="mb-12">
-        <h2 className="text-2xl font-semibold text-gray-800 mb-6 text-center">
-          제공 과정
-        </h2>
-        <div className="bg-slate-50 p-6 md:p-8 rounded-lg shadow-sm">
-          <p className="text-xl text-center text-gray-700 mb-4">
-            초등 정규 / 초등 인텐시브 / 중등 정규
-          </p>
-          <div className="text-center text-gray-600 space-y-2">
-            <p>• 콘텐츠: 아래 제공되는 레벨표와 차트를 참고해주세요.</p> 
-            <p>• 각 과정은 하단을 통해 확인 가능합니다.</p>
-          </div>
+      <section className="mb-16">
+        <h2 className="text-3xl font-bold text-center text-gray-700 mb-10">과정 안내</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+          {curriculumData.map((curriculum) => (
+            <CurriculumCard
+              key={curriculum.title}
+              {...curriculum}
+            />
+          ))}
         </div>
       </section>
 
-      {/* 초등 과정 공통 테이블/차트 섹션 */}
       <section id="elementary-common-info" className="mb-16 space-y-12">
+        <h2 className="text-2xl md:text-3xl font-bold text-center text-gray-800 mb-8 pt-8 border-t border-gray-200">
+          초등부 공통 안내
+        </h2>
         <div>
           <ElementaryRoadmapTable />
         </div>
@@ -240,13 +340,14 @@ export default function CurriculumPage() {
         </div>
       </section>
 
-      {/* 초등 정규 과정 섹션 */}
-      <ElementaryRegularCourse {...elementaryCourseData} />
-
-      {/* 초등 인텐시브 과정 섹션 */}
-      <ElementaryIntensiveCourse {...elementaryIntensiveCourseData} />
+      <section id="elementary-regular-details" className="mb-16">
+        <ElementaryRegularCourse {...elementaryCourseData} />
+      </section>
       
-      {/* 중등 과정 공통 테이블/차트 섹션 */}
+      <section id="elementary-intensive-details" className="mb-16">
+        <ElementaryIntensiveCourse {...elementaryIntensiveCourseData} />
+      </section>
+      
       <section id="middleschool-common-info" className="my-16 space-y-12">
         <h2 className="text-2xl md:text-3xl font-bold text-center text-gray-800 mb-8 pt-8 border-t border-gray-200">
           중등부 공통 안내
@@ -259,25 +360,22 @@ export default function CurriculumPage() {
         </div>
       </section>
 
-      {/* 중등 정규 과정 섹션 */}
-      <MiddleSchoolRegularCourse {...middleSchoolCourseData} />
+      <section id="middle-regular-details" className="mb-16">
+        <MiddleSchoolRegularCourse {...middleSchoolCourseData} />
+      </section>
 
-      {/* 내신 과정 섹션 (추가) */}
-      <section id="school-record-process" className="my-16">
+      <section id="middle-school-record-details" className="my-16">
          <SchoolRecordProcess />
       </section>
 
-      {/* 복습 과정 섹션 추가 */}
       <section id="review-process" className="mb-16">
         <ReviewCycleDisplay />
       </section>
 
-      {/* 3중 관리 완성 학습 섹션 추가 */}
       <section id="triple-care" className="mb-16">
         <TripleCareSystem />
       </section>
 
-      {/* 스터디북 섹션 추가 */}
       <section id="study-book-info" className="mb-16">
         <StudyBook />
       </section>
