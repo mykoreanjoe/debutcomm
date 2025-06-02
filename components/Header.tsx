@@ -67,12 +67,12 @@ export default function Header() {
       </nav>
       {/* 모바일 메뉴 */}
       <div className={`md:hidden ${isMobileMenuOpen ? 'block' : 'hidden'} mobile-menu`}>
-        <ul className="mt-2 space-y-2 px-2 py-3">
+        <ul className="mt-2 space-y-2 px-2 py-3 flex flex-col items-end">
           {navItems.map((item) => (
-            <li key={item.name}>
+            <li key={item.name} className="w-full">
               <Link 
                 href={item.href} 
-                className="block px-3 py-2 rounded-md text-base font-medium text-[#7fa6c3] hover:text-[#13588f] hover:bg-gray-50"
+                className="block px-3 py-2 rounded-md text-base font-medium text-[#7fa6c3] hover:text-[#13588f] hover:bg-gray-50 text-right"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 {item.name}

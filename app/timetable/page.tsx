@@ -146,6 +146,7 @@ export default function TimetablePage() {
         <meta name="description" content="데뷰 영어 학원의 초등부 및 중등부 시간표를 안내합니다." />
       </Head>
       <main className="container mx-auto px-4 py-12 md:py-16 bg-gray-50">
+        {(() => { console.log("TimetablePage 렌더링 시작"); return null; })()}
         <section className="text-center mb-12 md:mb-16">
           <h1 className="text-4xl md:text-5xl font-bold text-gray-800 mb-4 flex items-center justify-center">
             <CalendarDays className="w-10 h-10 md:w-12 md:h-12 mr-3 text-blue-600" /> 시간표
@@ -168,6 +169,7 @@ export default function TimetablePage() {
               </TableRow>
             </TableHeader>
             <TableBody>
+              {(() => { console.log("초등부 월수금 데이터:", elementaryMonWedFriData); return null; })()}
               {elementaryMonWedFriData.map((row) => (
                 <TableRow key={row.time}>
                   <TableCell className="font-medium text-gray-800">{row.time}</TableCell>
@@ -187,6 +189,7 @@ export default function TimetablePage() {
               </TableRow>
             </TableHeader>
             <TableBody>
+              {(() => { console.log("초등부 화목 데이터:", elementaryTueThuData); return null; })()}
               {elementaryTueThuData.map((row) => (
                 <TableRow key={row.time}>
                   <TableCell className="font-medium text-gray-800">{row.time}</TableCell>
@@ -210,6 +213,7 @@ export default function TimetablePage() {
               </TableRow>
             </TableHeader>
             <TableBody>
+              {(() => { console.log("초등 인텐시브 데이터:", elementaryIntensiveData); return null; })()}
               {elementaryIntensiveData.map((row) => (
                 <TableRow key={row.classType}>
                   <TableCell className="font-medium text-gray-800">{row.classType}</TableCell>
@@ -236,6 +240,7 @@ export default function TimetablePage() {
               </TableRow>
             </TableHeader>
             <TableBody>
+              {(() => { console.log("중등부 월금 데이터:", middleMonFriClassData); return null; })()}
               {middleMonFriClassData.map((row) => (
                 <TableRow key={row.level}>
                   <TableCell className="font-medium text-gray-800">{row.level}</TableCell>
@@ -256,6 +261,7 @@ export default function TimetablePage() {
               </TableRow>
             </TableHeader>
             <TableBody>
+              {(() => { console.log("중등부 화목 데이터:", middleTueThuClassData); return null; })()}
               {middleTueThuClassData.map((row) => (
                 <TableRow key={row.level}>
                   <TableCell className="font-medium text-gray-800">{row.level}</TableCell>
@@ -276,6 +282,7 @@ export default function TimetablePage() {
               </TableRow>
             </TableHeader>
             <TableBody>
+              {(() => { console.log("중등부 수요 클리닉 데이터:", middleWedClinicData); return null; })()}
               {middleWedClinicData.map((row) => (
                 <TableRow key={row.level}>
                   <TableCell className="font-medium text-gray-800">{row.level}</TableCell>

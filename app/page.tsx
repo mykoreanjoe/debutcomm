@@ -40,20 +40,13 @@ export default function HomePage() {
 
       <AnimatedSection delay={0}>
         <div className="mt-10 flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-4">
-          <Button asChild size="lg" className="bg-yellow-500 hover:bg-yellow-600 text-gray-800 font-semibold btn-apple-style">
+          <Button asChild size="lg" className="bg-[#FEE500] hover:bg-[#F0D900] text-gray-800 font-semibold btn-apple-style">
             <Link href="/reservation">테스트 예약</Link>
           </Button>
-          <AnimatedSection delay={0.3} className="w-full sm:w-auto">
-            <Link href="/why-debut"
-              className="inline-flex items-center justify-center w-full sm:w-auto px-8 py-3.5 border border-transparent text-base font-semibold rounded-md text-white bg-blue-600 hover:bg-blue-700 transition-colors duration-300 shadow-lg hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transform hover:-translate-y-0.5 btn-apple-style"
-            >
-              학습과정 보기 <ArrowRight className="w-5 h-5 ml-2" />
-            </Link>
-          </AnimatedSection>
-          <Button asChild size="lg" className="bg-yellow-500 hover:bg-yellow-600 text-gray-800 font-semibold btn-apple-style">
+          <Button asChild size="lg" className="bg-[#FEE500] hover:bg-[#F0D900] text-gray-800 font-semibold btn-apple-style">
             <Link href="/consulting">상담 받기</Link>
           </Button>
-          <Button asChild size="lg" className="bg-yellow-500 hover:bg-yellow-600 text-gray-800 font-semibold btn-apple-style">
+          <Button asChild size="lg" className="bg-[#FEE500] hover:bg-[#F0D900] text-gray-800 font-semibold btn-apple-style">
             <Link href="https://blog.naver.com/ourdebut" target="_blank" rel="noopener noreferrer">
               데뷰 블로그
             </Link>

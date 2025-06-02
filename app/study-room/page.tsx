@@ -5,10 +5,9 @@ import { BookHeadphones, Lock, ArrowRight, Search, Film, Loader2, AlertTriangle 
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { supabase } from '@/lib/supabaseClient';
 
 const STUDY_ROOM_PASSWORD = "debutedu";
-const SUPABASE_URL = "https://aijwqgvcfzqbrdwbfwsp.supabase.co/rest/v1/grammar_videos?select=*";
-const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFpandxZ3ZjZnpxYnJkd2Jmd3NwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDg0MjE0NzYsImV4cCI6MjA2Mzk5NzQ3Nn0.vq-D3CwR-lBVz6nC61-S8grI0CNAq2GdnRKSZ6cyKVs";
 
 interface Video {
   id: number;
@@ -29,39 +28,46 @@ const StudyRoomPage = () => {
 
   const handlePasswordSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    console.log("Attempting login with password:", password);
     if (password === STUDY_ROOM_PASSWORD) {
+      console.log("Password matched! Setting isAuthenticated to true.");
       setIsAuthenticated(true);
       setError('');
     } else {
+      console.log("Password did not match.");
       setError('비밀번호가 일치하지 않습니다.');
       setIsAuthenticated(false);
     }
   };
 
   useEffect(() => {
+    console.log("useEffect triggered. isAuthenticated:", isAuthenticated);
     if (isAuthenticated) {
+      console.log("isAuthenticated is true, calling fetchVideos...");
       const fetchVideos = async () => {
         setIsLoading(true);
         setFetchError(null);
         try {
-          const response = await fetch(SUPABASE_URL, {
-            headers: {
-              'apikey': SUPABASE_ANON_KEY,
-              'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
-            }
-          });
-          if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
+          const { data, error } = await supabase
+            .from('grammar_videos')
+            .select('*');
+
+          if (error) {
+            throw error;
           }
-          const data: Video[] = await response.json();
+
           console.log("Fetched videos data:", JSON.stringify(data, null, 2));
-          setVideos(data);
+          if (data) {
+            setVideos(data as Video[]);
+          }
         } catch (err) {
-          console.error("Failed to fetch videos:", err);
+          console.error("Failed to fetch videos (raw error object):", err);
           if (err instanceof Error) {
             setFetchError(`영상 목록을 불러오는 데 실패했습니다: ${err.message}`);
           } else {
-            setFetchError("영상 목록을 불러오는 데 실패했습니다. 알 수 없는 오류입니다.");
+            const errorMessage = err && typeof err === 'object' && 'message' in err ? String(err.message) : '알 수 없는 오류입니다.';
+            setFetchError(`영상 목록을 불러오는 데 실패했습니다: ${errorMessage}`);
+            console.error("Error object details:", JSON.stringify(err, null, 2));
           }
         } finally {
           setIsLoading(false);
