@@ -40,10 +40,10 @@ export default function HomePage() {
       <AnimatedSection delay={0}>
         <div className="mt-10 flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-4">
           <Button asChild size="lg" className="bg-[#FEE500] hover:bg-[#F0D900] text-gray-800 font-semibold btn-apple-style">
-            <Link href="/reservation">테스트 예약</Link>
+            <Link href="https://booking.naver.com/booking/13/bizes/1068331" target="_blank" rel="noopener noreferrer">테스트 예약</Link>
           </Button>
           <Button asChild size="lg" className="bg-[#FEE500] hover:bg-[#F0D900] text-gray-800 font-semibold btn-apple-style">
-            <Link href="/consulting">상담 받기</Link>
+            <Link href="http://pf.kakao.com/_pGxkPn/chat" target="_blank" rel="noopener noreferrer">상담 받기</Link>
           </Button>
           <Button asChild size="lg" className="bg-[#FEE500] hover:bg-[#F0D900] text-gray-800 font-semibold btn-apple-style">
             <Link href="https://blog.naver.com/ourdebut" target="_blank" rel="noopener noreferrer">
