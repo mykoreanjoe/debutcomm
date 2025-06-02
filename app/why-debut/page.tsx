@@ -249,67 +249,68 @@ const StudyBookSection = () => {
   const naverBlogUrl = "https://blog.naver.com/ourdebut";
 
   return (
-    <AnimatedSection delay={0}>
-      <section className="py-12 md:py-16 bg-green-50">
-        <div className="container mx-auto px-4 md:px-6">
-          <div className="text-center mb-12 md:mb-16">
-            <BookHeart className="w-12 h-12 md:w-16 md:h-16 text-green-600 mx-auto mb-4" />
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-green-700">
-              나만의 학습 로드맵, 스터디북
-            </h2>
-            <p className="mt-4 text-md sm:text-lg text-gray-600 max-w-3xl mx-auto">
-              스터디북은 스스로 학습을 설계하고 완성하는 메타인지 도구로, 자기주도 학습 능력을 키웁니다.
-            </p>
-          </div>
+    <AnimatedSection className="py-12 md:py-20 bg-slate-50">
+      <div className="container mx-auto px-4">
+        <div className="text-center mb-10 md:mb-12">
+          <h3 className="text-3xl md:text-4xl font-bold text-gray-800 mb-3 flex items-center justify-center">
+            <BookHeart className="w-10 h-10 mr-3 text-amber-500" /> 데뷰 스터디북
+          </h3>
+          <p className="text-gray-600 md:text-lg max-w-2xl mx-auto">
+            단순 필기 노트가 아닌, 자기주도 학습 습관을 형성하는 메타인지 도구입니다.
+          </p>
+        </div>
 
-          <div className="bg-white p-6 md:p-8 rounded-xl shadow-lg border border-green-200 mb-12 md:mb-16 max-w-3xl mx-auto">
-            <p className="text-gray-700 leading-relaxed text-sm md:text-base">
-              스터디북은 학생 스스로 학습을 계획하고, 배운 내용을 자신의 언어로 <strong className="text-green-600 font-semibold">기록(Record)</strong>하며, 
-              이를 바탕으로 과제를 수행하고 꾸준히 <strong className="text-green-600 font-semibold">복습(Practice)</strong>하여 지식을 내재화합니다. 
-              또한, 학습 과정을 주기적으로 <strong className="text-green-600 font-semibold">성찰하고 피드백(Reflect & Feedback)</strong>을 통해 학습 전략을 개선하며 메타인지 능력을 향상시킵니다. 
-              이러한 과정을 통해 개인별 맞춤 학습, 자기 주도 학습 습관 형성, 학습 성과 시각화 등 다양한 효과를 얻을 수 있습니다.
-            </p>
+        <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center mb-10 md:mb-12">
+          <div>
+            <StudyBookSectionTitle icon={Edit3} title="스터디북 주요 기능" />
+            <ul className="space-y-3 text-gray-700 text-sm md:text-base list-disc list-inside pl-2">
+              <li><strong>개인 맞춤형 학습 계획:</strong> 학생 스스로 학습 목표와 계획을 세우고 점검합니다.</li>
+              <li><strong>수업 내용 정리:</strong> 배운 내용을 자신의 언어로 재구성하며 이해도를 높입니다.</li>
+              <li><strong>과제 및 복습 관리:</strong> 체계적인 복습과 과제 수행을 통해 학습 내용을 완전히 자기 것으로 만듭니다.</li>
+              <li><strong>성장 과정 기록:</strong> 학습 여정을 기록하며 성취감을 느끼고 학습 동기를 부여받습니다.</li>
+              <li><strong>학습 성찰:</strong> 학습 과정에서의 어려움과 해결 과정을 기록하며 메타인지 능력을 향상시킵니다.</li>
+            </ul>
           </div>
-
-          <div className="pt-12 border-t border-gray-200">
-            <StudyBookSectionTitle icon={Edit3} title="스터디북 샘플 보기" className="justify-center text-green-700 !text-2xl md:!text-3xl" />
-            <p className="text-center text-gray-600 mb-10 text-sm md:text-base max-w-xl mx-auto">
-              학생들의 실제 스터디북 예시입니다. 체계적인 기록으로 학습 과정을 한눈에 살펴보세요.
-            </p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-12">
-              {sampleImages.map((image, index) => (
-                <div key={index} className="bg-white p-2 md:p-3 rounded-lg shadow-xl hover:shadow-2xl transition-shadow duration-300 aspect-[3/4]">
-                  <Image 
-                    src={image.src} 
-                    alt={image.alt}
-                    width={600}
-                    height={800}
-                    className="rounded-md object-cover w-full h-full"
-                  />
-                </div>
-              ))}
-            </div>
-            <p className="text-center text-xs text-gray-500 mt-6 mb-10">
-              샘플 이미지는 실제 스터디북 활용 모습 예시이며, 학생의 학습 수준과 과정에 따라 다를 수 있습니다.
-            </p>
-            <div className="text-center">
-              <Link href={naverBlogUrl} legacyBehavior>
-                <a 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center px-8 py-3.5 border border-transparent text-base font-semibold rounded-md text-white bg-green-500 hover:bg-green-600 transition-colors duration-300 shadow-lg hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transform hover:-translate-y-0.5 btn-apple-style"
-                >
-                  <ExternalLink className="w-5 h-5 mr-2.5" />
-                  더 많은 스터디북 사례 보러가기
-                </a>
-              </Link>
-              <p className="mt-4 text-sm text-gray-600">
-                데뷰 학생들의 생생한 스터디북 활용기를 네이버 블로그에서 확인하세요!
-              </p>
-            </div>
+          <div className="relative w-full h-64 md:h-80 rounded-lg overflow-hidden shadow-xl">
+            <Image 
+              src="/images/studybook_all_purpose_notes_sample.jpg" 
+              alt="데뷰 스터디북 내부 샘플 이미지"
+              layout="fill"
+              objectFit="cover"
+            />
           </div>
         </div>
-      </section>
+
+        <div className="mb-10 md:mb-12">
+          <StudyBookSectionTitle icon={FolderArchive} title="스터디북 샘플 이미지" />
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {sampleImages.map((image, index) => (
+              <div key={index} className="relative w-full h-40 md:h-56 rounded-md overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300 group">
+                <Image src={image.src} alt={image.alt} layout="fill" objectFit="cover" className="transform group-hover:scale-105 transition-transform duration-300" />
+                <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <p className="text-white text-center text-xs p-2">{image.alt}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+        
+        <div className="text-center">
+          <p className="text-center text-gray-600 mb-6">
+            더 많은 스터디북 활용 예시와 데뷰의 교육 철학은 공식 블로그에서 확인하실 수 있습니다.
+          </p>
+          <Link 
+            href={naverBlogUrl} 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-lg shadow-md text-white bg-green-500 hover:bg-green-600 transition-colors duration-300 transform hover:scale-105"
+          >
+            <ExternalLink className="w-5 h-5 mr-2" />
+            데뷰 공식 블로그 바로가기
+          </Link>
+        </div>
+
+      </div>
     </AnimatedSection>
   );
 };

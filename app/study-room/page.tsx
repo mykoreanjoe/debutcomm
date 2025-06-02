@@ -48,6 +48,10 @@ const StudyRoomPage = () => {
         setIsLoading(true);
         setFetchError(null);
         try {
+          console.log("Supabase client object:", supabase);
+          if (!supabase) {
+            throw new Error("Supabase client is not initialized.");
+          }
           const { data, error } = await supabase
             .from('grammar_videos')
             .select('*');
