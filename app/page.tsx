@@ -3,7 +3,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from "@/components/ui/button";
 import AnimatedSection from '@/components/AnimatedSection';
-import { ArrowRight } from 'lucide-react';
 
 export default function HomePage() {
   return (
