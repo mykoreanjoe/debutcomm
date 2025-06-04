@@ -1,19 +1,5 @@
 import React from 'react';
-import { BookOpen, Lightbulb, BarChart2 } from 'lucide-react'; // 사용되는 아이콘만 남김
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-
-interface ComparisonTableRow {
-  item: string;
-  middleSchool: string;
-  highSchool: string;
-}
+import { BookOpen, Lightbulb } from 'lucide-react'; // BarChart2 제거
 
 interface TimeTableClassRow {
   level: string;

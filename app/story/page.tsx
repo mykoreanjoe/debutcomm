@@ -1,6 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
-import { MessagesSquare, ClipboardCheck, ShieldCheck, Award } from 'lucide-react';
+import { MessagesSquare, ClipboardCheck, ShieldCheck } from 'lucide-react';
 
 const learningDifficulties = [
   {

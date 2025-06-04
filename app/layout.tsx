@@ -1,6 +1,7 @@
 // "use client"; // 최상단 "use client" 제거
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -78,20 +79,23 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <head>
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-WNBBJY06SL"></script>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-
-          gtag('config', 'G-WNBBJY06SL');
-        `,
-          }}
-        />
+        {/* 기존 script 태그들을 아래 Script 컴포넌트로 대체 */}
       </head>
       <body className={inter.className}>
+        {/* Google Analytics Scripts using next/script */}
+        <Script 
+          src="https://www.googletagmanager.com/gtag/js?id=G-WNBBJY06SL"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-WNBBJY06SL');
+          `}
+        </Script>
+
         {/* Header 내 Clerk 관련 버튼은 Header 컴포넌트에서 직접 제거 예정 */}
         <Header />
         <PageTransitionWrapper>{children}</PageTransitionWrapper> {/* PageTransitionWrapper 사용 */}
