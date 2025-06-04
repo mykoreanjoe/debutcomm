@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { BookHeadphones, Lock, ArrowRight, Search, Film, Loader2, AlertTriangle, Youtube } from 'lucide-react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { supabase } from '@/lib/supabaseClient';
@@ -73,16 +74,17 @@ const StudyRoomPage = () => {
 
           if (error) throw error;
           if (data) setGrammarVideos(data as Video[]);
-        } catch (err) {
+        } catch (err: unknown) {
           console.error("Raw error object (Grammar):", err);
           let detailedMessage = '알 수 없는 오류입니다.';
           if (err instanceof Error) {
             detailedMessage = err.message;
           } else if (typeof err === 'object' && err !== null) {
-            detailedMessage = (err as any).message || JSON.stringify(err);
-            if ((err as any).details) detailedMessage += ` (Details: ${(err as any).details})`;
-            if ((err as any).hint) detailedMessage += ` (Hint: ${(err as any).hint})`;
-            if ((err as any).code) detailedMessage += ` (Code: ${(err as any).code})`;
+            const errorObj = err as { message?: string; details?: string; hint?: string; code?: string; };
+            detailedMessage = errorObj.message || JSON.stringify(err);
+            if (errorObj.details) detailedMessage += ` (Details: ${errorObj.details})`;
+            if (errorObj.hint) detailedMessage += ` (Hint: ${errorObj.hint})`;
+            if (errorObj.code) detailedMessage += ` (Code: ${errorObj.code})`;
           } else if (err) {
             detailedMessage = String(err);
           }
@@ -107,16 +109,17 @@ const StudyRoomPage = () => {
           if (data) {
             setStudentVideos(data.map(v => ({...v, id: String(v.id)})) as Video[]);
           }
-        } catch (err) {
+        } catch (err: unknown) {
           console.error("Raw error object (Student):", err);
           let detailedMessage = '알 수 없는 오류입니다.';
           if (err instanceof Error) {
             detailedMessage = err.message;
           } else if (typeof err === 'object' && err !== null) {
-            detailedMessage = (err as any).message || JSON.stringify(err);
-            if ((err as any).details) detailedMessage += ` (Details: ${(err as any).details})`;
-            if ((err as any).hint) detailedMessage += ` (Hint: ${(err as any).hint})`;
-            if ((err as any).code) detailedMessage += ` (Code: ${(err as any).code})`;
+            const errorObj = err as { message?: string; details?: string; hint?: string; code?: string; };
+            detailedMessage = errorObj.message || JSON.stringify(err);
+            if (errorObj.details) detailedMessage += ` (Details: ${errorObj.details})`;
+            if (errorObj.hint) detailedMessage += ` (Hint: ${errorObj.hint})`;
+            if (errorObj.code) detailedMessage += ` (Code: ${errorObj.code})`;
           } else if (err) {
             detailedMessage = String(err);
           }
@@ -165,7 +168,14 @@ const StudyRoomPage = () => {
           aria-label={`Play video ${title}`}
         >
           {thumbnailUrl ? (
-            <img src={thumbnailUrl} alt={title} className="w-full h-48 object-cover" />
+            <div className="relative w-full h-48">
+              <Image
+                src={thumbnailUrl}
+                alt={title}
+                layout="fill"
+                objectFit="cover"
+              />
+            </div>
           ) : (
             <div className="bg-gray-200 h-48 flex items-center justify-center">
               <Film className="w-16 h-16 text-gray-400" />
