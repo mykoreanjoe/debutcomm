@@ -1,8 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useMemo } from 'react';
-import { BookHeadphones, Lock, ArrowRight, Search, Film, Loader2, AlertTriangle, Youtube } from 'lucide-react';
-import Link from 'next/link';
+import { BookHeadphones, Lock, Search, Film, Loader2, AlertTriangle, Youtube } from 'lucide-react';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
