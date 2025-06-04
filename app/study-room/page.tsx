@@ -18,12 +18,10 @@ import {
 const STUDY_ROOM_PASSWORD = "debutedu";
 
 interface Video {
-  id: string; // Changed to string to accommodate UUID
+  id: string;
   title: string;
-  description?: string; // Made optional
-  video_url?: string; // For grammar videos that might link directly
-  youtube_url?: string; // For student youtube videos
-  youtube_id?: string; // For student youtube videos, to construct embed URL
+  youtube_url?: string;
+  youtube_id?: string;
   thumbnail_url?: string;
 }
 
@@ -37,12 +35,6 @@ const StudyRoomPage = () => {
   const [searchTermGrammar, setSearchTermGrammar] = useState('');
   const [isLoadingGrammar, setIsLoadingGrammar] = useState(false);
   const [fetchErrorGrammar, setFetchErrorGrammar] = useState<string | null>(null);
-
-  // Student Videos States
-  const [studentVideos, setStudentVideos] = useState<Video[]>([]);
-  const [searchTermStudent, setSearchTermStudent] = useState('');
-  const [isLoadingStudent, setIsLoadingStudent] = useState(false);
-  const [fetchErrorStudent, setFetchErrorStudent] = useState<string | null>(null);
 
   // Video Player Dialog States
   const [selectedVideo, setSelectedVideo] = useState<Video | null>(null);
@@ -94,71 +86,25 @@ const StudyRoomPage = () => {
         }
       };
 
-      const fetchStudentVideos = async () => {
-        setIsLoadingStudent(true);
-        setFetchErrorStudent(null);
-        try {
-          if (!supabase) {
-            throw new Error("Supabase client is not initialized.");
-          }
-          const { data, error } = await supabase
-            .from('grammar_videos')
-            .select('id, title, youtube_id, youtube_url, thumbnail_url');
-
-          if (error) throw error;
-          if (data) {
-            setStudentVideos(data.map(v => ({...v, id: String(v.id)})) as Video[]);
-          }
-        } catch (err: unknown) {
-          console.error("Raw error object (Student):", err);
-          let detailedMessage = '알 수 없는 오류입니다.';
-          if (err instanceof Error) {
-            detailedMessage = err.message;
-          } else if (typeof err === 'object' && err !== null) {
-            const errorObj = err as { message?: string; details?: string; hint?: string; code?: string; };
-            detailedMessage = errorObj.message || JSON.stringify(err);
-            if (errorObj.details) detailedMessage += ` (Details: ${errorObj.details})`;
-            if (errorObj.hint) detailedMessage += ` (Hint: ${errorObj.hint})`;
-            if (errorObj.code) detailedMessage += ` (Code: ${errorObj.code})`;
-          } else if (err) {
-            detailedMessage = String(err);
-          }
-          setFetchErrorStudent(`학생 영상 목록을 불러오는 데 실패했습니다: ${detailedMessage}`);
-        } finally {
-          setIsLoadingStudent(false);
-        }
-      };
-
       fetchGrammarVideos();
-      fetchStudentVideos();
     }
   }, [isAuthenticated]);
 
   const filteredGrammarVideos = useMemo(() => {
     if (!searchTermGrammar) return grammarVideos;
     return grammarVideos.filter(video => 
-      video.title.toLowerCase().includes(searchTermGrammar.toLowerCase()) ||
-      (video.description && video.description.toLowerCase().includes(searchTermGrammar.toLowerCase()))
+      video.title.toLowerCase().includes(searchTermGrammar.toLowerCase())
     );
   }, [grammarVideos, searchTermGrammar]);
-
-  const filteredStudentVideos = useMemo(() => {
-    if (!searchTermStudent) return studentVideos;
-    return studentVideos.filter(video => 
-      video.title.toLowerCase().includes(searchTermStudent.toLowerCase()) ||
-      (video.description && video.description.toLowerCase().includes(searchTermStudent.toLowerCase()))
-    );
-  }, [studentVideos, searchTermStudent]);
 
   const openVideoPlayer = (video: Video) => {
     setSelectedVideo(video);
     setIsPlayerOpen(true);
   };
 
-  const renderVideoCard = (video: Video, isStudentVideo: boolean = false) => {
-    const thumbnailUrl = video.thumbnail_url || ''; // Use a placeholder if no thumbnail
+  const renderVideoCard = (video: Video) => {
+    const thumbnailUrl = video.thumbnail_url || '';
     const title = video.title;
-    const description = video.description || "설명이 없습니다.";
 
     return (
       <div key={video.id} className="bg-white rounded-lg shadow-lg overflow-hidden flex flex-col">
@@ -190,29 +136,18 @@ const StudyRoomPage = () => {
           >
             {title}
           </h3>
-          <p className="text-gray-600 text-sm mb-4 flex-grow line-clamp-3">
-            {description}
-          </p>
-          {isStudentVideo && video.youtube_id && (
+          {video.youtube_id && (
             <Button 
               onClick={() => openVideoPlayer(video)} 
               size="sm" 
               className="mt-auto bg-red-600 hover:bg-red-700 w-full"
             >
-              <Youtube className="mr-2 h-4 w-4" /> 학생 영상 시청하기
+              <Youtube className="mr-2 h-4 w-4" /> 영상 시청하기
             </Button>
           )}
-          {!isStudentVideo && video.video_url && (
-            <Button asChild size="sm" className="mt-auto bg-blue-600 hover:bg-blue-700 w-full">
-              <Link href={video.video_url} target="_blank" rel="noopener noreferrer">
-                문법 영상 시청하기 <ArrowRight className="ml-2 h-4 w-4" />
-              </Link>
-            </Button>
-          )}
-          {/* Fallback for videos without a direct action button if needed */}
-          {!isStudentVideo && !video.video_url && !video.youtube_id &&(
+          {!video.youtube_id && (
              <Button size="sm" disabled className="mt-auto w-full">
-                시청 불가
+                시청 정보 없음
              </Button>
           )}
         </div>
@@ -234,7 +169,6 @@ const StudyRoomPage = () => {
                   </Button>
                 </DialogClose>
               </DialogHeader>
-              {/* Prefer youtube_id for embed, fallback to youtube_url if it's an embeddable link */}
               {selectedVideo.youtube_id ? (
                 <iframe
                   className="w-full h-full"
@@ -292,52 +226,7 @@ const StudyRoomPage = () => {
         </div>
       ) : (
         <div>
-          {/* Student Videos Section */}
-          <section className="mb-16">
-            <h2 className="text-3xl font-semibold text-red-600 mb-6 text-center">학생 학습 영상</h2>
-            <div className="mb-8 max-w-xl mx-auto">
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
-                <Input
-                  type="text"
-                  placeholder="학생 영상 검색 (제목 또는 내용)..."
-                  value={searchTermStudent}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchTermStudent(e.target.value)}
-                  className="pl-10 w-full"
-                />
-              </div>
-            </div>
-
-            {isLoadingStudent && (
-              <div className="flex justify-center items-center py-10">
-                <Loader2 className="h-12 w-12 animate-spin text-red-600" />
-                <p className="ml-3 text-lg text-gray-600">학생 영상 목록을 불러오는 중입니다...</p>
-              </div>
-            )}
-
-            {fetchErrorStudent && (
-              <div className="bg-red-50 border-l-4 border-red-400 p-4 rounded-md shadow-md max-w-2xl mx-auto text-center">
-                <div className="flex items-center justify-center">
-                  <AlertTriangle className="h-6 w-6 text-red-600 mr-2" />
-                  <p className="text-red-700 font-semibold">{fetchErrorStudent}</p>
-                </div>
-              </div>
-            )}
-
-            {!isLoadingStudent && !fetchErrorStudent && filteredStudentVideos.length === 0 && (
-              <p className="text-center text-gray-500 py-10 text-lg">
-                {searchTermStudent ? "검색된 학생 영상이 없습니다." : "등록된 학생 영상이 없습니다."}
-              </p>
-            )}
-            
-            {!isLoadingStudent && !fetchErrorStudent && filteredStudentVideos.length > 0 && (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {filteredStudentVideos.map((video) => renderVideoCard(video, true))}
-              </div>
-            )}
-          </section>
-
-          {/* Grammar Videos Section (Existing) */}
+          {/* Grammar Videos Section */}
           <section>
             <h2 className="text-3xl font-semibold text-blue-600 mb-6 text-center">문법 학습 영상</h2>
             <div className="mb-8 max-w-xl mx-auto">
@@ -377,7 +266,7 @@ const StudyRoomPage = () => {
 
             {!isLoadingGrammar && !fetchErrorGrammar && filteredGrammarVideos.length > 0 && (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {filteredGrammarVideos.map((video) => renderVideoCard(video, false))}
+                {filteredGrammarVideos.map((video) => renderVideoCard(video))}
               </div>
             )}
           </section>
