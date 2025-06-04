@@ -54,15 +54,15 @@ const sampleReviews = [
 ];
 
 const surveyItems = [
-  '학습 기간이 어떻게 될까요? (기간을 선택해주세요.)',
+  '학습 기간이 어떻게 될까요?',
   '강사진에 대해서 어떻게 생각하시나요?',
   '교재에 대해 어떻게 생각하시나요?',
   '관리 프로그램에 대해 어떻게 생각하시나요?',
-  '온라인 프로그램 (리딩앤, 원아워)에 대해 어떻게 생각하시나요?',
+  '온라인 프로그램에 대해 어떻게 생각하시나요?',
   '학원비에 대해 어떻게 생각하시나요?',
   '방학특강 (여름, 겨울)에 대해 어떻게 생각하시나요?',
   '차량 서비스에 대해 어떻게 생각하시나요?',
-  '데뷰데이 (토요 프로그램)에 대해 어떻게 생각하시나요?',
+  '데뷰데이에 대해 어떻게 생각하시나요?',
   '행정 및 CS 응대에 대해 어떻게 생각하시나요?',
 ];
 
@@ -133,6 +133,19 @@ const ReviewsPage = () => {
               </div>
             ))}
           </div>
+
+          {/* 레테 예약하기 버튼 */}
+          <div className="mt-12 md:mt-16 text-center">
+            <a
+              href="https://booking.naver.com/booking/13/bizes/1068331"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center px-8 py-4 border border-transparent text-lg font-semibold rounded-lg text-white bg-blue-600 hover:bg-blue-700 transition-colors duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+            >
+              레벨테스트 예약하기
+            </a>
+          </div>
+
         </div>
       </section>
     </main>

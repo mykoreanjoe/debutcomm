@@ -5,7 +5,10 @@ const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
 // 환경 변수 값 로깅 추가
 console.log("Supabase URL from env:", supabaseUrl);
-console.log("Supabase Anon Key from env:", supabaseAnonKey);
+console.log("Raw NEXT_PUBLIC_SUPABASE_ANON_KEY from process.env:", process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY);
+console.log("Length of raw key:", process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY?.length);
+console.log("Supabase Anon Key used for createClient:", supabaseAnonKey);
+console.log("Length of key used for createClient:", supabaseAnonKey?.length);
 
 if (!supabaseUrl) {
   console.error("ERROR: Supabase URL not found in environment variables.");

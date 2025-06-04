@@ -45,17 +45,12 @@ interface TimeTableData {
 export interface MiddleSchoolCourseData {
   title: string;
   introduction: string;
-  comparisonTable: {
-    title: string;
-    columns: string[];
-    rows: ComparisonTableRow[];
-  };
   timeTable?: TimeTableData; // 타입 수정 -> timeTable?: TimeTableData;
   id?: string; // id prop 추가
 }
 
 const MiddleSchoolRegularCourse = (props: MiddleSchoolCourseData) => {
-  const { title, introduction, comparisonTable, /*timeTable,*/ id } = props;
+  const { title, introduction, /* comparisonTable, */ /*timeTable,*/ id } = props;
 
   // const scrollRef = useRef<HTMLDivElement>(null); // scrollRef 주석 처리
 
@@ -75,43 +70,7 @@ const MiddleSchoolRegularCourse = (props: MiddleSchoolCourseData) => {
           </div>
         </div>
 
-        <div className="bg-white p-6 rounded-lg shadow-md mb-10">
-          <h3 className="text-2xl font-semibold text-gray-700 mb-6 text-center flex items-center justify-center">
-            <BarChart2 className="w-7 h-7 mr-2 text-gray-600" /> {comparisonTable.title}
-          </h3>
-          <div className="overflow-x-auto">
-            <Table className="min-w-full border">
-              <TableHeader className="bg-gray-100">
-                <TableRow>
-                  {comparisonTable.columns.map((col, index) => (
-                    <TableHead 
-                      key={index} 
-                      className={`py-3 px-4 font-semibold text-gray-700 text-sm ${index === 0 ? 'w-1/4' : (index === 1 ? 'w-3/8' : 'w-3/8')}`}
-                    >
-                      {col}
-                    </TableHead>
-                  ))}
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {comparisonTable.rows.map((row, rowIndex) => (
-                  <TableRow key={rowIndex} className={rowIndex % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
-                    <TableCell className="py-3 px-4 font-medium text-gray-800 text-sm border-r">{row.item}</TableCell>
-                    <TableCell className="py-3 px-4 text-gray-700 text-sm border-r">{row.middleSchool}</TableCell>
-                    <TableCell className="py-3 px-4 text-gray-700 text-sm">{row.highSchool}</TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </div>
-        </div>
-
         {/* 시간표 관련 div 시작 - 이 부분을 삭제합니다. */}
-        {/* timeTable 데이터가 있을 경우에만 렌더링되도록 되어 있었으나, 이제 이 전체 div를 삭제합니다. 
-        <div className="bg-white p-6 rounded-lg shadow-md">
-           ... 시간표 관련 모든 내용 ... 
-        </div>
-        */}
 
       </div>
     </section>

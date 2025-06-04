@@ -37,8 +37,7 @@ const DebutDayDetailsSection = () => {
             데뷰데이!
           </h2>
           <p className="text-lg md:text-xl text-gray-700 max-w-3xl mx-auto leading-relaxed">
-            데뷰데이는 정규 수업 외에 토요 클리닉, 1:1 간담회 등을 통해 학습 동기를 부여하고 학부모님과 소통하는 데뷰만의 특별한 날입니다. <br />
-            진로 탐색, 재미있는 이벤트, 도전적인 챌린지, 실력 발휘 컨테스트, 유익한 특강 등 데뷰가 지금까지 진행해온 다채로운 활동들을 소개합니다.
+            데뷰는 하루의 소중함을 알고 있습니다. 정규 수업 외에 토요 클리닉, 1:1 간담회 등, 학원과 함께 하는 하루 하루를, 학생들의 시기에 따른 행사들로 채워 나갑니다.
           </p>
         </div>
 
@@ -144,7 +143,7 @@ const DebutDayDetailsSection = () => {
                   { month: "5월", activity: "로드맵 상담", theme: "성장 점검 및 감성" },
                   { month: "6월", activity: "Speaking Day, 내신 스터디", theme: "발표력 및 자신감" },
                   { month: "7월", activity: "CHAT-GPT 스피킹 컨테스트", theme: "자기 표현력 및 창의성" },
-                  { month: "8월", activity: "여름 특강", theme: "복습 및 실력 강화" },
+                  { month: "8월", activity: "데뷰 디즈니 데이", theme: "복습 및 실력 강화" },
                   { month: "9월", activity: "대개강 이벤트", theme: "동기 부여 및 새출발" },
                   { month: "10월", activity: "공포의 영어방탈출", theme: "재미있는 학습 체험" },
                   { month: "11월", activity: "로드맵 상담", theme: "학습 완성도 평가" },

@@ -56,7 +56,7 @@ export interface CourseInfoProps {
       content: string;
     };
   };
-  activitiesAndProjects: {
+  activitiesAndProjects?: { // 선택적으로 변경
     title: string;
     points: string[];
   };
@@ -182,13 +182,15 @@ const ElementaryRegularCourse = (props: CourseInfoProps) => { // props 전체를
           </div>
         </div>
 
-        {/* 활동과 프로젝트 (기존 내용 유지) */}
-        <div className="mb-10 p-6 bg-white rounded-lg shadow-md">
-          <h3 className="text-xl font-semibold text-sky-600 mb-4 flex items-center"><Activity className="w-6 h-6 mr-2" /> {activitiesAndProjects.title}</h3>
-          <ul className="list-disc list-inside text-gray-600 space-y-1 pl-2 text-sm">
-            {activitiesAndProjects.points.map((point, i) => <li key={i}>{point}</li>)}
-          </ul>
-        </div>
+        {/* 활동과 프로젝트 (조건부 렌더링 추가) */}
+        {activitiesAndProjects && (
+          <div className="mb-10 p-6 bg-white rounded-lg shadow-md">
+            <h3 className="text-xl font-semibold text-sky-600 mb-4 flex items-center"><Activity className="w-6 h-6 mr-2" /> {activitiesAndProjects.title}</h3>
+            <ul className="list-disc list-inside text-gray-600 space-y-1 pl-2 text-sm">
+              {activitiesAndProjects.points.map((point, i) => <li key={i}>{point}</li>)}
+            </ul>
+          </div>
+        )}
 
         {/* 스킬 베이스 러닝 (기존 내용 유지) */}
         <div className="p-6 bg-white rounded-lg shadow-md">

@@ -270,7 +270,7 @@ const ElementaryIntensiveCourse = (props: IntensiveCourseInfoProps) => {
         {/* 학부모 안심 메시지 */}
         <div className="mt-10 p-6 bg-purple-50 rounded-lg shadow-lg">
           <h3 className="text-2xl font-semibold text-purple-700 mb-4 text-center">
-            학부모님께 드리는 <span className="text-pink-500 font-bold">안심 메시지</span>
+            초등 고학년에서 <span className="text-pink-500 font-bold">중요한것은?</span>
           </h3>
           <div className="space-y-4 text-gray-700 leading-relaxed">
             <p>
@@ -278,12 +278,6 @@ const ElementaryIntensiveCourse = (props: IntensiveCourseInfoProps) => {
               이때 영어의 기초를 탄탄히 다지지 않으면, 중학교 진학 후 학습 격차로 인해 어려움을 겪는 경우가 많습니다. 
               단순히 단어를 많이 외우고 문제만 푸는 것을 넘어, 영어의 <strong className="text-purple-600">네 가지 영역(읽기, 듣기, 쓰기, 말하기)을 균형 있게 발전</strong>시키고, 
               <strong className="text-purple-600">문법의 원리를 정확히 이해</strong>하는 것이 중요합니다. 
-            </p>
-            <p>
-              데뷰어학원의 초등 인텐시브 과정은 중등 내신과 수능까지 이어지는 <strong className="text-purple-600">장기적인 영어 실력의 초석</strong>을 다지는 프로그램입니다. 
-              단순한 선행 학습이 아닌, <strong className="text-purple-600">깊이 있는 이해와 응용 능력</strong>을 키우는 데 중점을 둡니다. 
-              체계적인 커리큘럼과 경험 많은 강사진, 그리고 꼼꼼한 관리 시스템을 통해 우리 아이가 영어에 대한 자신감을 갖고 중학교에 진학할 수 있도록 최선을 다하겠습니다.
-              학부모님의 불안감을 <strong className="text-purple-600">&quot;확신&quot;</strong>으로 바꾸고, 과정의 모든 것을 <strong className="text-purple-600">&quot;결과&quot;</strong>로서 증명하겠습니다.
             </p>
           </div>
         </div>

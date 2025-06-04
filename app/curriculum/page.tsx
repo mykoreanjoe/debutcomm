@@ -38,7 +38,7 @@ const curriculumData: CurriculumCardProps[] = [
     anchorId: "elementary-regular-details",
   },
   {
-    title: "초등부 인텐시브 과정",
+    title: "초등 인텐시브 과정",
     description: "중등 영어 학습을 완벽하게 대비하는 초등 고학년 집중 과정입니다. 문법, 독해, 어휘력을 균형있게 강화합니다.",
     bgColorClass: "bg-purple-50",
     textColorClass: "text-purple-700",
@@ -48,7 +48,7 @@ const curriculumData: CurriculumCardProps[] = [
   },
   {
     title: "중등 정규 과정",
-    description: "체계적인 학습과 내신 대비를 통해 학업 성취도를 극대화하는 과정입니다.",
+    description: "학교 내신과 수능을 대비하는 학습 과정입니다.",
     bgColorClass: "bg-yellow-50",
     textColorClass: "text-yellow-700",
     buttonText: "과정 알아보기",
@@ -57,7 +57,7 @@ const curriculumData: CurriculumCardProps[] = [
   },
   {
     title: "중등 내신 과정",
-    description: "학교별 맞춤 전략과 실전 훈련으로 내신 성적 향상을 목표하는 과정입니다.",
+    description: "목일중, 목동중 내신을 전문적으로 대비하기 위한 과정입니다.",
     bgColorClass: "bg-purple-50",
     textColorClass: "text-purple-700",
     buttonText: "과정 알아보기",
@@ -138,22 +138,6 @@ const elementaryCourseData = {
       content: '유명 영어 도서관 프로그램에서 리딩 위주 학습만 한 학생들은 어휘량은 많지만, Speaking, Writing, 문법 영역의 약점으로 인해 어학원 출신과 큰 격차를 보이곤 합니다.',
     },
   },
-  activitiesAndProjects: {
-    title: '활동과 프로젝트 (Fun Activities and Projects)',
-    points: [
-      '암기만으로 실력이 느는 것은 맞지만, 흥미가 없다면 정체기 발생',
-      '초등 저학년일수록 수업과 활동/프로젝트의 연계가 매우 중요함',
-      '컴프리헨시브 커리큘럼 기반 수업 진행',
-      '주제별 리딩 스킬 + 연계 인클래스 액티비티 + 프로젝트 학습',
-      '집중력이 낮은 학생들도 즐기며 실력 향상 가능',
-      '매월 스피킹 발표',
-      '학습 리워드',
-      '영상 포트폴리오',
-      '온라인 AI 학습 레포트',
-      '데뷰카드',
-      '참여형 클래스',
-    ],
-  },
   skillBasedLearning: {
     title: '스킬 베이스 러닝 (Skill-Based Learning)',
     methods: [
@@ -169,7 +153,7 @@ const elementaryCourseData = {
         '품사 개념 정리',
         '3S QR 등 리딩 스킬 습득',
     ],
-    summary: '쉬운 개념부터 점진적으로 난이도를 높이며, 활동과 프로젝트를 통해 사고력 + 어휘력 동시 강화를 실현합니다.',
+    summary: '쉬운 개념부터 점진적으로 난이도를 높이며, 사고력과 어휘력 동시 강화를 실현합니다.',
   },
 };
 
@@ -193,67 +177,6 @@ const elementaryIntensiveCourseData = {
 const middleSchoolCourseData = {
   title: "중등 정규 과정",
   introduction: "중학교는 영어 학습에서 결정적인 전환점이 되는 시기입니다. 단순히 더 어려운 문법과 단어를 배우는 시기를 넘어서, 학생의 영어에 대한 태도와 정체성, 그리고 장기적인 실력의 기반이 형성되는 시기이기 때문입니다. 중학교 영어는 단순히 '중간 단계'가 아니라, 성패를 가르는 결정적 시기임이 분명 합니다.",
-  comparisonTable: {
-    title: "중학교 vs 고등학교 영어 비교표",
-    columns: ["항목", "중학교 영어", "고등학교 영어"],
-    rows: [
-      {
-        item: "학습 목적",
-        middleSchool: "기초 문법·어휘 습득, 영어의 흥미 유지",
-        highSchool: "수능·내신 대비 중심, 실전 문제 해결 능력 강화",
-      },
-      {
-        item: "교과서 난이도",
-        middleSchool: "일상 대화와 기본적인 설명 중심",
-        highSchool: "추상적 주제, 학문적 어휘 포함 (ex. 철학, 과학, 사회 등)",
-      },
-      {
-        item: "어휘 수준",
-        middleSchool: "초등 연계 + 기초 중등어휘 (~3,000단어 수준)",
-        highSchool: "고급 어휘 + 수능 어휘 (~6,000단어 이상)",
-      },
-      {
-        item: "문법 범위",
-        middleSchool: "시제, 조동사, 접속사, 관계대명사 등 기초 문법",
-        highSchool: "가정법, 도치, 강조, 준동사 등 심화 문법",
-      },
-      {
-        item: "평가 유형",
-        middleSchool: "객관식 + 서술형 중심, 기본 독해·듣기 포함",
-        highSchool: "복합 사고, 비판, 순서 배열, 간접쓰기 등 고난도 유형",
-      },
-      {
-        item: "지문 길이 및 난이도",
-        middleSchool: "짧고 생활문 정보 중심 (150~250단어 내외)",
-        highSchool: "장문, 다층적 구조 (400~700단어 이상)",
-      },
-      {
-        item: "듣기 평가",
-        middleSchool: "일상·어휘 사용 듣기, 난이도 낮음",
-        highSchool: "수능 스타일의 심층 듣기, 고난이도 의사소통 상황",
-      },
-      {
-        item: "쓰기/말하기 활동",
-        middleSchool: "수행평가 중심, 짧은 문장 표현",
-        highSchool: "수행평가 또는 에세이에 기반, 구조화된 논리적 글쓰기",
-      },
-      {
-        item: "학습 전략",
-        middleSchool: "반복·암기 기반 학습 + 흥미 유도 활동",
-        highSchool: "유형 분석 + 시간 관리 + 집중 독해 및 문법 전략",
-      },
-      {
-        item: "자기주도학습 필요성",
-        middleSchool: "낮은 편 (학원·학교 주도)",
-        highSchool: "매우 높음 (자기 학습·오답 관리 필수)",
-      },
-      {
-        item: "성적 변별력",
-        middleSchool: "상대적으로 낮음",
-        highSchool: "매우 높음 - 수시·정시 모두 영어에 반영",
-      },
-    ],
-  },
   learningFocusPoints: [
     "수능 대비 어휘 학습 (고교 수준 선행)",
     "다양한 주제의 배경지식 학습 (독해력 향상)",

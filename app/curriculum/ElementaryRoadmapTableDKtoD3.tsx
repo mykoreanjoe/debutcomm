@@ -10,10 +10,10 @@ import {
 } from "@/components/ui/table";
 
 const roadmapDataDKtoD3 = [
-  { level: 'DK, DK*', nationalLevel: '초3', usLevel: 'PK', achievementTarget: '파닉스 마스터', vocabulary: '400+', curriculum: '미국 교과과정 (각 레벨 별 사고 과정 진행)', literature: '파닉스', nonLiterature: '', hebrewLiterature: '' },
-  { level: 'D1, D1*', nationalLevel: '초4~5', usLevel: 'G1', achievementTarget: '토셀 Starter 3~2급', vocabulary: '640+', curriculum: '', literature: '다양한 문학 시리즈 (ORT, Biscuit, Little Critter 등)', nonLiterature: '', hebrewLiterature: '' },
-  { level: 'D2, D2*', nationalLevel: '초5~6', usLevel: 'G2', achievementTarget: '토셀 Basic 3~2급', vocabulary: '800+', curriculum: '', literature: '', nonLiterature: 'Oxford Read and Discover 외 다양한 분야의 컨텐츠 (역사, 문화, 과학, 지리)', hebrewLiterature: '' },
-  { level: 'D3, D3*', nationalLevel: '초6~중1', usLevel: 'G3', achievementTarget: '토셀 Basic 2~1급', vocabulary: '800+', curriculum: '', literature: '', nonLiterature: '', hebrewLiterature: '' },
+  { level: 'DK, DK*', nationalLevel: '초3', usLevel: 'PK', achievementTarget: '파닉스 마스터', vocabulary: '400+', curriculum: '미국 교과과정 (각 레벨 별 사고 과정 진행)', literature: '파닉스', nonLiterature: '' },
+  { level: 'D1, D1*', nationalLevel: '초4~5', usLevel: 'G1', achievementTarget: '토셀 Starter 3~2급', vocabulary: '640+', curriculum: '', literature: '다양한 문학 시리즈 (ORT, Biscuit, Little Critter 등)', nonLiterature: '' },
+  { level: 'D2, D2*', nationalLevel: '초5~6', usLevel: 'G2', achievementTarget: '토셀 Basic 3~2급', vocabulary: '800+', curriculum: '', literature: '', nonLiterature: 'Oxford Read and Discover 외 다양한 분야의 컨텐츠 (역사, 문화, 과학, 지리)' },
+  { level: 'D3, D3*', nationalLevel: '초6~중1', usLevel: 'G3', achievementTarget: '토셀 Basic 2~1급', vocabulary: '800+', curriculum: '', literature: '', nonLiterature: '' },
 ];
 
 const ElementaryRoadmapTableDKtoD3 = () => {
@@ -34,7 +34,6 @@ const ElementaryRoadmapTableDKtoD3 = () => {
             <TableHead className="w-[150px] text-center font-semibold text-amber-700 border">미교과</TableHead>
             <TableHead className="w-[180px] text-center font-semibold text-amber-700 border">문학</TableHead>
             <TableHead className="w-[200px] text-center font-semibold text-amber-700 border">비문학</TableHead>
-            <TableHead className="w-[150px] text-center font-semibold text-amber-700 border">하브루타 문법</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -46,21 +45,15 @@ const ElementaryRoadmapTableDKtoD3 = () => {
               <TableCell className="border px-2 py-3 text-xs align-top whitespace-normal">{row.achievementTarget}</TableCell>
               <TableCell className="text-center border px-2 py-3 text-xs align-top">{row.vocabulary}</TableCell>
               
-              {/* 교과 (미교과) - DK~D3 범위에서는 항상 첫번째 행의 curriculum 표시 */}
               {index === 0 && <TableCell className="border px-2 py-3 text-xs align-top whitespace-normal" rowSpan={roadmapDataDKtoD3.length}>{roadmapDataDKtoD3[0].curriculum}</TableCell>}
               
-              {/* 문학 */}
               {index === 0 && <TableCell className="border px-2 py-3 text-xs align-top whitespace-normal" rowSpan={1}>{row.literature}</TableCell>}
               {index === 1 && <TableCell className="border px-2 py-3 text-xs align-top whitespace-normal" rowSpan={1}>{row.literature}</TableCell>}
               {index > 1 && <TableCell className="border px-2 py-3 text-xs align-top"></TableCell>}
 
-              {/* 비문학 */}
               {index < 2 && <TableCell className="border px-2 py-3 text-xs align-top"></TableCell>}
               {index === 2 && <TableCell className="border px-2 py-3 text-xs align-top whitespace-normal" rowSpan={roadmapDataDKtoD3.length - 2}>{row.nonLiterature}</TableCell>}
               
-              {/* 하브루타 문법 - DK~D3 범위에서는 항상 빈칸 */}
-              <TableCell className="border px-2 py-3 text-xs align-top"></TableCell>
-
             </TableRow>
           ))}
         </TableBody>

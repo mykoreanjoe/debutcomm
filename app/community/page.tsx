@@ -17,7 +17,7 @@ const CommunityPage = () => {
           데뷰 영어 학원의 <span className="font-semibold text-blue-600">&apos;같이완성 커뮤니티&apos;</span>에 오신 것을 환영합니다!
         </p>
         <p className="mt-6 text-gray-700 text-center">
-          이곳은 학습 정보 공유, 질문과 답변, 스터디 그룹 구성 등 자유롭게 소통하며 함께 성장하는 공간입니다.
+          이곳은 학습 정보 공유, 질문과 답변 등 자유롭게 소통하며 함께 성장하는 공간입니다.
         </p>
         
         <div className="my-10">

@@ -46,8 +46,8 @@ const yAxisLabels = [
   { label: "고3", row: 1 },
   { label: "고2", row: 2 },
   { label: "고1", row: 3 },
-  { label: "중3\\n~", subLabel: "완성", row: 4 },
-  { label: "중3\\n~", subLabel: "중2", row: 5 },
+  { label: "중3\n~", subLabel: "완성", row: 4 },
+  { label: "중3\n~", subLabel: "중2", row: 5 },
 ];
 
 const MiddleSchoolLevelChart = () => {

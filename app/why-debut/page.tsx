@@ -162,33 +162,21 @@ interface ReviewSystemProps {
 const reviewSystemData: ReviewSystemProps = {
   mainTitle: "데뷰 복습 시스템",
   mainIcon: Sparkles,
-  mainDescription: "초등부부터 중등부까지 이어지는 데뷰만의 체계적인 복습 시스템으로 학습 효과를 극대화합니다. 각 단계별 맞춤 복습 전략을 확인해보세요.",
+  mainDescription: "데뷰만의 체계적인 4단계 복습 시스템으로 학습 효과를 극대화합니다. 각 단계별 맞춤 복습 전략을 확인해보세요.",
   subSections: [
     {
-      title: "초등부 4단계 복습과정",
-      icon: Zap,
-      titleColor: "text-sky-600",
-      sectionBgColor: "bg-sky-50",
-      description: "초등부는 탄탄한 어학 기본기를 쌓으며, 다양한 활동으로 창의적인 학습 역량을 마스터하는 과정입니다. 다양한 복습 방법을 통해 지루함을 덜고, 자연스러운 학습 효과를 유도합니다.",
+      title: "데뷰 4단계 복습과정",
+      icon: BookHeart,
+      titleColor: "text-emerald-600",
+      sectionBgColor: "bg-emerald-50",
+      description: "데뷰의 모든 학생들은 다음 4단계 복습 과정을 통해 학습 내용을 완벽하게 자기 것으로 만듭니다. 이 과정을 통해 어휘력 향상, 수업 내용 이해도 증진, 자기주도 학습 능력 배양, 그리고 꾸준한 온라인 학습 습관 형성을 목표로 합니다.",
       steps: [
-        { name: "단어", description: "수업과 연계된 자체제작 단어장으로 선노출 진행", color: "#FBBF24", textColor: "#78350F" },
-        { name: "수업", description: "선행된 단어 기반으로, 지문을 읽으며 직독직해", color: "#A3E635", textColor: "#3F6212" },
-        { name: "미션&과제", description: "학습된 어휘와 지식을 다양한 활동으로 한 번 더 체득", color: "#FB923C", textColor: "#FFFFFF" },
-        { name: "온라인 학습/미션", description: "온라인으로 어휘를 한번 더 복습하고, 가정에서 Speaking Writing 미션 복습", color: "#F87171", textColor: "#FFFFFF" },
+        { name: "단어", description: "수업과 연계된 단어 학습 및 암기를 통해 어휘 기반을 다집니다. 자체 단어장 및 다양한 어휘 활동을 활용합니다.", color: "#34D399", textColor: "#065F46" },
+        { name: "수업", description: "핵심 개념 이해와 적용에 중점을 둔 수업에 참여하여, 배운 내용을 명확히 이해합니다. 적극적인 질의응답과 토론을 장려합니다.", color: "#6EE7B7", textColor: "#047857" },
+        { name: "미션&과제", description: "수업 내용을 바탕으로 한 다양한 미션과 과제를 수행하며 학습한 내용을 능동적으로 적용하고 심화합니다.", color: "#A7F3D0", textColor: "#064E3B" },
+        { name: "온라인 학습", description: "온라인 학습 플랫폼을 통해 언제 어디서든 학습 내용을 복습하고, 추가적인 학습 자료 및 AI 기반 피드백을 제공받습니다.", color: "#D1FAE5", textColor: "#065F46" },
       ],
     },
-    {
-      title: "중등부 3단계 복습과정",
-      icon: Users2,
-      titleColor: "text-purple-600",
-      sectionBgColor: "bg-purple-50",
-      description: "중등부는 시험에 강한 학습역량을 형성하여, 중등 수행평가, 내신, 더 나아가 수능까지 대비할 수 있는 실력을 완성합니다. 기존점에 미달한 학생들은 전문학습 코칭과 관리로 완성도를 높입니다.",
-      steps: [
-        { name: "단어", description: "수업과 연계된 자체제작 단어장으로 선노출 진행", color: "#6EE7B7", textColor: "#047857" },
-        { name: "수업", description: "선행된 단어 기반으로, 지문을 읽으며 직독직해", color: "#5EEAD4", textColor: "#0F766E" },
-        { name: "미션&과제", description: "학습된 어휘와 지식을 다양한 활동으로 한 번 더 체득", color: "#22D3EE", textColor: "#164E63" },
-      ],
-    }
   ]
 };
 
@@ -333,7 +321,7 @@ const debutEducationalServices = [
   },
   {
     title: "성취도 평가",
-    description: "단원별, 영역별 학습 이해도를 정밀하게 진단하고, 취약점 보완을 위한 피드백을 제공합니다.",
+    description: "토셀, 토플, 수능형 시험으로 학생의 성취도를 평가 하고 피드백을 드립니다.",
     icon: CheckSquare,
   },
   {

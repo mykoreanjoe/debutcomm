@@ -74,8 +74,19 @@ const StudyRoomPage = () => {
           if (error) throw error;
           if (data) setGrammarVideos(data as Video[]);
         } catch (err) {
-          const errorMessage = err instanceof Error ? err.message : '알 수 없는 오류입니다.';
-          setFetchErrorGrammar(`문법 영상 목록을 불러오는 데 실패했습니다: ${errorMessage}`);
+          console.error("Raw error object (Grammar):", err);
+          let detailedMessage = '알 수 없는 오류입니다.';
+          if (err instanceof Error) {
+            detailedMessage = err.message;
+          } else if (typeof err === 'object' && err !== null) {
+            detailedMessage = (err as any).message || JSON.stringify(err);
+            if ((err as any).details) detailedMessage += ` (Details: ${(err as any).details})`;
+            if ((err as any).hint) detailedMessage += ` (Hint: ${(err as any).hint})`;
+            if ((err as any).code) detailedMessage += ` (Code: ${(err as any).code})`;
+          } else if (err) {
+            detailedMessage = String(err);
+          }
+          setFetchErrorGrammar(`문법 영상 목록을 불러오는 데 실패했습니다: ${detailedMessage}`);
         } finally {
           setIsLoadingGrammar(false);
         }
@@ -97,8 +108,19 @@ const StudyRoomPage = () => {
             setStudentVideos(data.map(v => ({...v, id: String(v.id)})) as Video[]);
           }
         } catch (err) {
-          const errorMessage = err instanceof Error ? err.message : '알 수 없는 오류입니다.';
-          setFetchErrorStudent(`학생 영상 목록을 불러오는 데 실패했습니다: ${errorMessage}`);
+          console.error("Raw error object (Student):", err);
+          let detailedMessage = '알 수 없는 오류입니다.';
+          if (err instanceof Error) {
+            detailedMessage = err.message;
+          } else if (typeof err === 'object' && err !== null) {
+            detailedMessage = (err as any).message || JSON.stringify(err);
+            if ((err as any).details) detailedMessage += ` (Details: ${(err as any).details})`;
+            if ((err as any).hint) detailedMessage += ` (Hint: ${(err as any).hint})`;
+            if ((err as any).code) detailedMessage += ` (Code: ${(err as any).code})`;
+          } else if (err) {
+            detailedMessage = String(err);
+          }
+          setFetchErrorStudent(`학생 영상 목록을 불러오는 데 실패했습니다: ${detailedMessage}`);
         } finally {
           setIsLoadingStudent(false);
         }

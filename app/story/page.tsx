@@ -1,6 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
-import { MessagesSquare, ClipboardCheck, Award } from 'lucide-react';
+import { MessagesSquare, ClipboardCheck, ShieldCheck, Award } from 'lucide-react';
 
 const learningDifficulties = [
   {
@@ -28,7 +28,6 @@ const learningDifficulties = [
 const academyPhilosophyPoints = [
   '세심하게 설계된 단계별 커리큘럼과 피드백 시스템의 정교함',
   '아이의 감정, 성향, 학습 리듬까지 배려하는 따뜻함',
-  '결과보다 과정을 중시하는 신뢰할 수 있는 운영',
   '\'함께 완성해간다\'는 공동체적 철학',
 ];
 
@@ -66,9 +65,9 @@ const debutTalents = [
     description: "수업, 과제, 운영 관련 이슈에 대해 선제적으로 계획하고 대응하여 매끄러운 학습 경험을 제공합니다.",
   },
   {
-    icon: Award,
-    title: "Ownership",
-    description: "자신의 수업과 업무에 주인의식을 갖고, 피드백을 성장의 도구로 삼습니다.",
+    icon: ShieldCheck,
+    title: "Confidence",
+    description: "자신감 있는 태도로 새로운 도전을 즐기며, 긍정적인 자세로 학습에 임합니다.",
   },
 ];
 
@@ -112,15 +111,6 @@ export default function StoryPage() {
                 {item.description && (
                   <p className="text-sm text-gray-600">{item.description}</p>
                 )}
-                {item.tags && item.tags.length > 0 && (
-                  <div className="flex flex-wrap gap-2 mt-2">
-                    {item.tags.map(tag => (
-                      <span key={tag} className="text-xs bg-[#7fa6c3] text-white px-2 py-1 rounded-full">
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                )}
               </li>
             ))}
           </ul>
@@ -147,7 +137,7 @@ export default function StoryPage() {
                 src="/images/joseph_choi.jpg"
                 alt="Joseph Choi 원장 프로필 사진"
                 layout="fill"
-                objectFit="cover"
+                objectFit="contain"
                 className="rounded-lg"
               />
             </div>
