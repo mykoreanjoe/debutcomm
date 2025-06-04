@@ -76,30 +76,28 @@ export default function RootLayout({
   // }, [pathname, key]); // 제거
 
   return (
-    // <ClerkProvider> // ClerkProvider 제거
-      <html lang="ko">
-        <head>
-          <script async src="https://www.googletagmanager.com/gtag/js?id=G-WNBBJY06SL"></script>
-          <script
-            dangerouslySetInnerHTML={{
-              __html: `
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
+    <html lang="ko">
+      <head>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-WNBBJY06SL"></script>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
 
-            gtag('config', 'G-WNBBJY06SL');
-          `,
-            }}
-          />
-        </head>
-        <body className={inter.className}>
-          {/* Header 내 Clerk 관련 버튼은 Header 컴포넌트에서 직접 제거 예정 */}
-          <Header />
-          <PageTransitionWrapper>{children}</PageTransitionWrapper> {/* PageTransitionWrapper 사용 */}
-          <Footer />
-          <FloatingInquiryButton />
-        </body>
-      </html>
-    // </ClerkProvider> // ClerkProvider 제거
+          gtag('config', 'G-WNBBJY06SL');
+        `,
+          }}
+        />
+      </head>
+      <body className={inter.className}>
+        {/* Header 내 Clerk 관련 버튼은 Header 컴포넌트에서 직접 제거 예정 */}
+        <Header />
+        <PageTransitionWrapper>{children}</PageTransitionWrapper> {/* PageTransitionWrapper 사용 */}
+        <Footer />
+        <FloatingInquiryButton />
+      </body>
+    </html>
   );
 }
