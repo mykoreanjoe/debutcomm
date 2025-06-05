@@ -51,7 +51,7 @@ export default function Header() {
           ))}
         </div>
 
-        <div className="col-start-3 flex justify-end items-center md:hidden">
+        <div className="col-start-1 flex justify-start items-center md:hidden">
           <button 
             className="outline-none mobile-menu-button"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
