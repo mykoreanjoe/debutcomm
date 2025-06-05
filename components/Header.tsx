@@ -23,6 +23,7 @@ const navItems = [
   { name: '데뷰인', href: '/debutian' },
   { name: '스터디룸', href: '/study-room' },
   { name: '데뷰후기', href: '/reviews' },
+  { name: '파트너스', href: '/partners' },
   { name: '같이완성 커뮤니티', href: '/community' },
 ];
 
@@ -33,7 +34,7 @@ export default function Header() {
   return (
     <header className="bg-white shadow-md sticky top-0 z-50">
       <nav className="container mx-auto px-6 py-3 grid grid-cols-3 items-center md:flex md:justify-between">
-        <div className="col-start-2 text-center md:col-start-auto md:text-left md:flex-none">
+        <div className="col-start-2 flex items-center justify-center md:col-start-auto md:justify-start md:flex-none">
           <Link href="/">
             <span className="text-xl font-bold text-[#13588f]">목동데뷰영어</span>
           </Link>
