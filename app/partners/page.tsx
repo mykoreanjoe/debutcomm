@@ -38,11 +38,11 @@ const partners = [
   {
     name: '리드나인주니어',
     logoUrl: '/images/partners/leadnine-junior-logo.png',
-    websiteUrl: 'https://map.naver.com/p/search/%EB%A6%AC%EB%93%9C%EB%82%98%EC%9D%B8%20%EC%98%81%EC%96%B4%ED%95%99%EC%9B%90/place/1632522352?c=15.00,0,0,0,dh&placePath=/home?entry=pll&from=map&fromPanelNum=2&timestamp=202506051527&locale=ko&svcName=map_pcv5&searchText=%EB%A6%AC%EB%93%9C%EB%82%98%EC%9D%B8%20%EC%98%81%EC%96%B4%ED%95%99%EC%9B%90',
+    websiteUrl: 'https://map.naver.com/p/entry/place/1632522352?c=15.00,0,0,0,dh&placePath=/home?from=map&fromPanelNum=1&additionalHeight=76&timestamp=202506052355&locale=ko&svcName=map_pcv5',
     description: '재미있는 WHOLE LANGUAGE 기반 커리큘럼, Oxford Reading Tree, 온라인 북클럽 및 특목·자사 대비 맞춤 프로그램으로 Speaking, Writing 실력 향상을 지원합니다. 합리적인 교육비로 최고의 가성비를 제공합니다.',
   },
   {
-    name: '법무법인 더 글로리',
+    name: '법무법인글로리',
     logoUrl: '/images/partners/glory-lawfirm-logo.png',
     websiteUrl: 'https://glorylawfirm.kr/kor/main/',
     description: '\'모두의 번영\'을 목표로 고객의 법적 상황을 종합 분석하여 선제적 법률 서비스를 제공합니다. 이혼, 상속, 부동산, 형사, 회사법, ESG 등 다양한 분야에서 최적의 솔루션을 제공합니다.',
@@ -87,14 +87,24 @@ export default function PartnersPage() {
                 <p className="text-base text-gray-700 mb-6 leading-relaxed">{partner.description}</p>
                 <div className="space-y-3 mt-auto">
                   {partner.websiteUrl && (
-                    <Button asChild variant="secondary" className="w-full py-3 text-base">
+                    <Button 
+                      asChild 
+                      variant={partner.websiteUrl.includes('naver.com') ? 'default' : 'secondary'} 
+                      className={`w-full py-3 text-base ${
+                        partner.websiteUrl.includes('naver.com') ? 'bg-[#03C75A] text-white hover:bg-[#02B350]' : ''
+                      }`}
+                    >
                       <Link href={partner.websiteUrl} target="_blank" rel="noopener noreferrer">
-                        웹사이트 방문 <ExternalLink size={18} className="ml-2" />
+                        {partner.websiteUrl.includes('naver.com') ? '네이버 플레이스 바로가기' : '웹사이트 방문'} <ExternalLink size={18} className="ml-2" />
                       </Link>
                     </Button>
                   )}
                   {partner.secondaryWebsiteUrl && (
-                     <Button asChild variant="outline" className="w-full py-3 text-base">
+                     <Button 
+                       asChild 
+                       variant="default" 
+                       className="w-full py-3 text-base bg-[#03C75A] text-white hover:bg-[#02B350]"
+                     >
                       <Link href={partner.secondaryWebsiteUrl} target="_blank" rel="noopener noreferrer">
                         네이버 플레이스 <ExternalLink size={18} className="ml-2" />
                       </Link>
