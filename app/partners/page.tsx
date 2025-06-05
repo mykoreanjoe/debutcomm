@@ -30,10 +30,10 @@ export const metadata: Metadata = {
 
 const partners = [
   {
-    name: '리드나인',
+    name: '리드나인영어',
     logoUrl: '/images/partners/leadnine-logo.png',
     websiteUrl: 'https://map.naver.com/p/search/%EB%A6%AC%EB%93%9C%EB%82%98%EC%9D%B8%EC%98%81%EC%96%B4%ED%95%99%EC%9B%90/place/1565515705?c=15.00,0,0,0,dh&placePath=/home?entry=bmp&from=map&fromPanelNum=2&timestamp=202506052255&locale=ko&svcName=map_pcv5&searchText=%EB%A6%AC%EB%93%9C%EB%82%98%EC%9D%B8%EC%98%81%EC%96%B4%ED%95%99%EC%9B%90',
-    description: '초·중·고등 영어 전문 기관으로, 원어민 수업, 개별 맞춤 관리, 스피킹, 에세이, 영어 토론 및 수준별 수업 등 전문 프로그램을 통해 내신과 실력 향상을 모두 지원합니다.',
+    description: '초·중·고등 영어 전문 기관으로, 개별 맞춤 관리, 스피킹, 에세이, 영어 토론 및 수준별 수업 등 전문 프로그램을 통해 내신과 실력 향상을 모두 지원합니다.',
   },
   {
     name: '리드나인주니어',
