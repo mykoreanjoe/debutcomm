@@ -72,6 +72,41 @@ const DebutianPage = () => {
         </div>
       </section>
 
+      {/* 데뷰인 시상 기준 섹션 추가 */}
+      <section className="py-12 md:py-16 bg-slate-50">
+        <div className="container mx-auto px-4 md:px-6">
+          <h2 className="text-3xl md:text-4xl font-bold text-center text-blue-600 mb-10">
+            데뷰인 시상 기준
+          </h2>
+          <div className="grid md:grid-cols-2 gap-8">
+            {/* 초등 데뷰인 */}
+            <div className="bg-white p-6 rounded-lg shadow-md">
+              <h3 className="text-2xl font-semibold text-green-600 mb-4">초등 데뷰인 (6개월 기준)</h3>
+              <ul className="list-disc list-inside space-y-2 text-gray-700">
+                <li>3관왕 (스스보하+아), 성취도 평가 레벨 내 상위 3% 달성</li>
+                <li>참고 자료: 3~8월, 9월~2월</li>
+              </ul>
+            </div>
+            {/* 중등 데뷰인 */}
+            <div className="bg-white p-6 rounded-lg shadow-md">
+              <h3 className="text-2xl font-semibold text-sky-600 mb-4">중등 데뷰인 (6개월 기준)</h3>
+              <ul className="list-disc list-inside space-y-2 text-gray-700">
+                <li>3관왕 (스피킹, 아카데믹, 스터디북)</li>
+                <li>내신 100, 고1, 고2, 고3 각 90점대 이상 성취도 평가 결과</li>
+              </ul>
+            </div>
+          </div>
+          {/* 보상 */}
+          <div className="mt-10 bg-white p-6 rounded-lg shadow-md">
+            <h3 className="text-2xl font-semibold text-yellow-500 mb-4">[보상]</h3>
+            <ul className="list-disc list-inside space-y-2 text-gray-700">
+              <li>포인트: 3만 포인트 + 인터뷰 게시 (수기)</li>
+              <li>시상: 초등부 시점과 동일하게 맞춤</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
       {/* 챔피언 섹션들을 포함할 컨테이너 */}
       <div className="container mx-auto px-4 py-10 md:px-6 md:py-16 flex-grow">
         {/* 아카데믹 챔피언 섹션 (하단으로 이동 및 간소화) */}

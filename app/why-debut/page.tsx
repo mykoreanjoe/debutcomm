@@ -259,14 +259,6 @@ const StudyBookSection = () => {
               <li><strong>학습 성찰:</strong> 학습 과정에서의 어려움과 해결 과정을 기록하며 메타인지 능력을 향상시킵니다.</li>
             </ul>
           </div>
-          <div className="relative w-full h-64 md:h-80 rounded-lg overflow-hidden shadow-xl">
-            <Image 
-              src="/images/studybook_all_purpose_notes_sample.jpg" 
-              alt="데뷰 스터디북 내부 샘플 이미지"
-              layout="fill"
-              objectFit="cover"
-            />
-          </div>
         </div>
 
         <div className="mb-10 md:mb-12">

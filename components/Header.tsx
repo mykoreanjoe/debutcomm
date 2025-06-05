@@ -32,12 +32,13 @@ export default function Header() {
 
   return (
     <header className="bg-white shadow-md sticky top-0 z-50">
-      <nav className="container mx-auto px-6 py-3 flex justify-between items-center">
-        <div>
+      <nav className="container mx-auto px-6 py-3 grid grid-cols-3 items-center md:flex md:justify-between">
+        <div className="col-start-2 text-center md:col-start-auto md:text-left md:flex-none">
           <Link href="/">
             <span className="text-xl font-bold text-[#13588f]">목동데뷰영어</span>
           </Link>
         </div>
+
         <div className="hidden md:flex items-center space-x-1">
           {navItems.map((item) => (
             <Link
@@ -50,37 +51,28 @@ export default function Header() {
           ))}
         </div>
 
-        {/* Clerk Authentication Buttons 제거 */}
-        {/* <div className="flex items-center space-x-2 ml-auto"> */}
-          {/* <SignedOut> ... </SignedOut> */}
-          {/* <SignedIn> ... </SignedIn> */}
-          <div className="md:hidden flex items-center ml-auto"> {/* ml-auto 추가하여 모바일 메뉴 버튼이 오른쪽으로 가도록 */} 
-            <button 
-              className="outline-none mobile-menu-button"
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            >
-              <Menu className="w-6 h-6 text-gray-500 hover:text-[#13588f]" />
-            </button>
-          </div>
-        {/* </div> */}
-
+        <div className="col-start-3 flex justify-end items-center md:hidden">
+          <button 
+            className="outline-none mobile-menu-button"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          >
+            <Menu className="w-6 h-6 text-gray-500 hover:text-[#13588f]" />
+          </button>
+        </div>
       </nav>
-      {/* 모바일 메뉴 */}
       <div className={`md:hidden ${isMobileMenuOpen ? 'block' : 'hidden'} mobile-menu`}>
-        <ul className="mt-2 space-y-2 px-2 py-3 flex flex-col items-end">
+        <ul className="mt-2 space-y-2 px-2 py-3 flex flex-col items-start">
           {navItems.map((item) => (
             <li key={item.name} className="w-full">
               <Link 
                 href={item.href} 
-                className="block px-3 py-2 rounded-md text-base font-medium text-[#7fa6c3] hover:text-[#13588f] hover:bg-gray-50 text-right"
+                className="block px-3 py-2 rounded-md text-base font-medium text-[#7fa6c3] hover:text-[#13588f] hover:bg-gray-50 text-left"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 {item.name}
               </Link>
             </li>
           ))}
-          {/* 모바일 메뉴의 Clerk 버튼들도 제거 */}
-          {/* <li className="mt-4 pt-4 border-t border-gray-200"> ... </li> */}
         </ul>
       </div>
     </header>
