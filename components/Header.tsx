@@ -28,40 +28,55 @@ const navItems = [
 ];
 
 export default function Header() {
-  // TODO: 모바일 메뉴 상태 관리 로직 추가 (useState 사용)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
 
   return (
     <header className="bg-white shadow-md sticky top-0 z-50">
-      <nav className="container mx-auto px-6 py-3 grid grid-cols-3 items-center md:flex md:justify-between">
-        <div className="col-start-2 flex items-center justify-center md:col-start-auto md:justify-start md:flex-none">
+      <nav className="container relative mx-auto flex h-16 items-center justify-between px-6">
+        {/* Left side: Menu button on mobile, Logo on desktop */}
+        <div className="flex items-center">
+          <div className="md:hidden">
+            <button
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="p-2"
+            >
+              <Menu className="h-6 w-6 text-gray-500 hover:text-[#13588f]" />
+            </button>
+          </div>
+          <div className="hidden md:block">
+            <Link href="/">
+              <span className="text-xl font-bold text-[#13588f]">목동데뷰영어</span>
+            </Link>
+          </div>
+        </div>
+
+        {/* Center: Logo (mobile only, absolutely centered) */}
+        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 md:hidden">
           <Link href="/">
             <span className="text-xl font-bold text-[#13588f]">목동데뷰영어</span>
           </Link>
         </div>
 
-        <div className="hidden md:flex items-center space-x-1">
-          {navItems.map((item) => (
-            <Link
-              key={item.name}
-              href={item.href}
-              className="py-2 px-3 text-sm text-[#7fa6c3] hover:text-[#13588f] rounded transition-colors duration-300"
-            >
-              {item.name}
-            </Link>
-          ))}
-        </div>
-
-        <div className="col-start-1 flex justify-start items-center md:hidden">
-          <button 
-            className="outline-none mobile-menu-button"
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          >
-            <Menu className="w-6 h-6 text-gray-500 hover:text-[#13588f]" />
-          </button>
+        {/* Right side: Spacer on mobile, Nav links on desktop */}
+        <div>
+          <div className="hidden md:flex items-center space-x-1">
+            {navItems.map((item) => (
+              <Link
+                key={item.name}
+                href={item.href}
+                className="py-2 px-3 text-sm text-[#7fa6c3] hover:text-[#13588f] rounded transition-colors duration-300"
+              >
+                {item.name}
+              </Link>
+            ))}
+          </div>
+          {/* This spacer balances the menu button on mobile */}
+          <div className="h-6 w-6 md:hidden" />
         </div>
       </nav>
-      <div className={`md:hidden ${isMobileMenuOpen ? 'block' : 'hidden'} mobile-menu`}>
+
+      {/* Mobile Menu Dropdown */}
+      <div className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out ${isMobileMenuOpen ? 'max-h-[500px]' : 'max-h-0'}`}>
         <ul className="mt-2 space-y-2 px-2 py-3 flex flex-col items-start">
           {navItems.map((item) => (
             <li key={item.name} className="w-full">

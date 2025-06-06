@@ -54,6 +54,12 @@ const partners = [
     secondaryWebsiteUrl: 'https://map.naver.com/p/search/%EC%9E%89%EA%B8%80%EB%A6%AC%EC%8B%9C%EB%9D%BC%EC%9D%B4%ED%94%84/place/19833185?c=15.00,0,0,0,dh&placePath=/home?entry=pll&from=map&fromPanelNum=2&timestamp=202506051619&locale=ko&svcName=map_pcv5&searchText=%EC%9E%89%EA%B8%80%EB%A6%AC%EC%8B%9C%EB%9D%BC%EC%9D%B4%ED%94%84',
     description: '다양한 영어 원서 및 교재 공급과 함께 에듀솔루션 학원관리, 온라인 학습 지원, VOCABOX 어휘학습 등 폭넓은 교육 서비스를 제공하며, 영어 도서관 맞춤 상담도 지원합니다.',
   },
+  {
+    name: '강의하는 아이들 내발산캠퍼스',
+    logoUrl: '/images/partners/gangeui-kids-logo.png',
+    websiteUrl: 'https://map.naver.com/p/search/%EA%B0%95%EC%9D%98%ED%95%98%EB%8A%94%20%EC%95%84%EC%9D%B4%EB%93%A4/place/1828938488?c=13.00,0,0,0,dh&placePath=/home?entry=bmp&from=map&fromPanelNum=2&timestamp=202506062116&locale=ko&svcName=map_pcv5&searchText=%EA%B0%95%EC%9D%98%ED%95%98%EB%8A%94%20%EC%95%84%EC%9D%B4%EB%93%A4',
+    description: '학생 중심의 참여형 수업을 통해 수학적 사고력과 문제 해결 능력을 키우는 데 중점을 둔 교육 기관입니다.',
+  },
 ];
 
 export default function PartnersPage() {
