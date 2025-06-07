@@ -1,5 +1,5 @@
 import React from 'react';
-import { Medal, BookOpen, MessageCircle, Sparkles, BookText, Target, Trophy } from 'lucide-react'; // Star, UserCircle, CheckCircle2, MessageSquareText 아이콘 삭제
+import { Medal, BookOpen, MessageCircle, Sparkles, BookText, Target, Trophy, Award, Star } from 'lucide-react'; // Star, UserCircle, CheckCircle2, MessageSquareText 아이콘 삭제, Award, Star 아이콘 추가
 import Image from 'next/image';
 import type { Metadata } from 'next';
 
@@ -97,12 +97,68 @@ const DebutianPage = () => {
             </div>
           </div>
           {/* 보상 */}
-          <div className="mt-10 bg-white p-6 rounded-lg shadow-md">
+          {/* <div className="mt-10 bg-white p-6 rounded-lg shadow-md">
             <h3 className="text-2xl font-semibold text-yellow-500 mb-4">[보상]</h3>
             <ul className="list-disc list-inside space-y-2 text-gray-700">
               <li>포인트: 3만 포인트 + 인터뷰 게시 (수기)</li>
               <li>시상: 초등부 시점과 동일하게 맞춤</li>
             </ul>
+          </div> */}
+        </div>
+      </section>
+
+      {/* 초등부 동기부여 시스템 섹션 */}
+      <section className="py-12 md:py-16 bg-slate-50">
+        <div className="container mx-auto px-4 md:px-6">
+          <h2 className="text-3xl md:text-4xl font-bold text-center text-blue-600 mb-4">
+            초등부 동기부여 시스템: 데뷰 카드
+          </h2>
+          <p className="text-lg text-center text-gray-600 mb-12">
+            학생들의 성취를 격려하고 꾸준한 노력을 응원하기 위해 특별한 카드를 수여합니다.
+          </p>
+          <div className="grid md:grid-cols-3 gap-8 text-left">
+            {/* 챔피언 카드 */}
+            <div className="bg-white p-6 rounded-lg shadow-lg border-t-4 border-yellow-400 flex flex-col">
+              <div className="flex items-center mb-4">
+                <Trophy className="w-12 h-12 text-yellow-500 mr-4" />
+                <div>
+                  <h3 className="text-2xl font-bold text-yellow-600">DEBUT CHAMPION</h3>
+                  <p className="font-semibold text-gray-700">챔피언에게 수여</p>
+                </div>
+              </div>
+              <blockquote className="text-sm text-gray-600 italic mt-auto">
+                <p className="font-bold mb-2">&quot;Champions are not afraid of failure. They take calculated risks.&quot;</p>
+                <p>챔피언이란 경기나 일련의 대회에서 모든 상대를 이겨낸 사람 또는 열정적으로 어떤 사람, 믿음, 권리, 또는 원칙을 지지하고, 경쟁하는 사람을 말합니다.</p>
+              </blockquote>
+            </div>
+            {/* 마스터 카드 */}
+            <div className="bg-white p-6 rounded-lg shadow-lg border-t-4 border-purple-400 flex flex-col">
+              <div className="flex items-center mb-4">
+                <Award className="w-12 h-12 text-purple-500 mr-4" />
+                <div>
+                  <h3 className="text-2xl font-bold text-purple-600">DEBUT MASTER</h3>
+                  <p className="font-semibold text-gray-700">아카데믹 챔피언에게 수여</p>
+                </div>
+              </div>
+              <blockquote className="text-sm text-gray-600 italic mt-auto">
+                <p className="font-bold mb-2">&quot;Talents are never enough. Masters always do best in small things.&quot;</p>
+                <p>마스터란 해당 분야에서 전문가 수준의 지식과 기술을 보유하고 있으며, 그 분야에서 최고의 성과를 이루어낸 사람을 의미합니다.</p>
+              </blockquote>
+            </div>
+            {/* 미션 카드 */}
+            <div className="bg-white p-6 rounded-lg shadow-lg border-t-4 border-green-400 flex flex-col">
+              <div className="flex items-center mb-4">
+                <Star className="w-12 h-12 text-green-500 mr-4" />
+                <div>
+                  <h3 className="text-2xl font-bold text-green-600">DEBUT MISSION</h3>
+                  <p className="font-semibold text-gray-700">매번의 학습 노력을 기울인 학생에게 수여</p>
+                </div>
+              </div>
+              <blockquote className="text-sm text-gray-600 italic mt-auto">
+                <p className="font-bold mb-2">&quot;Challenge yourself, but keep it realistic.&quot;</p>
+                <p>미션은 조직 개인이 달성하고자 하는 구체적인 목표나 목적을 의미합니다. 미션은 방향성과 목적을 제공하며, 우선순위를 결정하고 의사 결정을 지도하는 데 중요합니다.</p>
+              </blockquote>
+            </div>
           </div>
         </div>
       </section>
