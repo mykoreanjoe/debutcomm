@@ -60,6 +60,12 @@ const partners = [
     websiteUrl: 'https://map.naver.com/p/search/%EA%B0%95%EC%9D%98%ED%95%98%EB%8A%94%20%EC%95%84%EC%9D%B4%EB%93%A4/place/1828938488?c=13.00,0,0,0,dh&placePath=/home?entry=bmp&from=map&fromPanelNum=2&timestamp=202506062116&locale=ko&svcName=map_pcv5&searchText=%EA%B0%95%EC%9D%98%ED%95%98%EB%8A%94%20%EC%95%84%EC%9D%B4%EB%93%A4',
     description: '학생 중심의 참여형 수업을 통해 수학적 사고력과 문제 해결 능력을 키우는 데 중점을 둔 교육 기관입니다.',
   },
+  {
+    name: 'Concert K',
+    logoUrl: '/images/partners/concertk-logo.png',
+    websiteUrl: 'https://concertk.com/concertk/',
+    description: '가수/아티스트 섭외, 토털 공연회사. 30년 방송PD의 특별한 무대와 탁월한 기획력, 전문성으로 감동의 무대를 완성합니다.',
+  },
 ];
 
 export default function PartnersPage() {
