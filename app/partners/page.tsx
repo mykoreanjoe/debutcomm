@@ -42,23 +42,16 @@ const partners = [
     description: '재미있는 WHOLE LANGUAGE 기반 커리큘럼, Oxford Reading Tree, 온라인 북클럽 및 특목·자사 대비 맞춤 프로그램으로 Speaking, Writing 실력 향상을 지원합니다. 합리적인 교육비로 최고의 가성비를 제공합니다.',
   },
   {
-    name: '법무법인글로리',
-    logoUrl: '/images/partners/glory-lawfirm-logo.png',
-    websiteUrl: 'https://glorylawfirm.kr/kor/main/',
-    description: '\'모두의 번영\'을 목표로 고객의 법적 상황을 종합 분석하여 선제적 법률 서비스를 제공합니다. 이혼, 상속, 부동산, 형사, 회사법, ESG 등 다양한 분야에서 최적의 솔루션을 제공합니다.',
-  },
-  {
-    name: '잉글리쉬 라이프 (목동도서총판)',
-    logoUrl: '/images/partners/english-life-logo.png',
-    websiteUrl: 'https://e-lifeshop.co.kr/',
-    secondaryWebsiteUrl: 'https://map.naver.com/p/search/%EC%9E%89%EA%B8%80%EB%A6%AC%EC%8B%9C%EB%9D%BC%EC%9D%B4%ED%94%84/place/19833185?c=15.00,0,0,0,dh&placePath=/home?entry=pll&from=map&fromPanelNum=2&timestamp=202506051619&locale=ko&svcName=map_pcv5&searchText=%EC%9E%89%EA%B8%80%EB%A6%AC%EC%8B%9C%EB%9D%BC%EC%9D%B4%ED%94%84',
-    description: '다양한 영어 원서 및 교재 공급과 함께 에듀솔루션 학원관리, 온라인 학습 지원, VOCABOX 어휘학습 등 폭넓은 교육 서비스를 제공하며, 영어 도서관 맞춤 상담도 지원합니다.',
-  },
-  {
     name: '강의하는 아이들 내발산캠퍼스',
     logoUrl: '/images/partners/gangeui-kids-logo.png',
     websiteUrl: 'https://map.naver.com/p/search/%EA%B0%95%EC%9D%98%ED%95%98%EB%8A%94%20%EC%95%84%EC%9D%B4%EB%93%A4/place/1828938488?c=13.00,0,0,0,dh&placePath=/home?entry=bmp&from=map&fromPanelNum=2&timestamp=202506062116&locale=ko&svcName=map_pcv5&searchText=%EA%B0%95%EC%9D%98%ED%95%98%EB%8A%94%20%EC%95%84%EC%9D%B4%EB%93%A4',
     description: '학생 중심의 참여형 수업을 통해 수학적 사고력과 문제 해결 능력을 키우는 데 중점을 둔 교육 기관입니다.',
+  },
+  {
+    name: '법무법인글로리',
+    logoUrl: '/images/partners/glory-lawfirm-logo.png',
+    websiteUrl: 'https://glorylawfirm.kr/kor/main/',
+    description: '\'모두의 번영\'을 목표로 고객의 법적 상황을 종합 분석하여 선제적 법률 서비스를 제공합니다. 이혼, 상속, 부동산, 형사, 회사법, ESG 등 다양한 분야에서 최적의 솔루션을 제공합니다.',
   },
   {
     name: 'Concert K',
@@ -66,6 +59,13 @@ const partners = [
     websiteUrl: 'https://concertk.com/concertk/',
     secondaryWebsiteUrl: 'https://map.naver.com/p/search/concert%20k/place/1969908422?c=15.00,0,0,0,dh&placePath=/home?entry=bmp&from=map&fromPanelNum=2&timestamp=202506091320&locale=ko&svcName=map_pcv5&searchText=concert%20k',
     description: '가수/아티스트 섭외, 토털 공연회사. 30년 방송PD의 특별한 무대와 탁월한 기획력, 전문성으로 감동의 무대를 완성합니다.',
+  },
+  {
+    name: '잉글리쉬 라이프 (목동도서총판)',
+    logoUrl: '/images/partners/english-life-logo.png',
+    websiteUrl: 'https://e-lifeshop.co.kr/',
+    secondaryWebsiteUrl: 'https://map.naver.com/p/search/%EC%9E%89%EA%B8%80%EB%A6%AC%EC%8B%9C%EB%9D%BC%EC%9D%B4%ED%94%84/place/19833185?c=15.00,0,0,0,dh&placePath=/home?entry=pll&from=map&fromPanelNum=2&timestamp=202506051619&locale=ko&svcName=map_pcv5&searchText=%EC%9E%89%EA%B8%80%EB%A6%AC%EC%8B%9C%EB%9D%BC%EC%9D%B4%ED%94%84',
+    description: '다양한 영어 원서 및 교재 공급과 함께 에듀솔루션 학원관리, 온라인 학습 지원, VOCABOX 어휘학습 등 폭넓은 교육 서비스를 제공하며, 영어 도서관 맞춤 상담도 지원합니다.',
   },
 ];
 
