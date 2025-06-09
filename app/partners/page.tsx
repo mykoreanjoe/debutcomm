@@ -64,6 +64,7 @@ const partners = [
     name: 'Concert K',
     logoUrl: '/images/partners/concertk-logo.png',
     websiteUrl: 'https://concertk.com/concertk/',
+    secondaryWebsiteUrl: 'https://map.naver.com/p/search/concert%20k/place/1969908422?c=15.00,0,0,0,dh&placePath=/home?entry=bmp&from=map&fromPanelNum=2&timestamp=202506091320&locale=ko&svcName=map_pcv5&searchText=concert%20k',
     description: '가수/아티스트 섭외, 토털 공연회사. 30년 방송PD의 특별한 무대와 탁월한 기획력, 전문성으로 감동의 무대를 완성합니다.',
   },
 ];
