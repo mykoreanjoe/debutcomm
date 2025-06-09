@@ -38,9 +38,9 @@ export default function Header() {
           <div className="md:hidden">
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="p-2"
+              className="p-2 rounded-full bg-white shadow-md transition-all duration-300 hover:scale-110 active:scale-95 hover:shadow-xl"
             >
-              <Menu className="h-6 w-6 text-gray-500 hover:text-[#13588f]" />
+              <Menu className="h-6 w-6 text-gray-500 transition-colors duration-300 hover:text-indigo-600 drop-shadow" />
             </button>
           </div>
           <div className="hidden md:block">
@@ -64,7 +64,7 @@ export default function Header() {
               <Link
                 key={item.name}
                 href={item.href}
-                className="py-2 px-3 text-sm text-[#7fa6c3] hover:text-[#13588f] rounded transition-colors duration-300"
+                className="py-2 px-3 text-sm text-[#7fa6c3] hover:text-[#13588f] hover:underline hover:shadow-md rounded transition-all duration-300"
               >
                 {item.name}
               </Link>
@@ -82,7 +82,7 @@ export default function Header() {
             <li key={item.name} className="w-full">
               <Link 
                 href={item.href} 
-                className="block px-3 py-2 rounded-md text-base font-medium text-[#7fa6c3] hover:text-[#13588f] hover:bg-gray-50 text-left"
+                className="block px-3 py-2 rounded-md text-base font-medium text-[#7fa6c3] hover:text-[#13588f] hover:bg-gray-50 hover:shadow-md transition-all duration-300 text-left"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 {item.name}
