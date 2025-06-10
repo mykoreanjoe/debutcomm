@@ -1,6 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
-import { MessagesSquare, ClipboardCheck, ShieldCheck } from 'lucide-react';
+import { MessagesSquare, ClipboardCheck, ShieldCheck, MessageCircle, Users, TrendingUp } from 'lucide-react';
 
 const learningDifficulties = [
   {
@@ -55,19 +55,19 @@ const directorCareerHighlights = [
 
 const debutTalents = [
   {
-    icon: MessagesSquare,
-    title: "Communication",
-    description: "학부모, 학생, 동료와 명확하고 따뜻하게 소통하며 관계를 신뢰로 이끈다",
+    icon: MessageCircle,
+    title: "소통",
+    description: "학부모, 학생, 동료와 명확하고 따뜻하게 소통하며 신뢰를 쌓습니다.",
   },
   {
-    icon: ClipboardCheck,
-    title: "Readiness",
-    description: "수업, 과제, 운영 관련 이슈에 대해 선제적으로 계획하고 대응하여 매끄러운 학습 경험을 제공합니다.",
+    icon: Users,
+    title: "협력",
+    description: "함께 목표를 이루기 위해 서로 협력하고, 공동의 성취를 추구합니다.",
   },
   {
-    icon: ShieldCheck,
-    title: "Confidence",
-    description: "자신감 있는 태도로 새로운 도전을 즐기며, 긍정적인 자세로 학습에 임합니다.",
+    icon: TrendingUp,
+    title: "성장",
+    description: "지속적인 자기계발과 도전을 통해 함께 성장합니다.",
   },
 ];
 

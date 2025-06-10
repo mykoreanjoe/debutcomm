@@ -3,7 +3,7 @@
 import React from 'react';
 // import Image from 'next/image';
 import Link from 'next/link';
-import { Menu } from 'lucide-react';
+import { Menu, Search } from 'lucide-react';
 // Clerk 관련 import 주석 처리 또는 삭제
 // import {
 //   SignInButton,
@@ -57,8 +57,19 @@ export default function Header() {
           </Link>
         </div>
 
-        {/* Right side: Spacer on mobile, Nav links on desktop */}
-        <div>
+        {/* Right side: Search and Menu buttons on mobile, Nav links on desktop */}
+        <div className="flex items-center gap-2">
+          <div className="md:hidden">
+            <button className="p-2 rounded-full bg-white shadow-md transition-all duration-300 hover:scale-110 active:scale-95 hover:shadow-xl">
+              <Search className="h-6 w-6 text-gray-500 transition-colors duration-300 hover:text-indigo-600 drop-shadow" />
+            </button>
+            <button
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="p-2 rounded-full bg-white shadow-md transition-all duration-300 hover:scale-110 active:scale-95 hover:shadow-xl"
+            >
+              <Menu className="h-6 w-6 text-gray-500 transition-colors duration-300 hover:text-indigo-600 drop-shadow" />
+            </button>
+          </div>
           <div className="hidden md:flex items-center space-x-1">
             {navItems.map((item) => (
               <Link
@@ -70,8 +81,6 @@ export default function Header() {
               </Link>
             ))}
           </div>
-          {/* This spacer balances the menu button on mobile */}
-          <div className="h-6 w-6 md:hidden" />
         </div>
       </nav>
 

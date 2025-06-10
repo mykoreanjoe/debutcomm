@@ -385,8 +385,6 @@ export default function LearningProcessPage() {
               </h1>
               <p className="text-lg sm:text-xl text-indigo-100 max-w-3xl mx-auto">
                 학습 과정이 완성의 과정이 되도록! D.E.B.U.T 학습 과정을 소개 합니다.
-                <br />
-                <span className="text-indigo-200">단순한 지식 전달을 넘어, 학생 스스로 성장하는 힘을 기르는 데뷰만의 입체적 학습 로드맵입니다.</span>
               </p>
             </AnimatedSection>
           </div>
