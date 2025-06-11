@@ -317,6 +317,11 @@ const debutEducationalServices = [
     icon: CheckSquare,
   },
   {
+    title: "완성학습",
+    description: "수업 전, 후로 30분 또는 1시간을 학습 루틴화 하여, 학생의 부족한 부분을 완성하고 관리합니다.",
+    icon: CheckSquare,
+  },
+  {
     title: "온라인 학습 AI",
     description: "AI 기반 맞춤형 학습 콘텐츠와 피드백을 통해 시간과 장소에 구애받지 않는 학습 환경을 제공합니다.",
     icon: Brain,
@@ -383,9 +388,6 @@ export default function LearningProcessPage() {
               <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight mb-4">
                 데뷰 <span className="bg-yellow-400 text-indigo-800 px-2 rounded-md">5단계</span> 학습 과정
               </h1>
-              <p className="text-lg sm:text-xl text-indigo-100 max-w-3xl mx-auto">
-                학습 과정이 완성의 과정이 되도록! D.E.B.U.T 학습 과정을 소개 합니다.
-              </p>
             </AnimatedSection>
           </div>
         </section>

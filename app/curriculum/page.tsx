@@ -229,10 +229,10 @@ export default function CurriculumPage() {
           <h2 className="text-3xl sm:text-4xl font-bold text-center text-purple-600 mt-16 md:mt-24 mb-12 md:mb-16">중등부 과정</h2>
         </AnimatedSection>
 
+        <AnimatedSection delay={0.1}><MiddleSchoolRegularCourse {...middleSchoolCourseData} id="middle-regular-details" /></AnimatedSection>
         <AnimatedSection delay={0.1}><MiddleSchoolLevelChart /></AnimatedSection>
         <AnimatedSection delay={0.1}><MiddleSchoolCourseDetailsTable /></AnimatedSection>
 
-        <AnimatedSection delay={0.2}><MiddleSchoolRegularCourse {...middleSchoolCourseData} id="middle-regular-details" /></AnimatedSection>
         <AnimatedSection delay={0.2}><SchoolRecordProcess id="middle-school-record-details" /></AnimatedSection>
         
         <AnimatedSection delay={0}>

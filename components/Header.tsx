@@ -38,9 +38,9 @@ export default function Header() {
           <div className="md:hidden">
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="p-2 rounded-full bg-white shadow-md transition-all duration-300 hover:scale-110 active:scale-95 hover:shadow-xl"
+              className=""
             >
-              <Menu className="h-6 w-6 text-gray-500 transition-colors duration-300 hover:text-indigo-600 drop-shadow" />
+              <Menu className="h-6 w-6 text-gray-500 transition-colors duration-300 hover:text-indigo-600" />
             </button>
           </div>
           <div className="hidden md:block">
@@ -59,15 +59,15 @@ export default function Header() {
 
         {/* Right side: Search and Menu buttons on mobile, Nav links on desktop */}
         <div className="flex items-center gap-2">
-          <div className="md:hidden">
-            <button className="p-2 rounded-full bg-white shadow-md transition-all duration-300 hover:scale-110 active:scale-95 hover:shadow-xl">
-              <Search className="h-6 w-6 text-gray-500 transition-colors duration-300 hover:text-indigo-600 drop-shadow" />
+          <div className="md:hidden flex gap-2">
+            <button className="">
+              <Search className="h-6 w-6 text-gray-500 transition-colors duration-300 hover:text-indigo-600" />
             </button>
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="p-2 rounded-full bg-white shadow-md transition-all duration-300 hover:scale-110 active:scale-95 hover:shadow-xl"
+              className=""
             >
-              <Menu className="h-6 w-6 text-gray-500 transition-colors duration-300 hover:text-indigo-600 drop-shadow" />
+              <Menu className="h-6 w-6 text-gray-500 transition-colors duration-300 hover:text-indigo-600" />
             </button>
           </div>
           <div className="hidden md:flex items-center space-x-1">

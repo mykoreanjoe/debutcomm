@@ -114,15 +114,6 @@ export default function StoryPage() {
               </li>
             ))}
           </ul>
-
-          <div className="mt-8 space-y-3">
-            {academyPhilosophyPoints.map((point, index) => (
-              <p key={index} className="text-gray-600 flex items-start">
-                <span className="text-[#13588f] mr-2">✔</span> 
-                {point}
-              </p>
-            ))}
-          </div>
         </div>
       </section>
 
@@ -147,8 +138,8 @@ export default function StoryPage() {
 
           <div className="md:w-2/3">
             <blockquote className="text-center md:text-left mb-8">
-              <p className="text-3xl md:text-4xl font-bold text-[#13588f]">&quot;YOU REAP WHAT YOU SOW!&quot;</p>
-              <p className="text-xl md:text-2xl text-gray-600 mt-1">뿌린대로 거둡니다.</p>
+              <p className="text-3xl md:text-4xl font-bold text-[#13588f]">같이 완성</p>
+              <p className="text-xl md:text-2xl text-gray-600 mt-1">같이 완성</p>
             </blockquote>
 
             <div className="space-y-6 text-sm md:text-base">
