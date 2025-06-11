@@ -1,6 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
-import { MessagesSquare, ClipboardCheck, ShieldCheck, MessageCircle, Users, TrendingUp } from 'lucide-react';
+import { MessageCircle, Users, TrendingUp } from 'lucide-react';
 
 const learningDifficulties = [
   {
@@ -23,12 +23,6 @@ const learningDifficulties = [
     title: "학습 지속성과 장기 목표 설정의 어려움",
     description: "단기 로드맵과 장기 로드맵의 부재",
   },
-];
-
-const academyPhilosophyPoints = [
-  '세심하게 설계된 단계별 커리큘럼과 피드백 시스템의 정교함',
-  '아이의 감정, 성향, 학습 리듬까지 배려하는 따뜻함',
-  '\'함께 완성해간다\'는 공동체적 철학',
 ];
 
 const directorExperience = [
