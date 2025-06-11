@@ -29,11 +29,12 @@ const navItems = [
 
 export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
+  const [isSearchOpen, setIsSearchOpen] = React.useState(false);
 
   return (
     <header className="bg-white shadow-md sticky top-0 z-50">
       <nav className="container relative mx-auto flex h-16 items-center justify-between px-6">
-        {/* Left side: Menu button on mobile, Logo on desktop */}
+        {/* Left side: Menu button on mobile */}
         <div className="flex items-center">
           <div className="md:hidden">
             <button
@@ -43,6 +44,7 @@ export default function Header() {
               <Menu className="h-6 w-6 text-gray-500 transition-colors duration-300 hover:text-indigo-600" />
             </button>
           </div>
+          {/* Desktop Logo */}
           <div className="hidden md:block">
             <Link href="/">
               <span className="text-xl font-bold text-[#13588f]">목동데뷰영어</span>
@@ -57,19 +59,15 @@ export default function Header() {
           </Link>
         </div>
 
-        {/* Right side: Search and Menu buttons on mobile, Nav links on desktop */}
+        {/* Right side: Search button on mobile, Nav links on desktop */}
         <div className="flex items-center gap-2">
-          <div className="md:hidden flex gap-2">
-            <button className="">
+          {/* Mobile Search Button */}
+          <div className="md:hidden">
+            <button onClick={() => setIsSearchOpen(!isSearchOpen)} className="">
               <Search className="h-6 w-6 text-gray-500 transition-colors duration-300 hover:text-indigo-600" />
             </button>
-            <button
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className=""
-            >
-              <Menu className="h-6 w-6 text-gray-500 transition-colors duration-300 hover:text-indigo-600" />
-            </button>
           </div>
+          {/* Desktop Nav Links */}
           <div className="hidden md:flex items-center space-x-1">
             {navItems.map((item) => (
               <Link
@@ -99,6 +97,18 @@ export default function Header() {
             </li>
           ))}
         </ul>
+      </div>
+
+      {/* Mobile Search Input */}
+      <div className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out ${isSearchOpen ? 'max-h-20 p-4' : 'max-h-0'}`}>
+        <div className="relative">
+          <input
+            type="text"
+            placeholder="검색..."
+            className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          />
+          <Search className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+        </div>
       </div>
     </header>
   );
