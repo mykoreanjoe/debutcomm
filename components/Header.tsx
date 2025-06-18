@@ -4,6 +4,7 @@ import React from 'react';
 // import Image from 'next/image';
 import Link from 'next/link';
 import { Menu, Search } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 // Clerk 관련 import 주석 처리 또는 삭제
 // import {
 //   SignInButton,
@@ -45,17 +46,23 @@ export default function Header() {
             </button>
           </div>
           {/* Desktop Logo */}
-          <div className="hidden md:block">
+          <div className="hidden md:flex items-center gap-2">
             <Link href="/">
               <span className="text-xl font-bold text-[#13588f]">목동데뷰영어</span>
+            </Link>
+            <Link href="/news" passHref>
+               <Button variant="destructive" size="sm">NEWS</Button>
             </Link>
           </div>
         </div>
 
         {/* Center: Logo (mobile only, absolutely centered) */}
-        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 md:hidden">
+        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center gap-2 md:hidden">
           <Link href="/">
             <span className="text-xl font-bold text-[#13588f]">목동데뷰영어</span>
+          </Link>
+          <Link href="/news" passHref>
+            <Button variant="destructive" size="sm">NEWS</Button>
           </Link>
         </div>
 
