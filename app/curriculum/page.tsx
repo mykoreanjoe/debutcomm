@@ -8,13 +8,11 @@ import SectionTitle from '@/components/SectionTitle';
 import ScrollToTopButton from '@/components/ScrollToTopButton';
 import ElementarySection from '@/components/curriculum/ElementarySection';
 import MiddleSchoolSection from '@/components/curriculum/MiddleSchoolSection';
-import { BookOpenCheck } from 'lucide-react';
 
 interface CurriculumCardProps {
   title: string;
   description: string;
   icon: React.ElementType;
-  anchorId: string;
   onClick: () => void;
 }
 
@@ -63,7 +61,6 @@ const CurriculumCard: React.FC<CurriculumCardProps> = ({
   title,
   description,
   icon: Icon,
-  anchorId,
   onClick,
 }) => {
   const cardColors: { [key: string]: { bg: string, text: string, border: string } } = {
@@ -92,57 +89,66 @@ const CurriculumCard: React.FC<CurriculumCardProps> = ({
   );
 };
 
-interface LevelTitleProps {
-    level: string;
-    description: string;
-}
-
-const LevelTitle: React.FC<LevelTitleProps> = ({ level, description }) => (
-    <div className="text-center mb-12">
-        <h2 className="text-3xl font-bold text-gray-800 mb-4">{level}</h2>
-        <p className="text-gray-600 text-lg">{description}</p>
-    </div>
-);
-
-export const metadata = {
-    title: "커리큘럼 | 데뷰 영어 학원",
-    description: "데뷰 영어의 커리큘럼을 소개합니다. 초등부터 중등까지, 완성형 영어 교육을 만나보세요."
-};
-
 export default function CurriculumPage() {
-    return (
-        <div className="bg-slate-50">
-            <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
-                
-                <AnimatedSection>
-                    <SectionTitle
-                        icon={BookOpenCheck}
-                        title="커리큘럼"
-                        subtitle="체계적인 학습 로드맵으로 완성되는 데뷰의 영어 교육"
-                    />
-                </AnimatedSection>
-                
-                <AnimatedSection>
-                    <div id="elementary" className="mb-24">
-                        <LevelTitle 
-                            level="초등부"
-                            description="미국 교과서와 체계적인 관리로 영어의 기초를 완성합니다."
-                        />
-                        <ElementarySection />
-                    </div>
-                </AnimatedSection>
+  const [activeElementaryTab, setActiveElementaryTab] = useState('regular');
+  const [activeMiddleSchoolTab, setActiveMiddleSchoolTab] = useState('regular');
 
-                <AnimatedSection>
-                    <div id="middle-school" className="mb-24">
-                        <LevelTitle 
-                            level="중등부"
-                            description="내신 대비부터 수능 1등급까지, 입시 영어의 모든 것을 준비합니다."
-                        />
-                        <MiddleSchoolSection />
-                    </div>
-                </AnimatedSection>
+  const handleCardClick = (section: string, tabValue: string, anchorId: string) => {
+    if (section === 'elementary') {
+      setActiveElementaryTab(tabValue);
+    } else if (section === 'middle') {
+      setActiveMiddleSchoolTab(tabValue);
+    }
 
-            </div>
+    setTimeout(() => {
+      const element = document.getElementById(anchorId);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }, 100);
+  };
+
+  return (
+    <div className="bg-slate-50">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
+        <SectionTitle
+          icon={GraduationCap}
+          title="데뷰 영어 커리큘럼"
+          subtitle="초등부터 중등까지, 개인의 성장과 목표에 맞춘 데뷰만의 체계적인 학습 로드맵을 확인하세요."
+          iconColor="text-blue-600"
+          titleColor="text-gray-800"
+        />
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 mb-20 md:mb-28">
+          {curriculumData.map((card, index) => {
+            const anchorId = getAnchorId(card.title);
+            return (
+              <AnimatedSection delay={index * 0.05} key={card.title}>
+                <CurriculumCard 
+                  {...card} 
+                  onClick={() => handleCardClick(card.section, card.tabValue, anchorId)}
+                />
+              </AnimatedSection>
+            )
+          })}
         </div>
-    );
+        
+        {/* Sections Wrapper */}
+        <div className="space-y-20 md:space-y-28">
+          {/* 초등부 섹션 */}
+          <ElementarySection 
+            activeTab={activeElementaryTab}
+            setActiveTab={setActiveElementaryTab}
+          />
+
+          {/* 중등부 섹션 */}
+          <MiddleSchoolSection 
+            activeTab={activeMiddleSchoolTab}
+            setActiveTab={setActiveMiddleSchoolTab}
+          />
+        </div>
+      </div>
+      <ScrollToTopButton />
+    </div>
+  );
 } 

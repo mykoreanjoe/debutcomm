@@ -12,9 +12,10 @@ import ElementaryRoadmapTableDKtoD3 from '@/app/curriculum/ElementaryRoadmapTabl
 import ElementaryRoadmapTableD4toDCreator from '@/app/curriculum/ElementaryRoadmapTableD4toDCreator';
 import ElementaryLevelChart from '@/app/curriculum/elementary-level-chart';
 
+
 interface ElementarySectionProps {
-  activeTab?: string;
-  setActiveTab?: (value: string) => void;
+  activeTab: string;
+  setActiveTab: (value: string) => void;
 }
 
 // Reusable InfoCard component
@@ -247,13 +248,7 @@ const ElementaryIntensiveCourseDetails = () => (
   </div>
 );
 
-const ElementarySection: React.FC<ElementarySectionProps> = ({ activeTab = 'regular', setActiveTab }) => {
-  const handleTabChange = (value: string) => {
-    if (setActiveTab) {
-      setActiveTab(value);
-    }
-  };
-
+const ElementarySection: React.FC<ElementarySectionProps> = ({ activeTab, setActiveTab }) => {
   return (
     <AnimatedSection>
       <section id="elementary-section" className="py-16 md:py-20">
@@ -264,7 +259,7 @@ const ElementarySection: React.FC<ElementarySectionProps> = ({ activeTab = 'regu
           iconColor="text-cyan-500"
           titleColor="text-cyan-700"
         />
-        <Tabs value={activeTab} onValueChange={handleTabChange} className="w-full max-w-6xl mx-auto">
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full max-w-6xl mx-auto">
           <TabsList className="grid w-full grid-cols-2 bg-cyan-50 h-12 rounded-lg">
             <TabsTrigger value="regular" className="text-base font-semibold data-[state=active]:bg-cyan-500 data-[state=active]:text-white">초등 정규 과정</TabsTrigger>
             <TabsTrigger value="intensive" className="text-base font-semibold data-[state=active]:bg-purple-500 data-[state=active]:text-white">초등 인텐시브 과정</TabsTrigger>

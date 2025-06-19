@@ -1,19 +1,16 @@
-"use client";
+'use client';
 
 import React from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Badge } from '@/components/ui/badge';
-import { CheckCircle2 } from 'lucide-react';
+import SectionTitle from '@/components/SectionTitle';
+import { Target, BookCopy, Users2, CheckSquare, CalendarCheck, Calendar } from 'lucide-react';
 import AnimatedSection from '@/components/AnimatedSection';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
-import { Calendar } from 'lucide-react';
-import SectionTitle from '@/components/SectionTitle';
-import { Target, BookCopy, Users2, CheckSquare } from 'lucide-react';
 
 interface MiddleSchoolSectionProps {
-  activeTab?: string;
-  setActiveTab?: (value: string) => void;
+  activeTab: string;
+  setActiveTab: (value: string) => void;
 }
 
 // --- Reusable Components ---
@@ -52,7 +49,7 @@ const middleSchoolRecordData = {
     process: [
         { 
             phase: "내신 4주 전", 
-            icon: CheckSquare,
+            icon: CalendarCheck,
             color: "bg-yellow-400",
             tasks: [
                 { title: "내신 최상위 시작", description: "오리엔테이션 및 파일 배부를 통해 한 달간의 학습 계획 및 마인드셋 수립" },
@@ -87,7 +84,7 @@ const MiddleSchoolRegularDetails = () => (
             <InfoCard icon={BookCopy} title="중등 정규 과정 소개" className="border-purple-200 md:col-span-1">
                 <p>{middleSchoolRegularData.introduction}</p>
             </InfoCard>
-            <InfoCard icon={CheckSquare} title="수업 시간" className="border-purple-200 md:col-span-1">
+            <InfoCard icon={CalendarCheck} title="수업 시간" className="border-purple-200 md:col-span-1">
                 <div className="space-y-2">
                     <p><strong>월수금 클래스:</strong> {middleSchoolRegularData.schedule.monWedFri}</p>
                     <p><strong>화목 클래스:</strong> {middleSchoolRegularData.schedule.tueThu}</p>
@@ -167,27 +164,7 @@ const MiddleSchoolRecordDetails = () => (
 
 
 // --- Main Component ---
-const MiddleSchoolSection: React.FC<MiddleSchoolSectionProps> = ({ activeTab = 'regular', setActiveTab }) => {
-  const handleTabChange = (value: string) => {
-    if (setActiveTab) {
-      setActiveTab(value);
-    }
-  };
-
-  const renderContent = (title: string, items: string[]) => (
-    <div className="p-6 bg-white rounded-lg shadow-sm">
-        <h4 className="font-bold text-lg mb-3 text-purple-700">{title}</h4>
-        <ul className="space-y-2">
-            {items.map((item, index) => (
-                <li key={index} className="flex items-start">
-                    <CheckCircle2 className="w-5 h-5 text-purple-500 mr-2 mt-1 flex-shrink-0" />
-                    <span>{item}</span>
-                </li>
-            ))}
-        </ul>
-    </div>
-  );
-
+const MiddleSchoolSection: React.FC<MiddleSchoolSectionProps> = ({ activeTab, setActiveTab }) => {
   return (
     <AnimatedSection>
       <section id="middle-school-section" className="py-16 md:py-20">
@@ -198,7 +175,7 @@ const MiddleSchoolSection: React.FC<MiddleSchoolSectionProps> = ({ activeTab = '
           iconColor="text-purple-500"
           titleColor="text-purple-700"
         />
-        <Tabs value={activeTab} onValueChange={handleTabChange} className="w-full max-w-6xl mx-auto">
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full max-w-6xl mx-auto">
           <TabsList className="grid w-full grid-cols-2 bg-purple-50 h-12 rounded-lg">
             <TabsTrigger value="regular" className="text-base font-semibold data-[state=active]:bg-purple-600 data-[state=active]:text-white">
               <BookCopy className="w-5 h-5 mr-2" /> 중등 정규 과정
