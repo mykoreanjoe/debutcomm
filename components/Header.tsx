@@ -85,8 +85,8 @@ export default function Header() {
         </nav>
       </header>
 
-      {/* Floating NEWS Button for Mobile */}
-      <div className="md:hidden fixed top-24 right-5 z-50">
+      {/* Floating NEWS Button */}
+      <div className="fixed bottom-8 right-5 z-50">
         <Link href="/news" passHref>
           <Button
             variant="destructive"
