@@ -3,7 +3,6 @@
 import React from 'react';
 import SectionTitle from '@/components/SectionTitle';
 import AnimatedSection from '@/components/AnimatedSection';
-import ScrollToTopButton from '@/components/ScrollToTopButton';
 import { CalendarDays, Users, Gamepad2, Compass, Trophy, Mic2, BookOpen, Image as ImageIcon, ExternalLink } from 'lucide-react';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
@@ -136,7 +135,6 @@ export default function DebutDayPage() {
         </AnimatedSection>
 
       </div>
-      <ScrollToTopButton />
     </div>
   );
 } 
