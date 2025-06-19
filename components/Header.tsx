@@ -3,7 +3,7 @@
 import React from 'react';
 // import Image from 'next/image';
 import Link from 'next/link';
-import { Menu, Newspaper, Search } from 'lucide-react';
+import { Menu, Newspaper, CalendarDays, Search } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 // Clerk 관련 import 주석 처리 또는 삭제
 // import {
@@ -86,14 +86,14 @@ export default function Header() {
       </header>
 
       {/* Floating NEWS Button */}
-      <div className="fixed bottom-8 right-5 z-50">
+      <div className="fixed bottom-24 right-5 z-50">
         <Link href="/news" passHref>
           <Button
             variant="destructive"
             size="icon"
             className="rounded-full w-14 h-14 shadow-lg"
           >
-            <Newspaper className="h-6 w-6" />
+            <CalendarDays className="h-6 w-6" />
           </Button>
         </Link>
       </div>
