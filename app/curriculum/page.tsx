@@ -5,7 +5,6 @@ import AnimatedSection from '@/components/AnimatedSection';
 import { BookOpen, GraduationCap, Target, ArrowRight, Rocket } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import SectionTitle from '@/components/SectionTitle';
-import ScrollToTopButton from '@/components/ScrollToTopButton';
 import ElementarySection from '@/components/curriculum/ElementarySection';
 import MiddleSchoolSection from '@/components/curriculum/MiddleSchoolSection';
 
@@ -148,7 +147,6 @@ export default function CurriculumPage() {
           />
         </div>
       </div>
-      <ScrollToTopButton />
     </div>
   );
 } 
