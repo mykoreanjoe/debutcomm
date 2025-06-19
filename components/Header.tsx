@@ -3,7 +3,7 @@
 import React from 'react';
 // import Image from 'next/image';
 import Link from 'next/link';
-import { Menu, Search } from 'lucide-react';
+import { Menu, Newspaper, Search } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 // Clerk 관련 import 주석 처리 또는 삭제
 // import {
@@ -33,61 +33,70 @@ export default function Header() {
   const [isSearchOpen, setIsSearchOpen] = React.useState(false);
 
   return (
-    <header className="bg-white shadow-md sticky top-0 z-50">
-      <nav className="container relative mx-auto flex h-16 items-center justify-between px-6">
-        {/* Left side: Menu button on mobile */}
-        <div className="flex items-center">
-          <div className="md:hidden">
-            <button
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className=""
-            >
-              <Menu className="h-6 w-6 text-gray-500 transition-colors duration-300 hover:text-indigo-600" />
-            </button>
+    <>
+      <header className="bg-white shadow-md sticky top-0 z-40">
+        <nav className="container relative mx-auto flex h-16 items-center justify-between px-6">
+          {/* Left side: Menu button on mobile */}
+          <div className="flex items-center">
+            <div className="md:hidden">
+              <button
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                className=""
+              >
+                <Menu className="h-6 w-6 text-gray-500 transition-colors duration-300 hover:text-indigo-600" />
+              </button>
+            </div>
+            {/* Desktop Logo */}
+            <div className="hidden md:flex items-center gap-2">
+              <Link href="/">
+                <span className="text-xl font-bold text-[#13588f]">목동데뷰영어</span>
+              </Link>
+            </div>
           </div>
-          {/* Desktop Logo */}
-          <div className="hidden md:flex items-center gap-2">
+
+          {/* Center: Logo (mobile only, absolutely centered) */}
+          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center gap-2 md:hidden">
             <Link href="/">
               <span className="text-xl font-bold text-[#13588f]">목동데뷰영어</span>
             </Link>
-            <Link href="/news" passHref>
-               <Button variant="destructive" size="sm">NEWS</Button>
-            </Link>
           </div>
-        </div>
 
-        {/* Center: Logo (mobile only, absolutely centered) */}
-        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center gap-2 md:hidden">
-          <Link href="/">
-            <span className="text-xl font-bold text-[#13588f]">목동데뷰영어</span>
-          </Link>
-          <Link href="/news" passHref>
-            <Button variant="destructive" size="sm">NEWS</Button>
-          </Link>
-        </div>
+          {/* Right side: Search button on mobile, Nav links on desktop */}
+          <div className="flex items-center gap-2">
+            {/* Mobile Search Button */}
+            <div className="md:hidden">
+              <button onClick={() => setIsSearchOpen(!isSearchOpen)} className="">
+                <Search className="h-6 w-6 text-gray-500 transition-colors duration-300 hover:text-indigo-600" />
+              </button>
+            </div>
+            {/* Desktop Nav Links */}
+            <div className="hidden md:flex items-center space-x-1">
+              {navItems.map((item) => (
+                <Link
+                  key={item.name}
+                  href={item.href}
+                  className="py-2 px-3 text-sm text-[#7fa6c3] hover:text-[#13588f] hover:underline hover:shadow-md rounded transition-all duration-300"
+                >
+                  {item.name}
+                </Link>
+              ))}
+            </div>
+          </div>
+        </nav>
+      </header>
 
-        {/* Right side: Search button on mobile, Nav links on desktop */}
-        <div className="flex items-center gap-2">
-          {/* Mobile Search Button */}
-          <div className="md:hidden">
-            <button onClick={() => setIsSearchOpen(!isSearchOpen)} className="">
-              <Search className="h-6 w-6 text-gray-500 transition-colors duration-300 hover:text-indigo-600" />
-            </button>
-          </div>
-          {/* Desktop Nav Links */}
-          <div className="hidden md:flex items-center space-x-1">
-            {navItems.map((item) => (
-              <Link
-                key={item.name}
-                href={item.href}
-                className="py-2 px-3 text-sm text-[#7fa6c3] hover:text-[#13588f] hover:underline hover:shadow-md rounded transition-all duration-300"
-              >
-                {item.name}
-              </Link>
-            ))}
-          </div>
-        </div>
-      </nav>
+      {/* Floating NEWS Button for Mobile */}
+      <div className="md:hidden fixed top-24 right-5 z-50">
+        <Link href="/news" passHref>
+          <Button
+            variant="destructive"
+            size="icon"
+            className="rounded-full w-14 h-14 shadow-lg"
+          >
+            <Newspaper className="h-6 w-6" />
+          </Button>
+        </Link>
+      </div>
 
       {/* Mobile Menu Dropdown */}
       <div className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out ${isMobileMenuOpen ? 'max-h-[500px]' : 'max-h-0'}`}>
@@ -117,6 +126,6 @@ export default function Header() {
           <Search className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
         </div>
       </div>
-    </header>
+    </>
   );
 } 
