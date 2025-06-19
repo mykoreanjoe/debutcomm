@@ -23,7 +23,7 @@ async function getNewsPosts() {
     
     // 이제 데이터 구조를 정확히 알고 있으므로, 더 안정적으로 ID를 가져옵니다.
     const collectionViewId = '216a2fe8-845b-8090-81fc-000cfce23563'; // 피드 보기
-    const pageIds = recordMap.collection_view[collectionViewId]?.value?.page_sort ?? [];
+    const pageIds = (recordMap.collection_view[collectionViewId] as any)?.value?.page_sort ?? [];
     
     const posts = pageIds
       .map((pageId: string) => {
@@ -53,7 +53,7 @@ async function getNewsPosts() {
       .filter(Boolean);
 
     // 날짜 순으로 정렬
-    posts.sort((a, b) => {
+    posts.sort((a: any, b: any) => {
         if (!a.date) return 1;
         if (!b.date) return -1;
         return new Date(b.date).getTime() - new Date(a.date).getTime();
@@ -74,7 +74,7 @@ export default async function NewsListPage() {
       <h1 className="text-4xl font-bold mb-8">News</h1>
       <div className="space-y-4">
         {posts.length > 0 ? (
-          posts.map((post) => (
+          posts.map((post: any) => (
             // post.id는 이제 하이픈 없는 깔끔한 ID입니다.
             <Link key={post.id} href={`/news/${post.id}`} className="block p-6 border rounded-lg hover:shadow-lg transition-shadow">
               <h2 className="text-2xl font-semibold">{post.title}</h2>
@@ -82,7 +82,7 @@ export default async function NewsListPage() {
             </Link>
           ))
         ) : (
-          <p>게시된 뉴스가 없습니다. 노션 데이터베이스에서 글을 작성하고 'Status'를 'Published'로 설정해주세요.</p>
+          <p>게시된 뉴스가 없습니다. 노션 데이터베이스에서 글을 작성하고 &apos;Status&apos;를 &apos;Published&apos;로 설정해주세요.</p>
         )}
       </div>
     </div>

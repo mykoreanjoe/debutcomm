@@ -49,7 +49,7 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
         return {
             title: `${title} - 데뷰 News`,
         };
-    } catch (error) {
+    } catch {
         return {
             title: '데뷰 News',
         };
