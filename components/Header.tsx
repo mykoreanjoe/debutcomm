@@ -3,7 +3,8 @@
 import React from 'react';
 // import Image from 'next/image';
 import Link from 'next/link';
-import { Menu, Search } from 'lucide-react';
+import { Menu, Search, Rss } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 // Clerk 관련 import 주석 처리 또는 삭제
 // import {
 //   SignInButton,

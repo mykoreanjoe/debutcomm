@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import SectionTitle from '@/components/SectionTitle';
 import { Target, BookCopy, Users2, CheckSquare, CalendarCheck, Calendar } from 'lucide-react';
 import AnimatedSection from '@/components/AnimatedSection';

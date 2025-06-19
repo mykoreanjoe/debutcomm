@@ -46,6 +46,16 @@ const middleSchoolClinic = [
   { days: "수요일", time: "오후 5:00 ~ 10:00", level: "수요 클리닉" },
 ];
 
+// 완성학습 데이터
+const completionStudy = [
+    { type: "수업 전", time: "오전 9:00 ~ 10:00", note: "1시간 완성학습" },
+    { type: "수업 전", time: "오전 9:30 ~ 10:00", note: "30분 완성학습" },
+    { type: "수업 후", time: "오후 4:05 ~ 5:05", note: "1시간 완성학습 (초등)" },
+    { type: "수업 후", time: "오후 4:05 ~ 4:35", note: "30분 완성학습 (초등)" },
+    { type: "수업 후", time: "오후 8:00 ~ 9:00", note: "1시간 완성학습 (중등)" },
+    { type: "수업 후", time: "오후 8:00 ~ 8:30", note: "30분 완성학습 (중등)" },
+];
+
 const InfoListItem = ({ children }: { children: React.ReactNode }) => (
     <li className="flex items-start text-sm text-gray-600">
         <CheckSquare className="w-4 h-4 mr-2.5 mt-0.5 flex-shrink-0 text-sky-600" />

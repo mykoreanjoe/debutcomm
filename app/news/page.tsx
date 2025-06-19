@@ -1,6 +1,7 @@
 "use client";
 
 import React from 'react';
+import type { Metadata } from 'next';
 import SectionTitle from '@/components/SectionTitle';
 import AnimatedSection from '@/components/AnimatedSection';
 import { Button } from '@/components/ui/button';

@@ -12,6 +12,7 @@ interface CurriculumCardProps {
   title: string;
   description: string;
   icon: React.ElementType;
+  anchorId: string;
   onClick: () => void;
 }
 
@@ -60,6 +61,7 @@ const CurriculumCard: React.FC<CurriculumCardProps> = ({
   title,
   description,
   icon: Icon,
+  anchorId,
   onClick,
 }) => {
   const cardColors: { [key: string]: { bg: string, text: string, border: string } } = {
@@ -125,6 +127,7 @@ export default function CurriculumPage() {
               <AnimatedSection delay={index * 0.05} key={card.title}>
                 <CurriculumCard 
                   {...card} 
+                  anchorId={anchorId}
                   onClick={() => handleCardClick(card.section, card.tabValue, anchorId)}
                 />
               </AnimatedSection>
