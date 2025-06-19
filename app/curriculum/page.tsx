@@ -10,7 +10,6 @@ import MiddleSchoolCourseDetailsTable from './middle-school-course-details-table
 import ElementaryLevelChart from './elementary-level-chart';
 import MiddleSchoolLevelChart from './middle-school-level-chart';
 import SchoolRecordProcess from './school-record-process';
-import TripleCareSystem from './triple-care-system';
 import ScrollToTopButton from '@/components/ScrollToTopButton';
 import ElementaryRegularCourse from './elementary-regular-course';
 import ElementaryIntensiveCourse from './elementary-intensive-course';
@@ -238,7 +237,6 @@ export default function CurriculumPage() {
         <AnimatedSection delay={0}>
           <h2 className="text-3xl sm:text-4xl font-bold text-center text-teal-600 mt-16 md:mt-24 mb-12 md:mb-16">학습 관리 시스템</h2>
         </AnimatedSection>
-        <AnimatedSection delay={0.1}><TripleCareSystem /></AnimatedSection>
 
       </div>
       <ScrollToTopButton />

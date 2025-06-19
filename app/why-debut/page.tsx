@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import { Lightbulb, Zap, Rocket, Target, ExternalLink, UserCheck, BookHeart, Edit3, Briefcase, FolderArchive, Brain, Sparkles, Users2, FileText, BookOpen, CheckSquare } from 'lucide-react';
+import { Lightbulb, Zap, Rocket, Target, ExternalLink, UserCheck, BookHeart, Edit3, Briefcase, FolderArchive, Brain, Sparkles, Users2, FileText, BookOpen, CheckSquare, PhoneCall, BarChart2, Smile } from 'lucide-react';
 import Image from 'next/image';
 import Head from 'next/head';
 import AnimatedSection from '@/components/AnimatedSection';
@@ -295,6 +295,157 @@ const StudyBookSection = () => {
   );
 };
 
+const DebutEducationalServicesSection = () => {
+  return (
+    <AnimatedSection delay={0.1}>
+      <section className="py-12 md:py-16 bg-white">
+        <div className="container mx-auto px-4 md:px-6">
+          <div className="text-center mb-12 md:mb-16">
+            <Briefcase className="w-12 h-12 md:w-16 md:h-16 text-blue-600 mx-auto mb-4" /> 
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-blue-700">
+              데뷰 교육 서비스
+            </h2>
+            <p className="mt-4 text-md sm:text-lg text-gray-600 max-w-3xl mx-auto">
+              데뷰는 학생 중심의 체계적인 교육 서비스를 통해 잠재력을 최대한 발휘하고 학습 목표를 달성할 수 있도록 지원합니다.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8">
+            {debutEducationalServices.map((service, index) => (
+              <div key={index} className="bg-sky-50 p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 border border-sky-200 flex flex-col text-center items-center">
+                <div className="mb-4">
+                  {service.icon && <service.icon className="w-10 h-10 md:w-12 md:h-12 text-sky-500 mx-auto mb-3" />}
+                  <h3 className="text-lg md:text-xl font-semibold text-sky-700">{service.title}</h3>
+                </div>
+                <p className="text-sm text-gray-600 leading-relaxed flex-grow">{service.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    </AnimatedSection>
+  );
+};
+
+const StudyManagerDetailSection = () => {
+  return (
+    <AnimatedSection>
+      <section id="triple-care-system" className="py-12 md:py-16 bg-gradient-to-br from-purple-50 via-pink-50 to-rose-50">
+        <div className="container mx-auto px-4 md:px-6">
+          <div className="text-center mb-10 md:mb-12">
+            <Users2 className="w-12 h-12 text-purple-600 mx-auto mb-4" />
+            <h2 className="text-3xl md:text-4xl font-bold text-purple-700 mb-3">
+              스터디 매니저 상세
+            </h2>
+            <p className="text-lg md:text-xl text-gray-700 max-w-2xl mx-auto">
+              강사, 온라인AI, 스터디 매니저가 함께하여 한 학생의 학습을 관리 합니다.
+            </p>
+          </div>
+
+          <div className="max-w-3xl mx-auto bg-white p-6 md:p-8 rounded-xl shadow-2xl">
+            <h3 className="text-xl md:text-2xl font-semibold text-gray-800 mb-6 text-center">주요 업무</h3>
+            <ul className="space-y-6">
+              <li className="flex items-start">
+                <div className="flex-shrink-0">
+                  <PhoneCall className="w-7 h-7 text-green-500 mr-4 mt-1" />
+                </div>
+                <div>
+                  <h4 className="font-semibold text-lg text-gray-700">출결 체크</h4>
+                  <p className="text-gray-600">5분 이상 지각 시 학부모님께 즉시 전화 알림으로 철저한 출결 관리를 지원합니다.</p>
+                </div>
+              </li>
+              <li className="flex items-start">
+                <div className="flex-shrink-0">
+                  <BarChart2 className="w-7 h-7 text-blue-500 mr-4 mt-1" />
+                </div>
+                <div>
+                  <h4 className="font-semibold text-lg text-gray-700">온라인 성취도 관리</h4>
+                  <p className="text-gray-600">온라인 학습 데이터 기반으로 학생의 성취도를 면밀히 분석하고, 맞춤형 피드백을 제공합니다.</p>
+                </div>
+              </li>
+              <li className="flex items-start">
+                <div className="flex-shrink-0">
+                  <Smile className="w-7 h-7 text-pink-500 mr-4 mt-1" />
+                </div>
+                <div>
+                  <h4 className="font-semibold text-lg text-gray-700">학생들의 정서적 케어</h4>
+                  <p className="text-gray-600">단순한 학습 관리를 넘어, 학생들의 학습 동기 부여 및 정서적 안정까지 세심하게 지원합니다.</p>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+    </AnimatedSection>
+  );
+};
+
+const EducationServiceSection = () => {
+  return (
+    <AnimatedSection className="py-12 md:py-20 bg-gradient-to-r from-blue-600 to-indigo-700 text-white">
+      <div className="container mx-auto px-4 md:px-6 text-center">
+        <AnimatedSection delay={0}>
+          <Brain className="w-16 h-16 md:w-20 md:h-20 mx-auto mb-6 opacity-90" />
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight mb-4">
+            데뷰 <span className="bg-yellow-400 text-indigo-800 px-2 rounded-md">5단계</span> 학습 과정
+          </h1>
+        </AnimatedSection>
+      </div>
+    </AnimatedSection>
+  );
+};
+
+const LearningStagesSection = () => {
+  return (
+    <section className="py-12 md:py-16">
+      <div className="container mx-auto px-4 md:px-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6 md:gap-8">
+          {learningStages.map((stage, index) => (
+            <AnimatedSection delay={index * 0.05} key={stage.id}>
+              <div className={`p-4 rounded-xl shadow-2xl flex flex-col h-full ${stage.bgColor} border border-gray-200 hover:shadow-blue-200/50 transition-all duration-300`}>
+                <div className="flex-grow">
+                  <div className="flex items-center mb-3">
+                    <stage.icon className={`w-8 h-8 md:w-10 md:h-10 mr-3 ${stage.textColor}`} />
+                    <h2 className={`text-2xl md:text-3xl font-bold ${stage.textColor}`}>{stage.name}</h2>
+                  </div>
+                  <h3 className={`text-sm font-semibold mb-1 ${stage.textColor}`}>{stage.mainTitle}</h3>
+                  <p className="text-xs text-gray-600 mb-3 leading-relaxed min-h-[3.5rem]">{stage.subtitle}</p>
+                </div>
+                <div className="text-xs text-gray-500 border-t border-gray-300 pt-2 mt-auto">
+                  {stage.details}
+                </div>
+              </div>
+            </AnimatedSection>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+const ReviewSystemSection = ({ mainTitle, mainIcon: ReviewIcon, mainDescription: reviewDesc, subSections }: ReviewSystemProps) => {
+  return (
+    <AnimatedSection delay={0}>
+      <section className="py-12 md:py-16 lg:py-20 bg-gradient-to-b from-slate-100 to-purple-100">
+        <div className="container mx-auto px-4 md:px-6">
+          <div className="text-center mb-12 md:mb-16">
+            {ReviewIcon && <ReviewIcon className="w-12 h-12 md:w-16 md:h-16 text-purple-600 mx-auto mb-4" />}
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-purple-700">
+              {mainTitle}
+            </h2>
+            <p className="mt-4 text-md sm:text-lg text-gray-600 max-w-3xl mx-auto">
+              {reviewDesc}
+            </p>
+          </div>
+          {subSections.map((subSection, index) => (
+            <ReviewCycleSectionDisplay key={index} {...subSection} />
+          ))}
+        </div>
+      </section>
+    </AnimatedSection>
+  );
+};
+
 const debutEducationalServices = [
   {
     title: "1인 담임 관리",
@@ -338,109 +489,32 @@ const debutEducationalServices = [
   },
 ];
 
-const MissionSystemSection = () => {
-  return (
-    <AnimatedSection delay={0.1}>
-      <section className="py-12 md:py-16 bg-white">
-        <div className="container mx-auto px-4 md:px-6">
-          <div className="text-center mb-12 md:mb-16">
-            <Briefcase className="w-12 h-12 md:w-16 md:h-16 text-blue-600 mx-auto mb-4" /> 
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-blue-700">
-              데뷰 교육 서비스
-            </h2>
-            <p className="mt-4 text-md sm:text-lg text-gray-600 max-w-3xl mx-auto">
-              데뷰는 학생 중심의 체계적인 교육 서비스를 통해 잠재력을 최대한 발휘하고 학습 목표를 달성할 수 있도록 지원합니다.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8">
-            {debutEducationalServices.map((service, index) => (
-              <div key={index} className="bg-sky-50 p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 border border-sky-200 flex flex-col text-center items-center">
-                <div className="mb-4">
-                  {service.icon && <service.icon className="w-10 h-10 md:w-12 md:h-12 text-sky-500 mx-auto mb-3" />}
-                  <h3 className="text-lg md:text-xl font-semibold text-sky-700">{service.title}</h3>
-                </div>
-                <p className="text-sm text-gray-600 leading-relaxed flex-grow">{service.description}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-    </AnimatedSection>
-  );
-};
-
 export default function LearningProcessPage() {
+  const { mainTitle: reviewTitle, mainIcon: ReviewIcon, mainDescription: reviewDesc, subSections } = reviewSystemData;
+
   return (
     <>
       <Head>
-        <title>데뷰 5단계 학습 과정 | 데뷰 영어 학원</title>
-        <meta name="description" content="데뷰만의 체계적인 5단계 학습 과정을 통해 영어 실력 향상을 경험하세요. 발견, 참여, 신장, 펼침, 훈련의 각 단계를 알아보고 학습 목표를 설정하세요." />
-        <meta property="og:title" content="데뷰 5단계 학습 과정" />
-        <meta property="og:description" content="데뷰만의 체계적인 5단계 학습 과정을 통해 영어 실력 향상을 경험하세요." />
-        {/* <meta property="og:image" content="/images/og-why-debut.png" /> */}
+        <title>데뷰 교육 서비스 | 데뷰 영어 학원</title>
+        <meta name="description" content="데뷰의 학생 중심 교육 서비스를 소개합니다. 1인 담임 관리, 스터디북, 완성학습, 온라인 학습 AI 등 체계적인 시스템을 확인해보세요." />
       </Head>
-      <main className="flex flex-col min-h-screen bg-gray-50">
-        <section className="py-12 md:py-20 bg-gradient-to-r from-blue-600 to-indigo-700 text-white">
-          <div className="container mx-auto px-4 md:px-6 text-center">
-            <AnimatedSection delay={0}>
-              <Brain className="w-16 h-16 md:w-20 md:h-20 mx-auto mb-6 opacity-90" />
-              <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight mb-4">
-                데뷰 <span className="bg-yellow-400 text-indigo-800 px-2 rounded-md">5단계</span> 학습 과정
-              </h1>
-            </AnimatedSection>
-          </div>
-        </section>
-
-        <section className="py-12 md:py-16">
-          <div className="container mx-auto px-4 md:px-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6 md:gap-8">
-              {learningStages.map((stage, index) => (
-                <AnimatedSection delay={index * 0.05} key={stage.id}>
-                  <div className={`p-4 rounded-xl shadow-2xl flex flex-col h-full ${stage.bgColor} border border-gray-200 hover:shadow-blue-200/50 transition-all duration-300`}>
-                    <div className="flex-grow">
-                      <div className="flex items-center mb-3">
-                        <stage.icon className={`w-8 h-8 md:w-10 md:h-10 mr-3 ${stage.textColor}`} />
-                        <h2 className={`text-2xl md:text-3xl font-bold ${stage.textColor}`}>{stage.name}</h2>
-                      </div>
-                      <h3 className={`text-sm font-semibold mb-1 ${stage.textColor}`}>{stage.mainTitle}</h3>
-                      <p className="text-xs text-gray-600 mb-3 leading-relaxed min-h-[3.5rem]">{stage.subtitle}</p>
-                    </div>
-                    <div className="text-xs text-gray-500 border-t border-gray-300 pt-2 mt-auto">
-                      {stage.details}
-                    </div>
-                  </div>
-                </AnimatedSection>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <AnimatedSection delay={0}>
-          <section className="py-12 md:py-16 lg:py-20 bg-gradient-to-b from-slate-100 to-purple-100">
-            <div className="container mx-auto px-4 md:px-6">
-              <div className="text-center mb-12 md:mb-16">
-                {reviewSystemData.mainIcon && <reviewSystemData.mainIcon className="w-12 h-12 md:w-16 md:h-16 text-purple-600 mx-auto mb-4" />}
-                <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-purple-700">
-                  {reviewSystemData.mainTitle}
-                </h2>
-                <p className="mt-4 text-md sm:text-lg text-gray-600 max-w-3xl mx-auto">
-                  {reviewSystemData.mainDescription}
-                </p>
-              </div>
-              {
-                reviewSystemData.subSections.map((subSection, index) => (
-                  <ReviewCycleSectionDisplay key={index} {...subSection} />
-                ))
-              }
-            </div>
-          </section>
-        </AnimatedSection>
-
-        <StudyBookSection />
-        <MissionSystemSection />
-        
-      </main>
+      <div className="bg-white">
+        <div className="container mx-auto px-4 py-12">
+          
+          <DebutEducationalServicesSection />
+          <StudyManagerDetailSection />
+          <EducationServiceSection />
+          <LearningStagesSection />
+          <ReviewSystemSection 
+            mainTitle={reviewTitle} 
+            mainIcon={ReviewIcon}
+            mainDescription={reviewDesc}
+            subSections={subSections}
+          />
+          <StudyBookSection />
+          
+        </div>
+      </div>
     </>
   );
 } 

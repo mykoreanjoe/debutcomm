@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { /* Users, */ BookOpen, /* Zap, */ /* TrendingUp, */ /* Target, */ /* BrainCircuit, */ CheckSquare, Clock, CalendarDays, Info, /* List, */ Newspaper, Activity, Puzzle, Users2, /* ClipboardList, */ /* CheckCircle */ } from 'lucide-react'; // 사용하지 않는 아이콘 주석 처리
+import { /* Users, */ BookOpen, /* Zap, */ /* TrendingUp, */ /* Target, */ /* BrainCircuit, */ CheckSquare, Clock, CalendarDays, Info, /* List, */ Newspaper, Activity, Puzzle, /* ClipboardList, */ /* CheckCircle */ } from 'lucide-react'; // 사용하지 않는 아이콘 주석 처리
 import {
   Table,
   TableBody,
@@ -10,6 +10,9 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { Button } from "@/components/ui/button";
+import Link from 'next/link';
+import { Users2 } from "lucide-react";
 
 // 새로운 데이터 구조에 맞춘 타입 정의
 interface ClassOverviewItem {
@@ -214,10 +217,11 @@ const ElementaryRegularCourse = (props: CourseInfoProps) => { // props 전체를
         
         {/* 상담 버튼 */}
         <div className="text-center mt-12">
-            <button className="bg-[#FEE500] text-black font-bold py-3 px-8 rounded-lg hover:bg-yellow-400 transition-colors text-lg shadow-md flex items-center justify-center mx-auto">
-                <Users2 className="w-6 h-6 mr-2" /> 초등 정규 과정 상담받기
-            </button>
-            <p className="text-sm text-gray-500 mt-2">(카카오톡 채널로 연결됩니다)</p>
+             <Button asChild className="bg-[#FEE500] text-black font-bold py-3 px-8 rounded-lg hover:bg-yellow-400 transition-colors text-lg shadow-md flex items-center justify-center mx-auto">
+                 <Link href="http://pf.kakao.com/_pGxkPn/chat" target="_blank">
+                    <Users2 className="w-6 h-6 mr-2" /> 초등 정규 과정 상담받기
+                 </Link>
+             </Button>
         </div>
 
       </div>

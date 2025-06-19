@@ -1,14 +1,6 @@
 import React from 'react';
-import { CalendarDays, Sun, Award, Sparkles } from 'lucide-react';
+import { CalendarDays, Sun, Award, Clock, User } from 'lucide-react';
 import Head from 'next/head';
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
 
 // 초등 인텐시브 코스 데이터 타입
 interface ElementaryIntensiveEntry {
@@ -135,6 +127,46 @@ const SubHeading: React.FC<{ children: React.ReactNode }> = ({ children }) => (
   <h3 className="text-xl font-semibold text-gray-700 mt-8 mb-4">{children}</h3>
 );
 
+// 시간표 카드를 위한 새로운 컴포넌트
+const TimeCard: React.FC<{ time: string; level: string; }> = ({ time, level }) => (
+  <div className="flex items-center justify-between p-4 bg-gray-100 rounded-lg shadow-sm transition-transform hover:scale-105">
+    <div className="flex items-center">
+      <Clock className="w-5 h-5 mr-3 text-blue-500" />
+      <span className="font-bold text-lg text-gray-800">{time}</span>
+    </div>
+    <span className="text-md text-gray-600 font-medium">{level}</span>
+  </div>
+);
+
+// 초등 인텐시브 및 중등부 시간표를 위한 새로운 카드 컴포넌트
+interface ClassCardProps {
+  title: string;
+  time: string;
+  details: { label: string; value: string; }[];
+  note?: string;
+}
+
+const ClassCard: React.FC<ClassCardProps> = ({ title, time, details, note }) => (
+  <div className="p-4 bg-gray-100 rounded-lg shadow-sm transition-transform hover:scale-105 flex flex-col h-full">
+    <div className="flex items-center mb-3">
+      <h4 className="font-bold text-lg text-blue-600">{title}</h4>
+    </div>
+    <div className="flex-grow space-y-2 text-sm">
+      <div className="flex items-center text-gray-800">
+        <Clock className="w-4 h-4 mr-2" />
+        <span className="font-semibold">{time}</span>
+      </div>
+      {details.map((detail, index) => (
+        <div key={index} className="flex items-center text-gray-600">
+          <User className="w-4 h-4 mr-2" />
+          <span>{detail.label}: {detail.value}</span>
+        </div>
+      ))}
+    </div>
+    {note && <p className="text-xs text-red-500 mt-3 pt-3 border-t border-gray-200">{note}</p>}
+  </div>
+);
+
 
 export default function TimetablePage() {
   // const mainText = "주간 학습 시간표"; // mainText 주석 처리
@@ -151,78 +183,34 @@ export default function TimetablePage() {
           <h1 className="text-4xl md:text-5xl font-bold text-gray-800 mb-4 flex items-center justify-center">
             <CalendarDays className="w-10 h-10 md:w-12 md:h-12 mr-3 text-blue-600" /> 시간표
           </h1>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            학생들의 학습 효과를 극대화하기 위한 최적의 시간표입니다.
-          </p>
         </section>
 
         {/* 초등부 일반 시간표 */}
         <section className="mb-12 md:mb-16 p-6 bg-white rounded-lg shadow-lg">
           <SectionTitle title="초등부 시간표" icon={Sun} className="text-sky-600" />
 
-          <SubHeading>월수금 클래스</SubHeading>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead className="w-1/2 font-medium text-gray-600">시간</TableHead>
-                <TableHead className="font-medium text-gray-600">레벨</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {(() => { console.log("초등부 월수금 데이터:", elementaryMonWedFriData); return null; })()}
-              {elementaryMonWedFriData.map((row) => (
-                <TableRow key={row.time}>
-                  <TableCell className="font-medium text-gray-800">{row.time}</TableCell>
-                  <TableCell className="text-gray-700">{row.level}</TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-          <InfoList items={elementaryRegularInfo1} />
+          <SubHeading>정규 클래스 (월수금/화목)</SubHeading>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {elementaryMonWedFriData.map((row) => (
+              <TimeCard key={row.time} time={row.time} level={row.level} />
+            ))}
+            {elementaryTueThuData.map((row) => (
+              <TimeCard key={row.time} time={row.time} level={row.level} />
+            ))}
+          </div>
+          <InfoList items={[...elementaryRegularInfo1, ...elementaryRegularInfo2]} />
 
-          <SubHeading>화목 클래스</SubHeading>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead className="w-1/2 font-medium text-gray-600">시간</TableHead>
-                <TableHead className="font-medium text-gray-600">레벨</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {(() => { console.log("초등부 화목 데이터:", elementaryTueThuData); return null; })()}
-              {elementaryTueThuData.map((row) => (
-                <TableRow key={row.time}>
-                  <TableCell className="font-medium text-gray-800">{row.time}</TableCell>
-                  <TableCell className="text-gray-700">{row.level}</TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-          <InfoList items={elementaryRegularInfo2} />
-        </section>
-
-        {/* 초등 인텐시브 코스 */}
-        <section className="mb-12 md:mb-16 p-6 bg-white rounded-lg shadow-lg">
-          <SectionTitle title="초등 인텐시브 코스" icon={Sparkles} className="text-amber-600" />
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead className="w-1/2 font-medium text-gray-600">클래스</TableHead>
-                <TableHead className="font-medium text-gray-600">시간</TableHead>
-                <TableHead className="text-right font-medium text-gray-600">총 시간</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {(() => { console.log("초등 인텐시브 데이터:", elementaryIntensiveData); return null; })()}
-              {elementaryIntensiveData.map((row) => (
-                <TableRow key={row.classType}>
-                  <TableCell className="font-medium text-gray-800">{row.classType}</TableCell>
-                  <TableCell className="text-gray-700">{row.time}</TableCell>
-                  <TableCell className="text-right text-gray-700">{row.duration}</TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+          <SubHeading>인텐시브 코스</SubHeading>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {elementaryIntensiveData.map((row) => (
+              <ClassCard 
+                key={row.classType}
+                title={row.classType}
+                time={row.time}
+                details={[{ label: '총 시간', value: row.duration }]}
+              />
+            ))}
+          </div>
           <InfoList items={elementaryIntensiveInfo} />
         </section>
 
@@ -231,67 +219,42 @@ export default function TimetablePage() {
           <SectionTitle title="중등부 시간표" icon={Award} className="text-indigo-600" />
           
           <SubHeading>월금 클래스</SubHeading>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead className="font-medium text-gray-600">레벨</TableHead>
-                <TableHead className="font-medium text-gray-600">시간</TableHead>
-                <TableHead className="font-medium text-gray-600">담당T</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {(() => { console.log("중등부 월금 데이터:", middleMonFriClassData); return null; })()}
-              {middleMonFriClassData.map((row) => (
-                <TableRow key={row.level}>
-                  <TableCell className="font-medium text-gray-800">{row.level}</TableCell>
-                  <TableCell className="text-gray-700">{row.time} <span className="text-xs text-gray-500">{row.note}</span></TableCell>
-                  <TableCell className="text-gray-700">{row.teacher}</TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {middleMonFriClassData.map((row) => (
+              <ClassCard 
+                key={row.level}
+                title={row.level}
+                time={row.time}
+                details={[{ label: '담당', value: row.teacher }]}
+                note={row.note}
+              />
+            ))}
+          </div>
 
           <SubHeading>화목 클래스</SubHeading>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead className="font-medium text-gray-600">레벨</TableHead>
-                <TableHead className="font-medium text-gray-600">시간</TableHead>
-                <TableHead className="font-medium text-gray-600">담당T</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {(() => { console.log("중등부 화목 데이터:", middleTueThuClassData); return null; })()}
-              {middleTueThuClassData.map((row) => (
-                <TableRow key={row.level}>
-                  <TableCell className="font-medium text-gray-800">{row.level}</TableCell>
-                  <TableCell className="text-gray-700">{row.time} <span className="text-xs text-gray-500">{row.note}</span></TableCell>
-                  <TableCell className="text-gray-700">{row.teacher}</TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {middleTueThuClassData.map((row) => (
+              <ClassCard 
+                key={row.level}
+                title={row.level}
+                time={row.time}
+                details={[{ label: '담당', value: row.teacher }]}
+                note={row.note}
+              />
+            ))}
+          </div>
           
           <SubHeading>수요 클리닉</SubHeading>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead className="font-medium text-gray-600">레벨</TableHead>
-                <TableHead className="font-medium text-gray-600">시간</TableHead>
-                <TableHead className="font-medium text-gray-600">담당T</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {(() => { console.log("중등부 수요 클리닉 데이터:", middleWedClinicData); return null; })()}
-              {middleWedClinicData.map((row) => (
-                <TableRow key={row.level}>
-                  <TableCell className="font-medium text-gray-800">{row.level}</TableCell>
-                  <TableCell className="text-gray-700">{row.time}</TableCell>
-                  <TableCell className="text-gray-700">{row.teacher}</TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {middleWedClinicData.map((row) => (
+              <ClassCard 
+                key={row.level}
+                title={row.level}
+                time={row.time}
+                details={[{ label: '담당', value: row.teacher }]}
+              />
+            ))}
+          </div>
           <InfoList items={middleSchoolInfo} />
           <InfoList items={middleSchoolCompletionInfo} title="완성 학습" />
         </section>

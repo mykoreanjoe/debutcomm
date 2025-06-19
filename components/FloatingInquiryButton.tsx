@@ -5,10 +5,10 @@ const FloatingInquiryButton = () => {
   const kakaoTalkUrl = "http://pf.kakao.com/_pGxkPn/chat"; // Footer에서 사용된 URL과 동일하게 설정
 
   return (
-    <div className="fixed bottom-6 right-6 flex flex-col items-center space-y-3 z-50">
+    <div className="fixed bottom-6 right-6 flex flex-col items-center space-y-3 z-[1000]">
       {/* 캘린더 아이콘 */}
       <Link
-        href="/news"
+        href="/timetable"
         className="bg-red-500 hover:bg-red-600 text-white p-4 rounded-full shadow-lg transition-colors duration-300 flex items-center justify-center"
         title="캘린더"
         aria-label="캘린더 페이지로 이동"
