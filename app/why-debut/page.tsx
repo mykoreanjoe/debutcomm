@@ -1,9 +1,60 @@
 import React from 'react';
 import Link from 'next/link';
-import { Lightbulb, Zap, Rocket, Target, ExternalLink, UserCheck, BookHeart, Edit3, Briefcase, FolderArchive, Brain, Sparkles, Users2, FileText, BookOpen, CheckSquare, PhoneCall, BarChart2, Smile } from 'lucide-react';
+import { Lightbulb, Zap, Rocket, Target, ExternalLink, UserCheck, BookHeart, FolderArchive, Brain, Users2, FileText, BookOpen, CheckSquare, Sparkles, Edit3, Briefcase, PhoneCall, BarChart2, Smile } from 'lucide-react';
 import Image from 'next/image';
 import Head from 'next/head';
 import AnimatedSection from '@/components/AnimatedSection';
+import SectionTitle from '@/components/SectionTitle';
+
+// [Fix] 데이터 정의를 파일 상단으로 이동시키고 타입 추가
+interface DebutService {
+  title: string;
+  description: string;
+  icon: React.ElementType;
+}
+
+const debutEducationalServices: DebutService[] = [
+  {
+    title: "1인 담임 관리",
+    description: "학생 맞춤형 학습 계획 수립부터 성적 관리, 정서적 지원까지 전담 담임 선생님이 밀착 관리합니다.",
+    icon: UserCheck,
+  },
+  {
+    title: "스터디북",
+    description: "자기주도 학습 능력 향상을 위한 개인별 학습 기록 및 관리 시스템입니다. 메타인지 학습을 돕습니다.",
+    icon: BookHeart,
+  },
+  {
+    title: "월말고사",
+    description: "매월 학습 성과를 점검하고, 다음 학습 목표 설정의 기초 자료로 활용되는 정기 평가입니다.",
+    icon: FileText,
+  },
+  {
+    title: "성취도 평가",
+    description: "토셀, 토플, 수능형 시험으로 학생의 성취도를 평가 하고 피드백을 드립니다.",
+    icon: CheckSquare,
+  },
+  {
+    title: "완성학습",
+    description: "수업 전, 후로 30분 또는 1시간을 학습 루틴화 하여, 학생의 부족한 부분을 완성하고 관리합니다.",
+    icon: CheckSquare,
+  },
+  {
+    title: "온라인 학습 AI",
+    description: "AI 기반 맞춤형 학습 콘텐츠와 피드백을 통해 시간과 장소에 구애받지 않는 학습 환경을 제공합니다.",
+    icon: Brain,
+  },
+  {
+    title: "스터디 매니저",
+    description: "학생들의 학습 습관 형성, 과제 관리, 학습 동기 부여 등 학습 전반을 지원하는 전문 관리자입니다.",
+    icon: Users2,
+  },
+  {
+    title: "개별 포트폴리오",
+    description: "학생의 학습 과정과 성과를 체계적으로 기록하고 시각화하여, 성장 과정을 한눈에 파악할 수 있도록 합니다.",
+    icon: FolderArchive,
+  },
+];
 
 const learningStages = [
   {
@@ -162,50 +213,49 @@ interface ReviewSystemProps {
 const reviewSystemData: ReviewSystemProps = {
   mainTitle: "데뷰 복습 시스템",
   mainIcon: Sparkles,
-  mainDescription: "데뷰만의 체계적인 4단계 복습 시스템으로 학습 효과를 극대화합니다. 각 단계별 맞춤 복습 전략을 확인해보세요.",
+  mainDescription: "체계적인 4단계 복습 시스템으로 학습 효과를 극대화합니다.",
   subSections: [
     {
-      title: "데뷰 4단계 복습과정",
+      title: "4단계 복습과정",
       icon: BookHeart,
       titleColor: "text-emerald-600",
       sectionBgColor: "bg-emerald-50",
-      description: "데뷰의 모든 학생들은 다음 4단계 복습 과정을 통해 학습 내용을 완벽하게 자기 것으로 만듭니다. 이 과정을 통해 어휘력 향상, 수업 내용 이해도 증진, 자기주도 학습 능력 배양, 그리고 꾸준한 온라인 학습 습관 형성을 목표로 합니다.",
+      description: "각 단계별 맞춤 복습 전략을 통해 어휘력 향상, 이해도 증진, 자기주도 학습 능력 배양, 온라인 학습 습관을 형성합니다.",
       steps: [
-        { name: "단어", description: "수업과 연계된 단어 학습 및 암기를 통해 어휘 기반을 다집니다. 자체 단어장 및 다양한 어휘 활동을 활용합니다.", color: "#34D399", textColor: "#065F46" },
-        { name: "수업", description: "핵심 개념 이해와 적용에 중점을 둔 수업에 참여하여, 배운 내용을 명확히 이해합니다. 적극적인 질의응답과 토론을 장려합니다.", color: "#6EE7B7", textColor: "#047857" },
-        { name: "미션&과제", description: "수업 내용을 바탕으로 한 다양한 미션과 과제를 수행하며 학습한 내용을 능동적으로 적용하고 심화합니다.", color: "#A7F3D0", textColor: "#064E3B" },
-        { name: "온라인 학습", description: "온라인 학습 플랫폼을 통해 언제 어디서든 학습 내용을 복습하고, 추가적인 학습 자료 및 AI 기반 피드백을 제공받습니다.", color: "#D1FAE5", textColor: "#065F46" },
+        { name: "단어", description: "수업 연계 단어 학습과 암기를 통해 기반을 다집니다. 자체 단어장 및 다양한 어휘 활동을 활용합니다.", color: "#34D399", textColor: "#065F46" },
+        { name: "수업", description: "핵심 개념 이해와 적용에 중점을 둔 수업에 참여하며, 배운 내용을 명확히 이해합니다.", color: "#6EE7B7", textColor: "#047857" },
+        { name: "미션&과제", description: "수업 내용을 바탕으로 다양한 미션과 과제를 수행하며 적용하고 심화합니다.", color: "#A7F3D0", textColor: "#064E3B" },
+        { name: "온라인 학습", description: "온라인 학습 플랫폼을 통해 언제 어디서든 학습 내용을 복습하고, 추가 학습 자료 및 AI 피드백을 제공받습니다.", color: "#D1FAE5", textColor: "#065F46" },
       ],
     },
   ]
 };
 
-const ReviewCycleSectionDisplay: React.FC<ReviewCycleSubSectionProps> = ({
+const ReviewCycleDetails: React.FC<ReviewCycleSubSectionProps> = ({
   title,
   description,
   steps,
   icon: IconComponent,
-  titleColor = 'text-blue-700',
-  sectionBgColor = 'bg-white',
+  titleColor = 'text-purple-700',
 }) => {
   return (
-    <div className={`mb-10 p-6 md:p-8 rounded-lg shadow-xl ${sectionBgColor}`}>
-      <h4 className={`text-xl md:text-2xl font-bold text-center mb-3 ${titleColor} flex items-center justify-center`}>
-        {IconComponent && <IconComponent className="w-7 h-7 mr-2.5" />} {title}
+    <div className="mb-10 p-6 md:p-8 rounded-2xl shadow-lg bg-white/70 backdrop-blur-sm border border-purple-100">
+      <h4 className={`text-xl md:text-2xl font-bold text-center mb-4 ${titleColor} flex items-center justify-center`}>
+        {IconComponent && <IconComponent className="w-7 h-7 mr-3" />} {title}
       </h4>
-      <p className="text-center text-gray-600 mb-8 text-sm md:text-base max-w-2xl mx-auto">
+      <p className="text-center text-gray-600 mb-8 text-sm md:text-base max-w-3xl mx-auto">
         {description}
       </p>
-      <div className="overflow-hidden border border-gray-200 rounded-lg">
+      <div className="overflow-hidden border border-gray-200 rounded-lg shadow-inner bg-white">
         {steps.map((step, index) => (
           <div key={index} className={`md:flex items-stretch ${index < steps.length - 1 ? 'border-b border-gray-200' : ''}`}>
             <div 
               style={{ backgroundColor: step.color, color: step.textColor || 'white' }}
-              className={`w-full md:w-1/4 p-3 flex items-center justify-center text-center font-semibold text-base md:text-lg`}
+              className={`w-full md:w-1/4 p-4 flex items-center justify-center text-center font-bold text-base md:text-lg`}
             >
-              {step.name}
+              <span>{step.name}</span>
             </div>
-            <div className="w-full md:w-3/4 p-3 bg-slate-100 flex items-center">
+            <div className="w-full md:w-3/4 p-4 bg-slate-50 flex items-center">
               <p className="text-gray-700 text-sm md:text-base leading-relaxed">{step.description}</p>
             </div>
           </div>
@@ -214,18 +264,6 @@ const ReviewCycleSectionDisplay: React.FC<ReviewCycleSubSectionProps> = ({
     </div>
   );
 };
-
-interface StudyBookSectionTitleProps {
-  icon?: React.ElementType;
-  title: string;
-  className?: string;
-}
-
-const StudyBookSectionTitle: React.FC<StudyBookSectionTitleProps> = ({ icon: IconComponent, title, className }) => (
-  <h4 className={`text-xl font-semibold text-gray-700 mb-3 flex items-center ${className}`}>
-    {IconComponent && <IconComponent className="w-6 h-6 mr-2 text-blue-600" />} {title}
-  </h4>
-);
 
 const StudyBookSection = () => {
   const sampleImages = [
@@ -237,20 +275,22 @@ const StudyBookSection = () => {
   const naverBlogUrl = "https://blog.naver.com/ourdebut";
 
   return (
-    <AnimatedSection className="py-12 md:py-20 bg-slate-50">
+    <AnimatedSection className="py-16 md:py-24 bg-slate-50">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-10 md:mb-12">
-          <h3 className="text-3xl md:text-4xl font-bold text-gray-800 mb-3 flex items-center justify-center">
-            <BookHeart className="w-10 h-10 mr-3 text-amber-500" /> 데뷰 스터디북
-          </h3>
-          <p className="text-gray-600 md:text-lg max-w-2xl mx-auto">
-            단순 필기 노트가 아닌, 자기주도 학습 습관을 형성하는 메타인지 도구입니다.
-          </p>
-        </div>
+        <SectionTitle
+          icon={BookHeart}
+          title="데뷰 스터디북"
+          subtitle="단순 필기 노트가 아닌, 자기주도 학습 습관을 형성하는 메타인지 도구입니다."
+          iconColor="text-amber-500"
+          titleColor="text-gray-800"
+        />
 
-        <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center mb-10 md:mb-12">
+        <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center mb-12 md:mb-16">
           <div>
-            <StudyBookSectionTitle icon={Edit3} title="스터디북 주요 기능" />
+            <h4 className="text-xl font-bold text-gray-800 mb-4 flex items-center">
+              <Edit3 className="w-6 h-6 mr-2 text-blue-600" />
+              스터디북 주요 기능
+            </h4>
             <ul className="space-y-3 text-gray-700 text-sm md:text-base list-disc list-inside pl-2">
               <li><strong>개인 맞춤형 학습 계획:</strong> 학생 스스로 학습 목표와 계획을 세우고 점검합니다.</li>
               <li><strong>수업 내용 정리:</strong> 배운 내용을 자신의 언어로 재구성하며 이해도를 높입니다.</li>
@@ -259,15 +299,11 @@ const StudyBookSection = () => {
               <li><strong>학습 성찰:</strong> 학습 과정에서의 어려움과 해결 과정을 기록하며 메타인지 능력을 향상시킵니다.</li>
             </ul>
           </div>
-        </div>
-
-        <div className="mb-10 md:mb-12">
-          <StudyBookSectionTitle icon={FolderArchive} title="스터디북 샘플 이미지" />
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {sampleImages.map((image, index) => (
-              <div key={index} className="relative w-full h-40 md:h-56 rounded-md overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300 group">
+          <div className="grid grid-cols-2 gap-4">
+            {sampleImages.slice(0, 4).map((image, index) => (
+              <div key={index} className="relative w-full h-40 md:h-56 rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 group">
                 <Image src={image.src} alt={image.alt} layout="fill" objectFit="cover" className="transform group-hover:scale-105 transition-transform duration-300" />
-                <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <div className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                   <p className="text-white text-center text-xs p-2">{image.alt}</p>
                 </div>
               </div>
@@ -275,7 +311,7 @@ const StudyBookSection = () => {
           </div>
         </div>
         
-        <div className="text-center">
+        <div className="text-center bg-white p-8 rounded-lg shadow-md">
           <p className="text-center text-gray-600 mb-6">
             더 많은 스터디북 활용 예시와 데뷰의 교육 철학은 공식 블로그에서 확인하실 수 있습니다.
           </p>
@@ -295,27 +331,25 @@ const StudyBookSection = () => {
   );
 };
 
-const DebutEducationalServicesSection = () => {
+const EducationalServicesSection = () => {
   return (
     <AnimatedSection delay={0.1}>
-      <section className="py-12 md:py-16 bg-white">
+      <section className="py-16 md:py-24 bg-white">
         <div className="container mx-auto px-4 md:px-6">
-          <div className="text-center mb-12 md:mb-16">
-            <Briefcase className="w-12 h-12 md:w-16 md:h-16 text-blue-600 mx-auto mb-4" /> 
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-blue-700">
-              데뷰 교육 서비스
-            </h2>
-            <p className="mt-4 text-md sm:text-lg text-gray-600 max-w-3xl mx-auto">
-              데뷰는 학생 중심의 체계적인 교육 서비스를 통해 잠재력을 최대한 발휘하고 학습 목표를 달성할 수 있도록 지원합니다.
-            </p>
-          </div>
+          <SectionTitle
+            icon={Briefcase}
+            title="데뷰 교육 서비스"
+            subtitle="데뷰는 학생 중심의 체계적인 교육 서비스를 통해 잠재력을 최대한 발휘하고 학습 목표를 달성할 수 있도록 지원합니다."
+            iconColor="text-blue-600"
+            titleColor="text-blue-800"
+          />
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8">
-            {debutEducationalServices.map((service, index) => (
-              <div key={index} className="bg-sky-50 p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 border border-sky-200 flex flex-col text-center items-center">
+            {debutEducationalServices.map((service: DebutService, index: number) => (
+              <div key={index} className="bg-sky-50 p-6 rounded-xl shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 border border-sky-100 flex flex-col text-center items-center">
                 <div className="mb-4">
-                  {service.icon && <service.icon className="w-10 h-10 md:w-12 md:h-12 text-sky-500 mx-auto mb-3" />}
-                  <h3 className="text-lg md:text-xl font-semibold text-sky-700">{service.title}</h3>
+                  <service.icon className="w-10 h-10 md:w-12 md:h-12 text-sky-500 mx-auto mb-4" />
+                  <h3 className="text-lg md:text-xl font-bold text-sky-800">{service.title}</h3>
                 </div>
                 <p className="text-sm text-gray-600 leading-relaxed flex-grow">{service.description}</p>
               </div>
@@ -327,49 +361,46 @@ const DebutEducationalServicesSection = () => {
   );
 };
 
-const StudyManagerDetailSection = () => {
+const StudyManagerSection = () => {
   return (
     <AnimatedSection>
-      <section id="triple-care-system" className="py-12 md:py-16 bg-gradient-to-br from-purple-50 via-pink-50 to-rose-50">
+      <section id="triple-care-system" className="py-16 md:py-24 bg-slate-50">
         <div className="container mx-auto px-4 md:px-6">
-          <div className="text-center mb-10 md:mb-12">
-            <Users2 className="w-12 h-12 text-purple-600 mx-auto mb-4" />
-            <h2 className="text-3xl md:text-4xl font-bold text-purple-700 mb-3">
-              스터디 매니저 상세
-            </h2>
-            <p className="text-lg md:text-xl text-gray-700 max-w-2xl mx-auto">
-              강사, 온라인AI, 스터디 매니저가 함께하여 한 학생의 학습을 관리 합니다.
-            </p>
-          </div>
-
-          <div className="max-w-3xl mx-auto bg-white p-6 md:p-8 rounded-xl shadow-2xl">
-            <h3 className="text-xl md:text-2xl font-semibold text-gray-800 mb-6 text-center">주요 업무</h3>
-            <ul className="space-y-6">
+          <SectionTitle
+            icon={Users2}
+            title="스터디 매니저"
+            subtitle="강사, 온라인 AI, 스터디 매니저가 함께하여 한 학생의 학습을 관리합니다."
+            iconColor="text-purple-600"
+            titleColor="text-purple-800"
+          />
+          <div className="max-w-3xl mx-auto bg-white p-8 md:p-10 rounded-2xl shadow-xl border border-purple-100">
+            <h3 className="text-xl md:text-2xl font-bold text-gray-800 mb-8 text-center">주요 업무</h3>
+            <ul className="space-y-8">
               <li className="flex items-start">
-                <div className="flex-shrink-0">
-                  <PhoneCall className="w-7 h-7 text-green-500 mr-4 mt-1" />
+                <div className="flex-shrink-0 bg-green-100 p-3 rounded-full">
+                  <PhoneCall className="w-6 h-6 text-green-600" />
                 </div>
-                <div>
-                  <h4 className="font-semibold text-lg text-gray-700">출결 체크</h4>
-                  <p className="text-gray-600">5분 이상 지각 시 학부모님께 즉시 전화 알림으로 철저한 출결 관리를 지원합니다.</p>
+                <div className="ml-5">
+                  <h4 className="font-bold text-lg text-gray-800">출결 체크</h4>
+                  <p className="text-gray-600 mt-1">5분 이상 지각 시 학부모님께 즉시 전화 알림으로 철저한 출결 관리를 지원합니다.</p>
                 </div>
               </li>
               <li className="flex items-start">
-                <div className="flex-shrink-0">
-                  <BarChart2 className="w-7 h-7 text-blue-500 mr-4 mt-1" />
+                <div className="flex-shrink-0 bg-blue-100 p-3 rounded-full">
+                  <BarChart2 className="w-6 h-6 text-blue-600" />
                 </div>
-                <div>
-                  <h4 className="font-semibold text-lg text-gray-700">온라인 성취도 관리</h4>
-                  <p className="text-gray-600">온라인 학습 데이터 기반으로 학생의 성취도를 면밀히 분석하고, 맞춤형 피드백을 제공합니다.</p>
+                <div className="ml-5">
+                  <h4 className="font-bold text-lg text-gray-800">온라인 성취도 관리</h4>
+                  <p className="text-gray-600 mt-1">온라인 학습 데이터 기반으로 학생의 성취도를 면밀히 분석하고, 맞춤형 피드백을 제공합니다.</p>
                 </div>
               </li>
               <li className="flex items-start">
-                <div className="flex-shrink-0">
-                  <Smile className="w-7 h-7 text-pink-500 mr-4 mt-1" />
+                <div className="flex-shrink-0 bg-pink-100 p-3 rounded-full">
+                  <Smile className="w-6 h-6 text-pink-600" />
                 </div>
-                <div>
-                  <h4 className="font-semibold text-lg text-gray-700">학생들의 정서적 케어</h4>
-                  <p className="text-gray-600">단순한 학습 관리를 넘어, 학생들의 학습 동기 부여 및 정서적 안정까지 세심하게 지원합니다.</p>
+                <div className="ml-5">
+                  <h4 className="font-bold text-lg text-gray-800">학생들의 정서적 케어</h4>
+                  <p className="text-gray-600 mt-1">단순한 학습 관리를 넘어, 학생들의 학습 동기 부여 및 정서적 안정까지 세심하게 지원합니다.</p>
                 </div>
               </li>
             </ul>
@@ -380,38 +411,41 @@ const StudyManagerDetailSection = () => {
   );
 };
 
-const EducationServiceSection = () => {
+const LearningProcessBanner = () => {
   return (
-    <AnimatedSection className="py-12 md:py-20 bg-gradient-to-r from-blue-600 to-indigo-700 text-white">
-      <div className="container mx-auto px-4 md:px-6 text-center">
-        <AnimatedSection delay={0}>
-          <Brain className="w-16 h-16 md:w-20 md:h-20 mx-auto mb-6 opacity-90" />
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight mb-4">
-            데뷰 <span className="bg-yellow-400 text-indigo-800 px-2 rounded-md">5단계</span> 학습 과정
-          </h1>
-        </AnimatedSection>
-      </div>
+    <AnimatedSection>
+      <section className="py-16 md:py-24 bg-white">
+        <div className="container mx-auto px-4 md:px-6">
+          <SectionTitle
+            icon={Brain}
+            title="5단계 학습 과정"
+            subtitle="체계적인 단계별 학습으로 영어 실력 향상을 이끌어냅니다"
+            iconColor="text-blue-600"
+            titleColor="text-blue-800"
+          />
+        </div>
+      </section>
     </AnimatedSection>
   );
 };
 
 const LearningStagesSection = () => {
   return (
-    <section className="py-12 md:py-16">
+    <section className="py-16 md:py-24 bg-white">
       <div className="container mx-auto px-4 md:px-6">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6 md:gap-8">
           {learningStages.map((stage, index) => (
             <AnimatedSection delay={index * 0.05} key={stage.id}>
-              <div className={`p-4 rounded-xl shadow-2xl flex flex-col h-full ${stage.bgColor} border border-gray-200 hover:shadow-blue-200/50 transition-all duration-300`}>
+              <div className={`p-5 rounded-xl shadow-lg flex flex-col h-full ${stage.bgColor} border border-gray-200 hover:shadow-xl hover:-translate-y-2 transition-all duration-300`}>
                 <div className="flex-grow">
-                  <div className="flex items-center mb-3">
-                    <stage.icon className={`w-8 h-8 md:w-10 md:h-10 mr-3 ${stage.textColor}`} />
-                    <h2 className={`text-2xl md:text-3xl font-bold ${stage.textColor}`}>{stage.name}</h2>
+                  <div className="flex items-center mb-4">
+                    <stage.icon className={`w-9 h-9 md:w-11 md:h-11 mr-3.5 ${stage.textColor}`} />
+                    <h2 className={`text-2xl md:text-3xl font-extrabold ${stage.textColor}`}>{stage.name}</h2>
                   </div>
-                  <h3 className={`text-sm font-semibold mb-1 ${stage.textColor}`}>{stage.mainTitle}</h3>
-                  <p className="text-xs text-gray-600 mb-3 leading-relaxed min-h-[3.5rem]">{stage.subtitle}</p>
+                  <h3 className={`text-sm font-bold mb-2 ${stage.textColor}`}>{stage.mainTitle}</h3>
+                  <p className="text-xs text-gray-700 mb-4 leading-relaxed min-h-[4rem]">{stage.subtitle}</p>
                 </div>
-                <div className="text-xs text-gray-500 border-t border-gray-300 pt-2 mt-auto">
+                <div className="text-xs text-gray-600 border-t-2 border-dashed border-gray-300/70 pt-3 mt-auto">
                   {stage.details}
                 </div>
               </div>
@@ -423,22 +457,21 @@ const LearningStagesSection = () => {
   );
 };
 
-const ReviewSystemSection = ({ mainTitle, mainIcon: ReviewIcon, mainDescription: reviewDesc, subSections }: ReviewSystemProps) => {
+const ReviewSection = () => {
+  const { mainTitle, mainIcon, mainDescription, subSections } = reviewSystemData;
   return (
     <AnimatedSection delay={0}>
-      <section className="py-12 md:py-16 lg:py-20 bg-gradient-to-b from-slate-100 to-purple-100">
+      <section className="py-16 md:py-24 bg-gradient-to-br from-slate-50 via-purple-50 to-indigo-50">
         <div className="container mx-auto px-4 md:px-6">
-          <div className="text-center mb-12 md:mb-16">
-            {ReviewIcon && <ReviewIcon className="w-12 h-12 md:w-16 md:h-16 text-purple-600 mx-auto mb-4" />}
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-purple-700">
-              {mainTitle}
-            </h2>
-            <p className="mt-4 text-md sm:text-lg text-gray-600 max-w-3xl mx-auto">
-              {reviewDesc}
-            </p>
-          </div>
+          <SectionTitle
+            icon={mainIcon}
+            title={mainTitle}
+            subtitle={mainDescription}
+            iconColor="text-purple-600"
+            titleColor="text-purple-800"
+          />
           {subSections.map((subSection, index) => (
-            <ReviewCycleSectionDisplay key={index} {...subSection} />
+            <ReviewCycleDetails key={index} {...subSection} />
           ))}
         </div>
       </section>
@@ -446,75 +479,22 @@ const ReviewSystemSection = ({ mainTitle, mainIcon: ReviewIcon, mainDescription:
   );
 };
 
-const debutEducationalServices = [
-  {
-    title: "1인 담임 관리",
-    description: "학생 맞춤형 학습 계획 수립부터 성적 관리, 정서적 지원까지 전담 담임 선생님이 밀착 관리합니다.",
-    icon: UserCheck,
-  },
-  {
-    title: "스터디북",
-    description: "자기주도 학습 능력 향상을 위한 개인별 학습 기록 및 관리 시스템입니다. 메타인지 학습을 돕습니다.",
-    icon: BookHeart,
-  },
-  {
-    title: "월말고사",
-    description: "매월 학습 성과를 점검하고, 다음 학습 목표 설정의 기초 자료로 활용되는 정기 평가입니다.",
-    icon: FileText,
-  },
-  {
-    title: "성취도 평가",
-    description: "토셀, 토플, 수능형 시험으로 학생의 성취도를 평가 하고 피드백을 드립니다.",
-    icon: CheckSquare,
-  },
-  {
-    title: "완성학습",
-    description: "수업 전, 후로 30분 또는 1시간을 학습 루틴화 하여, 학생의 부족한 부분을 완성하고 관리합니다.",
-    icon: CheckSquare,
-  },
-  {
-    title: "온라인 학습 AI",
-    description: "AI 기반 맞춤형 학습 콘텐츠와 피드백을 통해 시간과 장소에 구애받지 않는 학습 환경을 제공합니다.",
-    icon: Brain,
-  },
-  {
-    title: "스터디 매니저",
-    description: "학생들의 학습 습관 형성, 과제 관리, 학습 동기 부여 등 학습 전반을 지원하는 전문 관리자입니다.",
-    icon: Users2,
-  },
-  {
-    title: "개별 포트폴리오",
-    description: "학생의 학습 과정과 성과를 체계적으로 기록하고 시각화하여, 성장 과정을 한눈에 파악할 수 있도록 합니다.",
-    icon: FolderArchive,
-  },
-];
-
-export default function LearningProcessPage() {
-  const { mainTitle: reviewTitle, mainIcon: ReviewIcon, mainDescription: reviewDesc, subSections } = reviewSystemData;
-
+export default function WhyDebutPage() {
   return (
-    <>
+    <div className="min-h-screen bg-slate-50">
       <Head>
-        <title>데뷰 교육 서비스 | 데뷰 영어 학원</title>
-        <meta name="description" content="데뷰의 학생 중심 교육 서비스를 소개합니다. 1인 담임 관리, 스터디북, 완성학습, 온라인 학습 AI 등 체계적인 시스템을 확인해보세요." />
+        <title>왜 데뷰인가? | 데뷰 영어 학원</title>
+        <meta name="description" content="데뷰 영어만의 차별화된 교육 철학과 시스템을 소개합니다. 학생 중심의 맞춤형 교육과 체계적인 관리 시스템으로 영어 실력 향상을 도와드립니다." />
       </Head>
-      <div className="bg-white">
-        <div className="container mx-auto px-4 py-12">
-          
-          <DebutEducationalServicesSection />
-          <StudyManagerDetailSection />
-          <EducationServiceSection />
-          <LearningStagesSection />
-          <ReviewSystemSection 
-            mainTitle={reviewTitle} 
-            mainIcon={ReviewIcon}
-            mainDescription={reviewDesc}
-            subSections={subSections}
-          />
-          <StudyBookSection />
-          
-        </div>
-      </div>
-    </>
+
+      <main>
+        <EducationalServicesSection />
+        <LearningProcessBanner />
+        <LearningStagesSection />
+        <StudyManagerSection />
+        <StudyBookSection />
+        <ReviewSection />
+      </main>
+    </div>
   );
 } 

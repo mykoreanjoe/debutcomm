@@ -1,131 +1,115 @@
 "use client";
 
-import React from 'react';
-// import Image from 'next/image';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Menu, CalendarDays, Search } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-// Clerk 관련 import 주석 처리 또는 삭제
-// import {
-//   SignInButton,
-//   SignUpButton,
-//   SignedIn,
-//   SignedOut,
-//   UserButton,
-// } from "@clerk/nextjs";
+import { usePathname } from 'next/navigation';
+import { Menu, X } from 'lucide-react';
+import { SignInButton, SignUpButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 
-const navItems = [
-  { name: '스토리', href: '/story' },
-  { name: 'WHY DEBUT', href: '/why-debut' },
-  { name: '커리큘럼', href: '/curriculum' },
-  { name: '시간표', href: '/timetable' },
-  // { name: '학습경험', href: '/learning-experience' }, // 이 링크는 현재 404, 필요시 복원
-  { name: '데뷰데이', href: '/debut-day' },
-  { name: '데뷰인', href: '/debutian' },
-  { name: '스터디룸', href: '/study-room' },
-  { name: '데뷰후기', href: '/reviews' },
-  { name: '파트너스', href: '/partners' },
-  { name: '같이완성 커뮤니티', href: '/community' },
-];
+const Header = () => {
+    const [isOpen, setIsOpen] = useState(false);
+    const [isScrolled, setIsScrolled] = useState(false);
+    const pathname = usePathname();
 
-export default function Header() {
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
-  const [isSearchOpen, setIsSearchOpen] = React.useState(false);
+    const navLinks = [
+        { name: '데뷰 스토리', href: '/story' },
+        { name: '커리큘럼', href: '/curriculum' },
+        { name: '시간표', href: '/timetable' },
+        { name: 'NEWS & Events', href: '/news' },
+        { name: '학부모 후기', href: '/reviews' },
+    ];
 
-  return (
-    <>
-      <header className="bg-white shadow-md sticky top-0 z-40">
-        <nav className="container relative mx-auto flex h-16 items-center justify-between px-6">
-          {/* Left side: Menu button on mobile */}
-          <div className="flex items-center">
-            <div className="md:hidden">
-              <button
-                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className=""
-              >
-                <Menu className="h-6 w-6 text-gray-500 transition-colors duration-300 hover:text-indigo-600" />
-              </button>
+    useEffect(() => {
+        const handleScroll = () => {
+            setIsOpen(false); 
+            if (window.scrollY > 20) {
+                setIsScrolled(true);
+            } else {
+                setIsScrolled(false);
+            }
+        };
+
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
+
+    const isHomePage = pathname === '/';
+
+    return (
+        <header className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${isScrolled ? 'bg-white/90 shadow-md backdrop-blur-sm' : 'bg-transparent'}`}>
+            <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="flex items-center justify-between h-20">
+                    
+                    <div className="flex-shrink-0">
+                        <Link href="/" className="text-2xl font-bold">
+                            <span className={isScrolled ? 'text-gray-800' : 'text-white'}>데뷰</span>
+                            <span className="text-blue-500">영어</span>
+                        </Link>
+                    </div>
+
+                    <nav className="hidden md:flex items-center space-x-8">
+                        {navLinks.map((link) => (
+                            <Link key={link.name} href={link.href} className={`text-base font-medium transition-colors duration-300 ${isScrolled || !isHomePage ? 'text-gray-700 hover:text-blue-600' : 'text-white hover:text-blue-300'}`}>
+                                {link.name}
+                            </Link>
+                        ))}
+                    </nav>
+
+                    <div className="hidden md:flex items-center space-x-4">
+                        <SignedOut>
+                            <SignInButton mode="modal">
+                                <button className={`text-sm font-medium px-4 py-2 rounded-md transition-colors duration-300 ${isScrolled || !isHomePage ? 'bg-blue-500 text-white hover:bg-blue-600' : 'bg-white/20 text-white hover:bg-white/30'}`}>
+                                    로그인
+                                </button>
+                            </SignInButton>
+                        </SignedOut>
+                        <SignedIn>
+                            <UserButton afterSignOutUrl="/" />
+                        </SignedIn>
+                    </div>
+
+                    <div className="md:hidden flex items-center">
+                        <button onClick={() => setIsOpen(!isOpen)} className={`focus:outline-none ${isScrolled || !isHomePage ? 'text-gray-700' : 'text-white'}`}>
+                            {isOpen ? <X size={28} /> : <Menu size={28} />}
+                        </button>
+                    </div>
+                </div>
             </div>
-            {/* Desktop Logo */}
-            <div className="hidden md:flex items-center gap-2">
-              <Link href="/">
-                <span className="text-xl font-bold text-[#13588f]">목동데뷰영어</span>
-              </Link>
-            </div>
-          </div>
 
-          {/* Center: Logo (mobile only, absolutely centered) */}
-          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center gap-2 md:hidden">
-            <Link href="/">
-              <span className="text-xl font-bold text-[#13588f]">목동데뷰영어</span>
-            </Link>
-          </div>
+            {/* Mobile Menu */}
+            {isOpen && (
+                <div className="md:hidden bg-white/95 shadow-lg absolute top-full left-0 w-full">
+                    <div className="px-5 pt-2 pb-5 space-y-3">
+                        {navLinks.map((link) => (
+                            <Link key={link.name} href={link.href} onClick={() => setIsOpen(false)} className="block text-gray-800 font-semibold py-2 hover:text-blue-600 border-b border-gray-200/80">
+                                {link.name}
+                            </Link>
+                        ))}
+                    </div>
+                    <div className="px-5 pb-5 mt-4 space-y-3">
+                         <SignedOut>
+                            <SignInButton mode="modal">
+                                <button className="w-full text-center bg-blue-500 text-white font-bold py-3 px-4 rounded-lg hover:bg-blue-600 transition-colors duration-300">
+                                    로그인
+                                </button>
+                            </SignInButton>
+                            <SignUpButton mode="modal">
+                                <button className="w-full text-center bg-gray-200 text-gray-800 font-bold py-3 px-4 rounded-lg hover:bg-gray-300 transition-colors duration-300">
+                                    회원가입
+                                </button>
+                            </SignUpButton>
+                        </SignedOut>
+                        <SignedIn>
+                            <div className="flex flex-col items-center space-y-4">
+                               <p className="text-gray-700">환영합니다!</p>
+                               <UserButton afterSignOutUrl="/" />
+                            </div>
+                        </SignedIn>
+                    </div>
+                </div>
+            )}
+        </header>
+    );
+};
 
-          {/* Right side: Search button on mobile, Nav links on desktop */}
-          <div className="flex items-center gap-2">
-            {/* Mobile Search Button */}
-            <div className="md:hidden">
-              <button onClick={() => setIsSearchOpen(!isSearchOpen)} className="">
-                <Search className="h-6 w-6 text-gray-500 transition-colors duration-300 hover:text-indigo-600" />
-              </button>
-            </div>
-            {/* Desktop Nav Links */}
-            <div className="hidden md:flex items-center space-x-1">
-              {navItems.map((item) => (
-                <Link
-                  key={item.name}
-                  href={item.href}
-                  className="py-2 px-3 text-sm text-[#7fa6c3] hover:text-[#13588f] hover:underline hover:shadow-md rounded transition-all duration-300"
-                >
-                  {item.name}
-                </Link>
-              ))}
-            </div>
-          </div>
-        </nav>
-      </header>
-
-      {/* Floating NEWS Button */}
-      <div className="fixed bottom-24 right-5 z-50">
-        <Link href="/news" passHref>
-          <Button
-            variant="destructive"
-            size="icon"
-            className="rounded-full w-14 h-14 shadow-lg"
-          >
-            <CalendarDays className="h-6 w-6" />
-          </Button>
-        </Link>
-      </div>
-
-      {/* Mobile Menu Dropdown */}
-      <div className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out ${isMobileMenuOpen ? 'max-h-[500px]' : 'max-h-0'}`}>
-        <ul className="mt-2 space-y-2 px-2 py-3 flex flex-col items-start">
-          {navItems.map((item) => (
-            <li key={item.name} className="w-full">
-              <Link 
-                href={item.href} 
-                className="block px-3 py-2 rounded-md text-base font-medium text-[#7fa6c3] hover:text-[#13588f] hover:bg-gray-50 hover:shadow-md transition-all duration-300 text-left"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                {item.name}
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </div>
-
-      {/* Mobile Search Input */}
-      <div className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out ${isSearchOpen ? 'max-h-20 p-4' : 'max-h-0'}`}>
-        <div className="relative">
-          <input
-            type="text"
-            placeholder="검색..."
-            className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
-          />
-          <Search className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-        </div>
-      </div>
-    </>
-  );
-} 
+export default Header; 

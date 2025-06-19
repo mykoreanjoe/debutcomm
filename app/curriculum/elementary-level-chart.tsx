@@ -66,64 +66,68 @@ const ElementaryLevelChart = () => {
   // D6 이후 레벨들이 차지하는 추가 컬럼 수를 고려하여 가이드라인 및 "1년 과정" 레이블 위치 계산 필요
 
   return (
-    <div className="bg-[#FFFBEB] p-4 md:p-6 rounded-lg shadow-lg mb-10 font-sans overflow-x-auto">
-      <h3 className="text-xl font-bold text-amber-700 mb-1 flex items-center">
-        <span className="inline-block bg-amber-600 text-white px-3 py-1 rounded-full text-sm mr-3 whitespace-nowrap">초등부 레벨 차트</span>
-        <span className="text-sm text-gray-700 font-normal">탄탄한 어학 기본기를 쌓으며, 다양한 프로젝트로 창의적인 학습역량을 마스터합니다.</span>
-      </h3>
-      
-      <div className="relative mt-6" style={{ paddingBottom: '40px' }}>
-        <div className="flex min-w-[${totalGridCols * 32}px]"> {/* 최소 너비 확보 */}
-          <div className="flex flex-col justify-between text-xs font-medium text-gray-600 pr-3 space-y-0">
-            {yAxisLabels.map(label => (
-              <div key={label.name} className="h-9 flex items-center justify-end flex-shrink-0" style={{ height: '36px' }}>{label.name}</div>
-            ))}
-            <div className="h-9"></div> {/* X축 레이블 공간 확보용 빈 div */}
-          </div>
+    <div className="overflow-x-auto py-2">
+      <div className="min-w-[800px]">
+        <div className="bg-[#FFFBEB] p-4 md:p-6 rounded-lg shadow-lg mb-10 font-sans">
+          <h3 className="text-xl font-bold text-amber-700 mb-1 flex items-center">
+            <span className="inline-block bg-amber-600 text-white px-3 py-1 rounded-full text-sm mr-3 whitespace-nowrap">초등부 레벨 차트</span>
+            <span className="text-sm text-gray-700 font-normal">탄탄한 어학 기본기를 쌓으며, 다양한 프로젝트로 창의적인 학습역량을 마스터합니다.</span>
+          </h3>
+          
+          <div className="relative mt-6" style={{ paddingBottom: '40px' }}>
+            <div className="flex min-w-[${totalGridCols * 32}px]"> {/* 최소 너비 확보 */}
+              <div className="flex flex-col justify-between text-xs font-medium text-gray-600 pr-3 space-y-0">
+                {yAxisLabels.map(label => (
+                  <div key={label.name} className="h-9 flex items-center justify-end flex-shrink-0" style={{ height: '36px' }}>{label.name}</div>
+                ))}
+                <div className="h-9"></div> {/* X축 레이블 공간 확보용 빈 div */}
+              </div>
 
-          <div className="flex-grow relative border-l border-gray-300">
-            <div 
-              className="grid gap-px relative"
-              style={{
-                gridTemplateColumns: `repeat(${totalGridCols}, minmax(30px, 1fr))`,
-                gridTemplateRows: `repeat(${yAxisLabels.length}, 36px)`,
-                // width: `${totalGridCols * 32}px` // 너비는 부모에서 overflow-x-auto로 관리
-              }}
-            >
-              {/* X축 가이드라인: 2컬럼(1년 과정)마다 생성. D6 이후 구조가 달라지므로, 처음 5개년은 규칙적으로, 이후는 추가로 그려야 할 수 있음 */}
-              {[...Array(yearCourseGroups)].map((_, i) => (
-                <div key={`guide-${i}`} className="absolute top-0 bottom-0 border-r border-dashed border-gray-300 z-0"
-                     style={{ left: `${(i + 1) * colsPerGroup * 32}px`, height: `${yAxisLabels.length * 36}px` }}></div>
-              ))}
-              
-              {chartCourses.map((course) => (
-                <div
-                  key={course.id}
-                  className={`text-white text-[10px] font-semibold flex flex-col items-center justify-center p-0.5 rounded-sm shadow leading-tight z-10`}
+              <div className="flex-grow relative border-l border-gray-300">
+                <div 
+                  className="grid gap-px relative"
                   style={{
-                    backgroundColor: course.color,
-                    color: course.textColor,
-                    gridColumnStart: course.gridColStart,
-                    gridColumnEnd: `span ${course.colSpan || 1}`,
-                    gridRowStart: course.gridRowStart,
-                    minHeight: '32px', 
+                    gridTemplateColumns: `repeat(${totalGridCols}, minmax(30px, 1fr))`,
+                    gridTemplateRows: `repeat(${yAxisLabels.length}, 36px)`,
+                    // width: `${totalGridCols * 32}px` // 너비는 부모에서 overflow-x-auto로 관리
                   }}
                 >
-                  <span>{course.id}</span>
-                  <span>{course.length}</span>
+                  {/* X축 가이드라인: 2컬럼(1년 과정)마다 생성. D6 이후 구조가 달라지므로, 처음 5개년은 규칙적으로, 이후는 추가로 그려야 할 수 있음 */}
+                  {[...Array(yearCourseGroups)].map((_, i) => (
+                    <div key={`guide-${i}`} className="absolute top-0 bottom-0 border-r border-dashed border-gray-300 z-0"
+                         style={{ left: `${(i + 1) * colsPerGroup * 32}px`, height: `${yAxisLabels.length * 36}px` }}></div>
+                  ))}
+                  
+                  {chartCourses.map((course) => (
+                    <div
+                      key={course.id}
+                      className={`text-white text-[10px] font-semibold flex flex-col items-center justify-center p-0.5 rounded-sm shadow leading-tight z-10`}
+                      style={{
+                        backgroundColor: course.color,
+                        color: course.textColor,
+                        gridColumnStart: course.gridColStart,
+                        gridColumnEnd: `span ${course.colSpan || 1}`,
+                        gridRowStart: course.gridRowStart,
+                        minHeight: '32px', 
+                      }}
+                    >
+                      <span>{course.id}</span>
+                      <span>{course.length}</span>
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
-            {/* "1년 과정" X축 레이블 */}
-            <div className="grid absolute bottom-[-30px] left-0 right-0 pr-3 h-9 items-center"
-                 style={{ gridTemplateColumns: `repeat(${totalGridCols}, minmax(30px, 1fr))` }}>
-              {[...Array(yearCourseGroups)].map((_, i) => (
-                <div key={`year-${i}`} 
-                     className="col-span-2 text-center text-xs text-amber-700 font-medium border-t-2 border-amber-600 pt-1 whitespace-nowrap"
-                     style={{ gridColumnStart: i * colsPerGroup + 1 }}>
-                  1년 과정
+                {/* "1년 과정" X축 레이블 */}
+                <div className="grid absolute bottom-[-30px] left-0 right-0 pr-3 h-9 items-center"
+                     style={{ gridTemplateColumns: `repeat(${totalGridCols}, minmax(30px, 1fr))` }}>
+                  {[...Array(yearCourseGroups)].map((_, i) => (
+                    <div key={`year-${i}`} 
+                         className="col-span-2 text-center text-xs text-amber-700 font-medium border-t-2 border-amber-600 pt-1 whitespace-nowrap"
+                         style={{ gridColumnStart: i * colsPerGroup + 1 }}>
+                      1년 과정
+                    </div>
+                  ))}
                 </div>
-              ))}
+              </div>
             </div>
           </div>
         </div>

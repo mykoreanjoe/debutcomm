@@ -1,8 +1,12 @@
 import React from 'react';
 // import Head from 'next/head';
 // import AnimatedSection from '@/components/AnimatedSection';
-import { Star, MessageSquare, CheckCircle } from 'lucide-react';
+import { Star, CheckCircle, Award } from 'lucide-react';
 import type { Metadata } from 'next';
+import SectionTitle from '@/components/SectionTitle';
+import AnimatedSection from '@/components/AnimatedSection';
+import { Button } from '@/components/ui/button';
+import Link from 'next/link';
 
 export const metadata: Metadata = {
   title: '데뷰 수강생 리얼 후기 | 데뷰 영어 학원',
@@ -68,87 +72,90 @@ const surveyItems = [
 
 const ReviewsPage = () => {
   return (
-    <main className="flex flex-col min-h-screen bg-gray-50">
-      <section id="reviews" className="w-full py-12 md:py-16 lg:py-20">
-        <div className="container mx-auto px-4 md:px-6">
-          <h1 className="text-4xl md:text-5xl font-bold text-center mb-6 text-blue-700">생생한 데뷰후기</h1>
-          <p className="text-lg md:text-xl text-gray-700 text-center mb-12 md:mb-16 max-w-3xl mx-auto">
-            데뷰 영어 학원은 주기적인 소통과 서비스 만족도 조사를 통해 학부모님께 최상의 교육 서비스를 제공합니다. 
-            실제 학부모님들이 작성해주신 소중한 후기들을 확인해보세요.
-          </p>
-
-          {/* 만족도 조사 주요 항목 */}
-          <div className="mb-16 md:mb-20 p-8 rounded-2xl shadow-xl bg-white border border-blue-100">
-            <h2 className="text-2xl md:text-3xl font-semibold text-center mb-8 text-blue-600">데뷰 영어 학원 교육서비스 만족도 조사</h2>
-            <p className="text-center text-gray-600 mb-8">학부모님의 목소리를 귀담아듣고 더 나은 교육 환경을 만들기 위해 노력합니다. 다음은 주요 설문 항목입니다.</p>
-            <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-4 text-gray-700">
-              {surveyItems.map((item, index) => (
-                <li key={index} className="pl-2 flex items-start">
-                  <span className="text-blue-500 mr-2 mt-1">&#10003;</span> {/* 체크 아이콘 */}
-                  <span>{item}</span>
-                </li>
-              ))}
-            </ul>
-            <p className="text-sm text-gray-500 mt-8 text-center">* 위 항목들은 학부모님 의견을 적극 반영하기 위한 실제 설문 내용의 일부입니다.</p>
-          </div>
-
-          {/* 실제 후기 카드 목록 */}
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-blue-600">학부모님 추천 후기</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {sampleReviews.map((review) => (
-              <div key={review.id} className="bg-white p-6 rounded-xl shadow-2xl border border-gray-200 flex flex-col hover:scale-[1.02] transition-all duration-300 ease-out">
-                <div className="flex items-center mb-4 pb-3 border-b border-gray-100">
-                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-400 to-indigo-500 text-white flex items-center justify-center text-xl font-semibold mr-4 shadow-sm">
-                    {review.avatarFallback}
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-gray-800 text-lg">{review.author}</h3>
-                    <div className="flex items-center mt-0.5">
-                      {[...Array(5)].map((_, i) => (
-                        <Star key={i} className={`w-5 h-5 ${i < review.rating ? 'text-yellow-400' : 'text-gray-300'}`} fill="currentColor" />
-                      ))}
-                      <span className="text-xs text-gray-500 ml-2">({review.date} / {review.visit})</span>
+    <div className="bg-slate-50">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
+        <AnimatedSection>
+            <SectionTitle
+                as="h1"
+                icon={Award}
+                title="수강생 리얼 후기"
+                subtitle="실제 학부모님들이 작성해주신 소중한 후기들을 통해 데뷰의 진가를 확인해보세요."
+                iconColor="text-blue-600"
+            />
+        </AnimatedSection>
+        
+        {/* 실제 후기 카드 목록 */}
+        <AnimatedSection>
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            {/* --- Main Review Column --- */}
+            <div className="lg:col-span-2 grid grid-cols-1 md:grid-cols-1 gap-8">
+              {sampleReviews.map((review) => (
+                <div key={review.id} className="bg-white p-6 rounded-xl shadow-md border border-gray-100 flex flex-col transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg">
+                  <div className="flex items-center mb-4 pb-4 border-b border-gray-100">
+                    <div className="w-12 h-12 rounded-full bg-slate-100 text-slate-500 flex items-center justify-center text-xl font-bold mr-4">
+                      {review.avatarFallback}
                     </div>
-                  </div>
-                </div>
-                <p className="text-gray-700 text-sm leading-relaxed mb-5 flex-grow whitespace-pre-line line-clamp-[8]">
-                  {review.content}
-                </p>
-                {review.tags && review.tags.length > 0 && (
-                  <div className="mt-auto pt-4 border-t border-gray-100">
-                    <h4 className="text-xs text-gray-500 mb-2.5 font-medium">이런 점이 좋았어요!</h4>
-                    <div className="flex flex-wrap gap-2">
-                      {review.tags.map(tag => (
-                        <span key={tag} className="px-3 py-1.5 text-xs font-semibold rounded-full bg-sky-50 text-sky-700 border border-sky-200 flex items-center shadow-sm">
-                          {tag.includes('열정적') ? <CheckCircle className="w-3.5 h-3.5 mr-1.5 text-red-400" /> :
-                           tag.includes('체계적') ? <CheckCircle className="w-3.5 h-3.5 mr-1.5 text-green-400" /> :
-                           tag.includes('소통') ? <MessageSquare className="w-3.5 h-3.5 mr-1.5 text-blue-400" /> : 
-                           <CheckCircle className="w-3.5 h-3.5 mr-1.5 text-sky-400" />}
-                          {tag}
+                    <div>
+                      <h3 className="font-semibold text-gray-800 text-lg">{review.author}</h3>
+                      <div className="flex items-center text-sm text-gray-500 mt-1">
+                        <span className="flex items-center mr-3">
+                           {[...Array(5)].map((_, i) => (
+                            <Star key={i} className={`w-4 h-4 ${i < review.rating ? 'text-yellow-400' : 'text-gray-300'}`} fill="currentColor" />
+                          ))}
                         </span>
-                      ))}
+                        <span>{review.date}</span>
+                        <span className="mx-2">|</span>
+                        <span>{review.visit}</span>
+                      </div>
                     </div>
                   </div>
-                )}
+                  <p className="text-gray-700 text-base leading-relaxed mb-5 flex-grow whitespace-pre-line">
+                    {review.content}
+                  </p>
+                  {review.tags && review.tags.length > 0 && (
+                    <div className="mt-auto pt-4 border-t border-gray-100">
+                      <div className="flex flex-wrap gap-2">
+                        {review.tags.map(tag => (
+                          <span key={tag} className="px-3 py-1 text-xs font-medium rounded-full bg-blue-50 text-blue-700 border border-blue-200/80 flex items-center">
+                            <CheckCircle className="w-3.5 h-3.5 mr-1.5 text-blue-400" />
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+
+            {/* --- Sidebar (Survey Items) --- */}
+            <aside className="lg:col-span-1">
+              <div className="sticky top-24">
+                <div className="p-8 rounded-xl shadow-md bg-white border border-gray-100">
+                  <h2 className="text-xl font-semibold text-center mb-4 text-gray-800">교육 만족도 설문</h2>
+                  <p className="text-center text-sm text-gray-600 mb-6">학부모님의 목소리를 귀담아듣고 더 나은 교육 환경을 만들기 위해 아래와 같은 항목으로 주기적인 만족도 조사를 진행합니다.</p>
+                  <ul className="space-y-3">
+                    {surveyItems.map((item, index) => (
+                      <li key={index} className="flex items-start text-sm text-gray-700">
+                        <CheckCircle className="w-4 h-4 text-blue-500 mr-2.5 mt-0.5 flex-shrink-0" />
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <div className="mt-8">
+                    <Button asChild className="w-full text-lg py-6 bg-[#03C75A] hover:bg-[#03B352] text-white" size="lg">
+                        <Link href="https://booking.naver.com/booking/13/bizes/1068331" target="_blank" rel="noopener noreferrer">
+                            레벨테스트 예약하기
+                        </Link>
+                    </Button>
+                </div>
               </div>
-            ))}
+            </aside>
           </div>
-
-          {/* 레테 예약하기 버튼 */}
-          <div className="mt-12 md:mt-16 text-center">
-            <a
-              href="https://booking.naver.com/booking/13/bizes/1068331"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center justify-center px-8 py-4 border border-transparent text-lg font-semibold rounded-lg text-white bg-blue-600 hover:bg-blue-700 transition-colors duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-            >
-              레벨테스트 예약하기
-            </a>
-          </div>
-
-        </div>
-      </section>
-    </main>
+        </AnimatedSection>
+      </div>
+    </div>
   );
 };
 

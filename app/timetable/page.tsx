@@ -1,264 +1,284 @@
 import React from 'react';
-import { CalendarDays, Sun, Award, Clock, User } from 'lucide-react';
-import Head from 'next/head';
+import { CalendarDays, Sun, Award, Info, CheckSquare } from 'lucide-react';
+import type { Metadata } from 'next';
+import SectionTitle from '@/components/SectionTitle';
+import AnimatedSection from '@/components/AnimatedSection';
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { Badge } from '@/components/ui/badge';
 
-// 초등 인텐시브 코스 데이터 타입
-interface ElementaryIntensiveEntry {
-  classType: string;
-  time: string;
-  duration: string;
-}
+export const metadata: Metadata = {
+    title: '시간표 | 데뷰 영어 학원',
+    description: '데뷰 영어의 시간표와 완성학습 안내입니다. 궁금한 점은 언제든 문의해주세요.',
+};
 
-const elementaryIntensiveData: ElementaryIntensiveEntry[] = [
-  { classType: "월수금 주3회", time: "6:00 ~ 7:35", duration: "95분" },
-  { classType: "화목 주2회", time: "6:00 ~ 8:25", duration: "285분" }, // 이미지에는 285분으로 되어있으나, 2시간 25분은 145분입니다. 일단 이미지대로 285분으로 표기합니다.
+// 초등부 데이터
+const elementaryRegularMWF = [
+  { days: "월수금", time: "오후 2:30 ~ 4:05", level: "DK ~ D4" },
+  { days: "월수금", time: "오후 4:10 ~ 5:45", level: "D3 ~ D6" },
+  { days: "화목", time: "오후 3:00 ~ 5:25", level: "D3 ~ D7" },
+  { days: "수요일", time: "오후 5:00 ~ 10:00", level: "수요 클리닉" },
 ];
 
-const elementaryIntensiveInfo = [
-  "교재: 자체/외부 교재 구성",
-  "데뷰 데이 월 1회 토요일 (이벤트 행사로 진행)",
-  "완성학습: 학생별 과제 수행이 필요할 경우, 학원 스케줄은 수업 전후로 고정하여 루틴으로 진행합니다.",
+const elementaryIntensive = [
+  { days: "월수금", time: "오후 6:00 ~ 7:35", level: "인텐시브" },
+  { days: "화목", time: "오후 6:00 ~ 8:25", level: "인텐시브" },
 ];
 
-// 중등부 시간표 데이터 타입
-interface MiddleSchoolClassEntry {
-  level: string;
-  time: string;
-  teacher: string;
-  note?: string;
-}
-
-const middleMonFriClassData: MiddleSchoolClassEntry[] = [
-  { level: "중등 Master", time: "5:00 - 8:00", teacher: "원장 직강", note: "(수업후 30분 완성학습 의무)" },
-  { level: "고등 Inter", time: "7:00 ~ 10:00", teacher: "원장 직강", note: "(수업전 30분 완성학습 의무)" },
+// 중등부 데이터
+const middleSchoolRegular = [
+  // 월/금 수업
+  { days: "월/금", time: "오후 5:00 ~ 8:00", level: "중등 Master" },
+  { days: "월/금", time: "오후 7:00 ~ 10:00", level: "고등 Inter" },
+  // 화/목 수업
+  { days: "화/목", time: "오후 5:00 ~ 8:00", level: "중등 Master" },
+  { days: "화/목", time: "오후 7:00 ~ 10:00", level: "고등 Master" },
 ];
 
-const middleTueThuClassData: MiddleSchoolClassEntry[] = [
-  { level: "중등 Master", time: "5:00 - 8:00", teacher: "원장 직강", note: "(수업후 30분 완성학습 의무)" },
-  { level: "고등 Master", time: "7:00 ~ 10:00", teacher: "원장 직강", note: "(수업전 30분 완성학습 의무)" },
+const middleSchoolClinic = [
+  { days: "수요일", time: "오후 5:00 ~ 10:00", level: "수요 클리닉" },
 ];
 
-const middleWedClinicData: MiddleSchoolClassEntry[] = [
-  { level: "무레벨제", time: "5:00 ~ 10:00", teacher: "원장 직강" },
-];
-
-const middleSchoolInfo = [
-  // "수업 프로세스: 어휘시험 -> Lecture -> 1:1 검사 발표 -> 밴드 과제",
-  "완성학습: 스터디 매니저와 상담 후 수업 전 또는 후를 선택하여 30분 또는 1시간 진행합니다.",
-  "수요 클리닉: 실력 보충이 필요한 학생은 수요일 의무 참석입니다. (시간은 학생별로 상이할 수 있습니다.)",
-  "추천 대상: 주2회 수업으로 학습 노출 빈도를 높이고자 하는 학생에게 적합합니다. 실력 보충이 필요한 학생은 수요일 또는 다른 요일에 필수 참여해야 합니다.",
-];
-const middleSchoolCompletionInfo = [
-  "학생별 과제 수행이 필요할 경우, 학원 스케줄은 수업 전후로 고정하여 루틴으로 진행합니다.",
-];
-
-
-// 초등부 일반 시간표 데이터 타입
-interface ElementaryRegularEntry {
-  time: string;
-  level: string;
-}
-
-const elementaryMonWedFriData: ElementaryRegularEntry[] = [
-  { time: "2:30 ~ 4:05", level: "DK ~ D4" },
-  { time: "4:10 ~ 5:45", level: "D3 ~ D6" },
-  { time: "6:00 ~ 7:35", level: "초등 인텐시브 코스" },
-];
-
-const elementaryTueThuData: ElementaryRegularEntry[] = [
-  { time: "화목 3:00 ~ 5:25", level: "D3 ~ D7" }, // 이미지에 '화목'이 시간 데이터에 포함되어 있어 그대로 사용
-  { time: "화목 6:00 ~ 8:30", level: "초등 인텐시브" }, // 시간표기 수정: 600 -> 6:00
-];
-
-const elementaryRegularInfo1 = [
-  "추천 대상: 주3회 수업으로 학습 노출 빈도를 높이고자 하는 학생에게 적합합니다.",
-];
-
-const elementaryRegularInfo2 = [
-  "추천 대상: 주2회 수업으로 학습 노출 빈도를 높이고자 하는 학생에게 적합합니다.",
-  "완성학습: 학생 특성에 따라 학원 스케줄은 수업 전후로 고정하여 루틴으로 진행하며, 시간은 30분 또는 1시간입니다.",
-  "학습 완성도에 따라 더 일찍 종료될 수 있습니다.",
-  "데뷰 데이 월 1회 토요일 (이벤트 행사로 진행)",
-];
-
-
-const SectionTitle: React.FC<{ title: string; icon?: React.ElementType; className?: string }> = ({ title, icon: Icon, className }) => (
-  <div className={`flex items-center justify-center mb-8 ${className}`}>
-    {Icon && <Icon className="w-8 h-8 md:w-10 md:h-10 mr-3" />}
-    <h2 className="text-2xl md:text-3xl font-bold">{title}</h2>
-  </div>
+const InfoListItem = ({ children }: { children: React.ReactNode }) => (
+    <li className="flex items-start text-sm text-gray-600">
+        <CheckSquare className="w-4 h-4 mr-2.5 mt-0.5 flex-shrink-0 text-sky-600" />
+        <span>{children}</span>
+    </li>
 );
 
-const InfoList: React.FC<{ items: string[]; title?: string }> = ({ items, title }) => (
-  <div className="mt-6">
-    {title && <h4 className="font-semibold text-lg text-gray-700 mb-2">{title}</h4>}
-    <ul className="space-y-1 text-gray-600 text-sm md:text-base">
-      {items.map((item, index) => {
-        if (item.startsWith("완성학습:")) {
-          const parts = item.split(":");
-          const mainText = parts[0] + ":";
-          // subText 변수는 사용되지 않으므로 삭제합니다.
-          // const subText = parts.slice(1).join(":").trim(); 
-          // "완성학습"과 관련된 세부 항목들을 이미지에 맞게 수정
-          const completionDetails = [
-            "학생 특성에 따라 학원 스케줄은 수업 전후로 고정하여 루틴으로 진행합니다.",
-            "시간: 30분 또는 1시간 진행합니다."
-          ];
-          return (
-            <li key={index} className="list-item list-disc list-inside">
-              {mainText}
-              <ul className="list-none pl-5 mt-1 space-y-0.5">
-                {completionDetails.map((detail, i) => (
-                  <li key={i} className="before:content-['-'] before:mr-2">{detail}</li>
-                ))}
-              </ul>
-            </li>
-          );
-        }
-        return (
-          <li key={index} className="list-item list-disc list-inside">{item}</li>
-        );
-      })}
-    </ul>
-  </div>
-);
+const TimetablePage = () => {
+    
+    const regularTimetable = {
+        'D-K, D1': '주 2회 | 화, 목 | 14:30-16:30',
+        '고등부': '주 2회 | 화, 목 | 19:30-21:30'
+    };
 
-const SubHeading: React.FC<{ children: React.ReactNode }> = ({ children }) => (
-  <h3 className="text-xl font-semibold text-gray-700 mt-8 mb-4">{children}</h3>
-);
+    return (
+        <div className="bg-slate-50">
+            <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
+                <AnimatedSection>
+                    <SectionTitle
+                        icon={CalendarDays}
+                        title="시간표 안내"
+                        subtitle="데뷰 영어의 초등부, 중등부 클래스 시간표를 확인하세요."
+                        iconColor="text-blue-600"
+                    />
+                </AnimatedSection>
 
-// 시간표 카드를 위한 새로운 컴포넌트
-const TimeCard: React.FC<{ time: string; level: string; }> = ({ time, level }) => (
-  <div className="flex items-center justify-between p-4 bg-gray-100 rounded-lg shadow-sm transition-transform hover:scale-105">
-    <div className="flex items-center">
-      <Clock className="w-5 h-5 mr-3 text-blue-500" />
-      <span className="font-bold text-lg text-gray-800">{time}</span>
-    </div>
-    <span className="text-md text-gray-600 font-medium">{level}</span>
-  </div>
-);
+                {/* --- 초등부 시간표 --- */}
+                <AnimatedSection>
+                    <section id="elementary" className="mt-12 mb-16">
+                        <h2 className="text-2xl md:text-3xl font-bold text-sky-700 mb-6 pb-3 border-b-2 border-sky-100 flex items-center">
+                            <Sun className="w-8 h-8 mr-3 text-sky-500" />초등부 시간표
+                        </h2>
+                        <div className="bg-white p-6 md:p-8 rounded-xl shadow-md border border-gray-100">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                <div>
+                                    <h3 className="text-xl font-semibold text-sky-700 mb-5">정규</h3>
+                                    <div className="bg-sky-50/30 rounded-lg p-4">
+                                        <Table>
+                                            <TableCaption className="caption-top text-base font-medium text-sky-700 mb-3">초등부 정규반</TableCaption>
+                                            <TableHeader>
+                                                <TableRow className="bg-sky-100/50">
+                                                    <TableHead className="w-[120px] text-sky-900 py-3">요일</TableHead>
+                                                    <TableHead className="w-[140px] text-sky-900 py-3">시간</TableHead>
+                                                    <TableHead className="min-w-[120px] text-sky-900 py-3">레벨</TableHead>
+                                                </TableRow>
+                                            </TableHeader>
+                                            <TableBody>
+                                                {elementaryRegularMWF.map((c) => (
+                                                    <TableRow key={`${c.days}-${c.time}`} className="hover:bg-sky-50">
+                                                        <TableCell className="font-medium text-sky-800 py-3 whitespace-nowrap">{c.days}</TableCell>
+                                                        <TableCell className="text-sky-700 py-3 whitespace-nowrap">{c.time}</TableCell>
+                                                        <TableCell className="text-sky-700 py-3 whitespace-nowrap">{c.level}</TableCell>
+                                                    </TableRow>
+                                                ))}
+                                            </TableBody>
+                                        </Table>
+                                    </div>
+                                </div>
+                                
+                                <div>
+                                    <h3 className="text-xl font-semibold text-purple-700 mb-5">인텐시브</h3>
+                                    <div className="bg-purple-50/30 rounded-lg p-4">
+                                        <Table>
+                                            <TableCaption className="caption-top text-base font-medium text-purple-700 mb-3">초등부 인텐시브반</TableCaption>
+                                            <TableHeader>
+                                                <TableRow className="bg-purple-100/50">
+                                                    <TableHead className="w-[120px] text-purple-900 py-3">요일</TableHead>
+                                                    <TableHead className="w-[140px] text-purple-900 py-3">시간</TableHead>
+                                                    <TableHead className="min-w-[120px] text-purple-900 py-3">레벨</TableHead>
+                                                </TableRow>
+                                            </TableHeader>
+                                            <TableBody>
+                                                {elementaryIntensive.map((c) => (
+                                                    <TableRow key={`${c.days}-${c.time}`} className="hover:bg-purple-50">
+                                                        <TableCell className="font-medium text-purple-800 py-3 whitespace-nowrap">{c.days}</TableCell>
+                                                        <TableCell className="text-purple-700 py-3 whitespace-nowrap">{c.time}</TableCell>
+                                                        <TableCell className="text-purple-700 py-3 whitespace-nowrap">{c.level}</TableCell>
+                                                    </TableRow>
+                                                ))}
+                                            </TableBody>
+                                        </Table>
+                                    </div>
+                                </div>
+                            </div>
 
-// 초등 인텐시브 및 중등부 시간표를 위한 새로운 카드 컴포넌트
-interface ClassCardProps {
-  title: string;
-  time: string;
-  details: { label: string; value: string; }[];
-  note?: string;
-}
+                            <div className="mt-8 pt-6 border-t border-gray-200">
+                                <h4 className="font-semibold text-gray-700 mb-4 flex items-center">
+                                    <Info className="w-4 h-4 mr-2 text-sky-600" />참고 사항
+                                </h4>
+                                <ul className="space-y-2.5">
+                                    <InfoListItem>교재: 자체/외부 교재 구성</InfoListItem>
+                                    <InfoListItem>데뷰 데이: 월 1회 토요일 이벤트 행사 진행</InfoListItem>
+                                    <InfoListItem>완성 학습: 학생별 과제 수행 필요시, 수업 전후로 고정된 스케줄에 따라 루틴으로 진행됩니다.</InfoListItem>
+                                    <InfoListItem>수업 시간: 월수금반 95분 수업 (주 3회), 화목반 145분 수업 (주 2회)</InfoListItem>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+                </AnimatedSection>
+                
+                {/* --- 중등부 시간표 --- */}
+                <AnimatedSection>
+                    <section id="middle">
+                        <h2 className="text-2xl md:text-3xl font-bold text-indigo-700 mb-6 pb-3 border-b-2 border-indigo-100 flex items-center">
+                            <Award className="w-8 h-8 mr-3 text-indigo-500" />중등부 시간표
+                        </h2>
+                        <div className="bg-white p-6 md:p-8 rounded-xl shadow-md border border-gray-100">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                <div>
+                                    <h3 className="text-xl font-semibold text-indigo-700 mb-5">정규</h3>
+                                    <div className="bg-indigo-50/30 rounded-lg p-4">
+                                        <Table>
+                                            <TableCaption className="caption-top text-base font-medium text-indigo-700 mb-3">중등부 정규반</TableCaption>
+                                            <TableHeader>
+                                                <TableRow className="bg-indigo-100/50">
+                                                    <TableHead className="w-[120px] text-indigo-900 py-3">요일</TableHead>
+                                                    <TableHead className="w-[140px] text-indigo-900 py-3">시간</TableHead>
+                                                    <TableHead className="min-w-[120px] text-indigo-900 py-3">레벨</TableHead>
+                                                </TableRow>
+                                            </TableHeader>
+                                            <TableBody>
+                                                {middleSchoolRegular.map((c) => (
+                                                    <TableRow key={`${c.days}-${c.time}`} className="hover:bg-indigo-50">
+                                                        <TableCell className="font-medium text-indigo-800 py-3 whitespace-nowrap">{c.days}</TableCell>
+                                                        <TableCell className="text-indigo-700 py-3 whitespace-nowrap">{c.time}</TableCell>
+                                                        <TableCell className="text-indigo-700 py-3 whitespace-nowrap">{c.level}</TableCell>
+                                                    </TableRow>
+                                                ))}
+                                            </TableBody>
+                                        </Table>
+                                    </div>
+                                </div>
 
-const ClassCard: React.FC<ClassCardProps> = ({ title, time, details, note }) => (
-  <div className="p-4 bg-gray-100 rounded-lg shadow-sm transition-transform hover:scale-105 flex flex-col h-full">
-    <div className="flex items-center mb-3">
-      <h4 className="font-bold text-lg text-blue-600">{title}</h4>
-    </div>
-    <div className="flex-grow space-y-2 text-sm">
-      <div className="flex items-center text-gray-800">
-        <Clock className="w-4 h-4 mr-2" />
-        <span className="font-semibold">{time}</span>
-      </div>
-      {details.map((detail, index) => (
-        <div key={index} className="flex items-center text-gray-600">
-          <User className="w-4 h-4 mr-2" />
-          <span>{detail.label}: {detail.value}</span>
+                                <div>
+                                    <h3 className="text-xl font-semibold text-red-700 mb-5">클리닉</h3>
+                                    <div className="bg-red-50/30 rounded-lg p-4">
+                                        <Table>
+                                            <TableCaption className="caption-top text-base font-medium text-red-700 mb-3">중등부 클리닉반</TableCaption>
+                                            <TableHeader>
+                                                <TableRow className="bg-red-100/50">
+                                                    <TableHead className="w-[120px] text-red-900 py-3">요일</TableHead>
+                                                    <TableHead className="w-[140px] text-red-900 py-3">시간</TableHead>
+                                                    <TableHead className="min-w-[120px] text-red-900 py-3">레벨</TableHead>
+                                                </TableRow>
+                                            </TableHeader>
+                                            <TableBody>
+                                                {middleSchoolClinic.map((c) => (
+                                                    <TableRow key={`${c.days}-${c.time}`} className="hover:bg-red-50">
+                                                        <TableCell className="font-medium text-red-800 py-3 whitespace-nowrap">{c.days}</TableCell>
+                                                        <TableCell className="text-red-700 py-3 whitespace-nowrap">{c.time}</TableCell>
+                                                        <TableCell className="text-red-700 py-3 whitespace-nowrap">
+                                                            <Badge variant="destructive" className="bg-red-100 text-red-700 hover:bg-red-200">
+                                                                {c.level}
+                                                            </Badge>
+                                                        </TableCell>
+                                                    </TableRow>
+                                                ))}
+                                            </TableBody>
+                                        </Table>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="mt-8 pt-6 border-t border-gray-200">
+                                <h4 className="font-semibold text-gray-700 mb-4 flex items-center">
+                                    <Info className="w-4 h-4 mr-2 text-indigo-600" />참고 사항
+                                </h4>
+                                <ul className="space-y-2.5">
+                                    <InfoListItem>완성 학습: 스터디 매니저와 상담 후 수업 전후를 선택하여 30분 진행합니다.</InfoListItem>
+                                    <InfoListItem>수요 클리닉: 실력 보충이 필요한 학생은 수요일에 의무적으로 참석해야 합니다. (시간은 학생별 상이)</InfoListItem>
+                                    <InfoListItem>수업 시간: 정규반 180분 수업 (주 2회)</InfoListItem>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+                </AnimatedSection>
+
+                {/* --- 완성학습 시간표 --- */}
+                <AnimatedSection>
+                    <section id="completion" className="mt-16">
+                        <h2 className="text-2xl md:text-3xl font-bold text-emerald-700 mb-6 pb-3 border-b-2 border-emerald-100 flex items-center">
+                            <CheckSquare className="w-8 h-8 mr-3 text-emerald-500" />완성학습 안내
+                        </h2>
+                        <div className="bg-white p-6 md:p-8 rounded-xl shadow-md border border-gray-100">
+                            <div className="mb-6">
+                                <p className="text-gray-700 leading-relaxed mb-4">
+                                    완성학습은 스터디 매니저 또는 담임 선생님과 함께 그날의 수업과제, 어휘 학습, 온라인 학습 등을 완성하는 개별 맞춤형 관리 시간입니다.
+                                </p>
+                                <p className="text-gray-700 leading-relaxed">
+                                    모든 클래스 전후 30분 또는 1시간 진행, 학부모 요청에 따라 시간은 매월 초 학부모 상담을 통해 결정됩니다.
+                                </p>
+                            </div>
+
+                            <div className="bg-emerald-50/30 rounded-lg p-4">
+                                <Table>
+                                    <TableCaption className="caption-top text-base font-medium text-emerald-700 mb-3">완성학습 시간</TableCaption>
+                                    <TableHeader>
+                                        <TableRow className="bg-emerald-100/50">
+                                            <TableHead className="w-[120px] text-emerald-900 py-3">구분</TableHead>
+                                            <TableHead className="w-[140px] text-emerald-900 py-3">시간</TableHead>
+                                            <TableHead className="min-w-[120px] text-emerald-900 py-3">비고</TableHead>
+                                        </TableRow>
+                                    </TableHeader>
+                                    <TableBody>
+                                        <TableRow className="hover:bg-emerald-50">
+                                            <TableCell className="font-medium text-emerald-800 py-3 whitespace-nowrap">수업 전</TableCell>
+                                            <TableCell className="text-emerald-700 py-3 whitespace-nowrap">30분 또는 1시간</TableCell>
+                                            <TableCell className="text-emerald-700 py-3">그날의 수업과제, 어휘 학습, 온라인 학습 등 학생별 맞춤형 관리</TableCell>
+                                        </TableRow>
+                                        <TableRow className="hover:bg-emerald-50">
+                                            <TableCell className="font-medium text-emerald-800 py-3 whitespace-nowrap">수업 후</TableCell>
+                                            <TableCell className="text-emerald-700 py-3 whitespace-nowrap">30분 또는 1시간</TableCell>
+                                            <TableCell className="text-emerald-700 py-3">그날의 수업과제, 어휘 학습, 온라인 학습 등 학생별 맞춤형 완성</TableCell>
+                                        </TableRow>
+                                    </TableBody>
+                                </Table>
+                            </div>
+
+                            <div className="mt-6">
+                                <h4 className="font-semibold text-gray-700 mb-4 flex items-center">
+                                    <Info className="w-4 h-4 mr-2 text-emerald-600" />운영 안내
+                                </h4>
+                                <ul className="space-y-2.5">
+                                    <InfoListItem>학생별 학습 상황과 니즈에 따라 맞춤형으로 진행됩니다.</InfoListItem>
+                                    <InfoListItem>정규 수업과 연계하여 체계적인 학습 관리가 이루어집니다.</InfoListItem>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+                </AnimatedSection>
+            </div>
         </div>
-      ))}
-    </div>
-    {note && <p className="text-xs text-red-500 mt-3 pt-3 border-t border-gray-200">{note}</p>}
-  </div>
-);
+    );
+};
 
-
-export default function TimetablePage() {
-  // const mainText = "주간 학습 시간표"; // mainText 주석 처리
-  // const constPurpleBoxText = "시간표는 학사일정에 따라 변경될 수 있습니다."; // 올바르게 주석 처리
-  return (
-    <>
-      <Head>
-        <title>시간표 | 데뷰 영어 학원</title>
-        <meta name="description" content="데뷰 영어 학원의 초등부 및 중등부 시간표를 안내합니다." />
-      </Head>
-      <main className="container mx-auto px-4 py-12 md:py-16 bg-gray-50">
-        {(() => { console.log("TimetablePage 렌더링 시작"); return null; })()}
-        <section className="text-center mb-12 md:mb-16">
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-800 mb-4 flex items-center justify-center">
-            <CalendarDays className="w-10 h-10 md:w-12 md:h-12 mr-3 text-blue-600" /> 시간표
-          </h1>
-        </section>
-
-        {/* 초등부 일반 시간표 */}
-        <section className="mb-12 md:mb-16 p-6 bg-white rounded-lg shadow-lg">
-          <SectionTitle title="초등부 시간표" icon={Sun} className="text-sky-600" />
-
-          <SubHeading>정규 클래스 (월수금/화목)</SubHeading>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {elementaryMonWedFriData.map((row) => (
-              <TimeCard key={row.time} time={row.time} level={row.level} />
-            ))}
-            {elementaryTueThuData.map((row) => (
-              <TimeCard key={row.time} time={row.time} level={row.level} />
-            ))}
-          </div>
-          <InfoList items={[...elementaryRegularInfo1, ...elementaryRegularInfo2]} />
-
-          <SubHeading>인텐시브 코스</SubHeading>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {elementaryIntensiveData.map((row) => (
-              <ClassCard 
-                key={row.classType}
-                title={row.classType}
-                time={row.time}
-                details={[{ label: '총 시간', value: row.duration }]}
-              />
-            ))}
-          </div>
-          <InfoList items={elementaryIntensiveInfo} />
-        </section>
-
-        {/* 중등부 시간표 */}
-        <section className="mb-12 md:mb-16 p-6 bg-white rounded-lg shadow-lg">
-          <SectionTitle title="중등부 시간표" icon={Award} className="text-indigo-600" />
-          
-          <SubHeading>월금 클래스</SubHeading>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {middleMonFriClassData.map((row) => (
-              <ClassCard 
-                key={row.level}
-                title={row.level}
-                time={row.time}
-                details={[{ label: '담당', value: row.teacher }]}
-                note={row.note}
-              />
-            ))}
-          </div>
-
-          <SubHeading>화목 클래스</SubHeading>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {middleTueThuClassData.map((row) => (
-              <ClassCard 
-                key={row.level}
-                title={row.level}
-                time={row.time}
-                details={[{ label: '담당', value: row.teacher }]}
-                note={row.note}
-              />
-            ))}
-          </div>
-          
-          <SubHeading>수요 클리닉</SubHeading>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {middleWedClinicData.map((row) => (
-              <ClassCard 
-                key={row.level}
-                title={row.level}
-                time={row.time}
-                details={[{ label: '담당', value: row.teacher }]}
-              />
-            ))}
-          </div>
-          <InfoList items={middleSchoolInfo} />
-          <InfoList items={middleSchoolCompletionInfo} title="완성 학습" />
-        </section>
-      </main>
-    </>
-  );
-} 
+export default TimetablePage; 

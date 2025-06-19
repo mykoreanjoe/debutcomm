@@ -1,8 +1,11 @@
 'use client';
 
 import { Button } from "@/components/ui/button";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Rss } from "lucide-react";
 import GoogleCalendarView from '@/components/GoogleCalendarView';
+import SectionTitle from "@/components/SectionTitle";
+import AnimatedSection from "@/components/AnimatedSection";
+import Link from "next/link";
 
 interface NewsClientPageProps {
   apiKey: string;
@@ -10,31 +13,43 @@ interface NewsClientPageProps {
 }
 
 export default function NewsClientPage({ apiKey, calendarId }: NewsClientPageProps) {
-  const handleGoToBlog = () => {
-    window.open('https://blog.naver.com/ourdebut', '_blank');
-  };
-
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="flex flex-col items-center justify-center text-center md:items-center md:text-center">
-        <h1 className="text-3xl md:text-4xl font-bold mb-4 text-left md:text-center">데뷰 소식을 확인해보세요</h1>
-        <p className="text-base md:text-lg text-gray-600 mb-8 text-left md:text-center">
-          데뷰의 최신 소식과 다양한 정보는 공식 블로그에서, <br className="hidden md:block" />
-          주요 학사 일정은 하단 캘린더에서 확인하실 수 있습니다.
-        </p>
-        <Button 
-          onClick={handleGoToBlog} 
-          size="lg"
-          className="bg-[#03C75A] hover:bg-[#03C75A]/90"
-        >
-          소식 확인하기
-          <ArrowRight className="ml-2 h-5 w-5" />
-        </Button>
-      </div>
+    <div className="bg-slate-50">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
+            <AnimatedSection>
+                <SectionTitle
+                    icon={Rss}
+                    title="News & Calendar"
+                    subtitle="데뷰의 새로운 소식은 블로그에서, 학원 일정은 캘린더에서 확인하세요."
+                    iconColor="text-orange-500"
+                />
+            </AnimatedSection>
+            
+            <AnimatedSection>
+                <div className="bg-white p-8 md:p-12 rounded-xl shadow-md border border-gray-100 max-w-4xl mx-auto text-center mb-16">
+                    <h2 className="text-2xl font-bold text-gray-800 mb-4">
+                        데뷰의 모든 소식은 공식 블로그에서!
+                    </h2>
+                    <p className="text-gray-600 leading-relaxed mb-8">
+                        학원의 최신 공지사항, 교육 정보, 학생들의 생생한 이야기, 특별 이벤트 등<br/>
+                        다채로운 소식이 데뷰 영어 공식 네이버 블로그에 가장 먼저 업데이트됩니다.
+                    </p>
+                    <Button asChild size="lg">
+                        <Link href="https://blog.naver.com/ourdebut" target="_blank" rel="noopener noreferrer">
+                            네이버 블로그 바로가기
+                            <ArrowRight className="ml-2 h-5 w-5" />
+                        </Link>
+                    </Button>
+                </div>
+            </AnimatedSection>
 
-      <div className="mt-16">
-        <GoogleCalendarView apiKey={apiKey} calendarId={calendarId} />
-      </div>
+            <AnimatedSection>
+                <div className="bg-white p-4 sm:p-6 md:p-8 rounded-xl shadow-md border border-gray-100">
+                     <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">학원 주요 일정</h2>
+                    <GoogleCalendarView apiKey={apiKey} calendarId={calendarId} />
+                </div>
+            </AnimatedSection>
+        </div>
     </div>
   );
 } 
