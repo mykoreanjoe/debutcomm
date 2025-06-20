@@ -250,29 +250,43 @@ const ElementaryIntensiveCourseDetails = () => (
 
 const ElementarySection: React.FC<ElementarySectionProps> = ({ activeTab, setActiveTab }) => {
   return (
-    <AnimatedSection>
-      <section id="elementary-section" className="py-16 md:py-20">
-        <SectionTitle
-          icon={BookOpen}
-          title="초등부 과정"
-          subtitle="탄탄한 기본기, 올바른 학습 습관, 그리고 영어에 대한 자신감을 키웁니다."
-          iconColor="text-cyan-500"
-          titleColor="text-cyan-700"
-        />
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full max-w-6xl mx-auto">
-          <TabsList className="grid w-full grid-cols-2 bg-cyan-50 h-12 rounded-lg">
-            <TabsTrigger value="regular" className="text-base font-semibold data-[state=active]:bg-cyan-500 data-[state=active]:text-white">초등 정규 과정</TabsTrigger>
-            <TabsTrigger value="intensive" className="text-base font-semibold data-[state=active]:bg-purple-500 data-[state=active]:text-white">초등 인텐시브 과정</TabsTrigger>
-          </TabsList>
-          <TabsContent value="regular" id="elementary-regular-details" className="mt-8">
-             <ElementaryRegularCourseDetails />
-          </TabsContent>
-          <TabsContent value="intensive" id="elementary-intensive-details" className="mt-8 p-6 md:p-10 bg-gray-50/50 rounded-lg shadow-inner border border-gray-200">
-             <ElementaryIntensiveCourseDetails />
-          </TabsContent>
-        </Tabs>
-      </section>
-    </AnimatedSection>
+    <section id="elementary" className="scroll-mt-20">
+      <SectionTitle
+        icon={BookOpen}
+        title="초등부 커리큘럼"
+        subtitle="개인의 성장 속도에 맞춰 기본기부터 심화까지, 1:1 맞춤형으로 완성합니다."
+        iconColor="text-cyan-600"
+        titleColor="text-gray-800"
+      />
+      
+      <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full mt-8">
+        <TabsList className="grid w-full grid-cols-2 h-14 md:h-16 rounded-xl shadow-inner bg-gray-100 p-1">
+          <TabsTrigger
+            value="regular"
+            className="rounded-lg text-base"
+          >
+            정규 과정
+          </TabsTrigger>
+          <TabsTrigger
+            value="intensive"
+            className="rounded-lg text-base"
+          >
+            인텐시브 과정
+          </TabsTrigger>
+        </TabsList>
+        
+        <TabsContent value="regular" className="pt-10" id="elementary-regular-details">
+          <AnimatedSection>
+            <ElementaryRegularCourseDetails />
+          </AnimatedSection>
+        </TabsContent>
+        <TabsContent value="intensive" className="pt-10" id="elementary-intensive-details">
+          <AnimatedSection>
+            <ElementaryIntensiveCourseDetails />
+          </AnimatedSection>
+        </TabsContent>
+      </Tabs>
+    </section>
   );
 };
 
