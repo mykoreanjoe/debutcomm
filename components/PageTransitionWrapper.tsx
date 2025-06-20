@@ -9,21 +9,20 @@ interface PageTransitionWrapperProps {
 
 export default function PageTransitionWrapper({ children }: PageTransitionWrapperProps) {
   const pathname = usePathname();
-  const [transitioning, setTransitioning] = useState(false);
-  const [key, setKey] = useState(pathname);
+  const [isAnimating, setIsAnimating] = useState(false);
 
   useEffect(() => {
-    if (pathname !== key) {
-      setTransitioning(true);
-      setTimeout(() => {
-        setKey(pathname);
-        setTransitioning(false);
-      }, 300); // CSS transition duration과 일치시킵니다.
-    }
-  }, [pathname, key]);
+    // 페이지가 변경될 때마다 짧은 애니메이션 효과를 줍니다.
+    setIsAnimating(true);
+    const timer = setTimeout(() => setIsAnimating(false), 300); // 애니메이션 지속 시간
+    return () => clearTimeout(timer);
+  }, [pathname]);
 
   return (
-    <main key={key} className={transitioning ? 'page-transition-exit-active' : 'page-transition-enter-active'}>
+    <main
+      key={pathname}
+      className={`flex-grow pt-16 ${isAnimating ? 'page-transition-enter-active' : ''}`}
+    >
       {children}
     </main>
   );

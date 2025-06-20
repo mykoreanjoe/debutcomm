@@ -1,9 +1,27 @@
+import type { Metadata } from 'next';
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import PageTransitionWrapper from '@/components/PageTransitionWrapper';
 import FloatingInquiryButton from "@/components/FloatingInquiryButton";
+
+export const metadata: Metadata = {
+  metadataBase: new URL('https://www.debutenglish.com'), // 실제 운영 도메인으로 변경해야 합니다.
+  title: {
+    default: '목동데뷰영어',
+    template: '%s | 목동데뷰영어',
+  },
+  description: '가장 완성도 높은 영어, 같이 완성합니다. 목동 대표 영어학원, 데뷰.',
+  openGraph: {
+    title: '목동데뷰영어',
+    description: '가장 완성도 높은 영어, 같이 완성합니다.',
+    images: ['/debutlogo.png'],
+    siteName: '목동데뷰영어',
+    locale: 'ko_KR',
+    type: 'website',
+  },
+};
 
 export default function RootLayout({
   children,
@@ -27,7 +45,7 @@ export default function RootLayout({
         <div className="relative flex min-h-screen flex-col">
           <Header />
           <PageTransitionWrapper>
-            <main className="flex-grow pt-16">{children}</main>
+            {children}
           </PageTransitionWrapper>
           <Footer />
           <FloatingInquiryButton />

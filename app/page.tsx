@@ -13,14 +13,7 @@ export const metadata: Metadata = {
     title: '목동데뷰영어 | 같이 완성하는 가장 완성도 높은 영어',
     description: '데뷰에서 당신의 영어 실력과 미래를 완성하세요. 지금 바로 레벨테스트를 예약하고 차이를 경험해보세요.',
     url: 'https://www.debutenglish.com', // 실제 도메인으로 추후 변경
-    images: [
-      {
-        url: "/images/og-main.png", // 메인 페이지 전용 OG 이미지 (가정)
-        width: 1200,
-        height: 630,
-        alt: "데뷰 영어 메인 페이지 OG 이미지",
-      },
-    ],
+    images: ["/debutlogo.png"],
   },
 };
 
