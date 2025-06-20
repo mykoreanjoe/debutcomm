@@ -5,6 +5,7 @@ import Image from 'next/image';
 import Head from 'next/head';
 import AnimatedSection from '@/components/AnimatedSection';
 import SectionTitle from '@/components/SectionTitle';
+import EducationalPhilosophySection from '@/components/EducationalPhilosophySection';
 
 // [Fix] 데이터 정의를 파일 상단으로 이동시키고 타입 추가
 interface DebutService {
@@ -366,52 +367,24 @@ const EducationalServicesSection = () => {
 };
 
 const StudyManagerSection = () => {
-  const sampleImages = [
-    { src: "/images/studybook_mission_checklist_sample.jpg", alt: "미션 체크리스트 샘플" },
-    { src: "/images/studybook_sample_nouns_notes.jpg", alt: "명사 노트 샘플" },
-    { src: "/images/studybook_sample_adj_adv_notes.jpg", alt: "형용사/부사 노트 샘플" },
-    { src: "/images/studybook_cover_yellow_parkminji.jpg", alt: "스터디북 커버" },
-  ];
-
   return (
     <section className="mt-20 md:mt-28 py-16 md:py-24">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid md:grid-cols-2 gap-12 md:gap-16 items-center">
-          <div className="order-2 md:order-1">
-             <AnimatedSection>
-               <h3 className="text-3xl md:text-4xl font-extrabold text-gray-800 mb-6">
-                <span className="text-purple-600">학습의 모든 과정을 함께하는</span><br />
-                <span className="text-purple-600">스터디 매니저</span>
-              </h3>
-              <p className="text-gray-600 leading-relaxed text-base md:text-lg mb-8">
-                단순한 지식 전달을 넘어, 학생의 학습 습관과 태도까지 관리하는 데뷰의 전문 학습 동반자입니다.
-              </p>
-              <ul className="space-y-4 text-gray-700">
-                <li>✅ <strong>1:1 맞춤 관리:</strong> 학생 개개인의 특성을 고려한 학습 전략과 목표를 설정하고, 꾸준히 동기를 부여합니다.</li>
-                <li>✅ <strong>체계적인 습관 형성:</strong> 올바른 학습 습관을 형성하고, 자기주도적 학습자로 성장할 수 있도록 지원합니다.</li>
-                <li>✅ <strong>학부모-학생 소통:</strong> 정기적인 상담과 리포트를 통해 학부모님과 긴밀하게 소통하며 학생의 성장을 함께 돕습니다.</li>
-              </ul>
-            </AnimatedSection>
-          </div>
-          <div className="order-1 md:order-2">
-             <AnimatedSection>
-               <div className="grid grid-cols-2 gap-4">
-                 {sampleImages.slice(0, 4).map((image, index) => (
-                  <div key={index} className="relative w-full h-40 md:h-56 rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 group">
-                    <Image 
-                      src={image.src} 
-                      alt={image.alt} 
-                      fill 
-                      className="object-cover transform group-hover:scale-105 transition-transform duration-300"
-                    />
-                    <div className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      <p className="text-white text-center text-xs p-2">{image.alt}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </AnimatedSection>
-          </div>
+        <div className="max-w-3xl mx-auto text-center">
+          <AnimatedSection>
+            <h3 className="text-3xl md:text-4xl font-extrabold text-gray-800 mb-6">
+              <span className="text-purple-600">학습의 모든 과정을 함께하는</span><br />
+              <span className="text-purple-600">스터디 매니저</span>
+            </h3>
+            <p className="text-gray-600 leading-relaxed text-base md:text-lg mb-8">
+              단순한 지식 전달을 넘어, 학생의 학습 습관과 태도까지 관리하는 데뷰의 전문 학습 동반자입니다.
+            </p>
+            <ul className="space-y-4 text-gray-700 text-left inline-block">
+              <li>✅ <strong>1:1 맞춤 관리:</strong> 학생 개개인의 특성을 고려한 학습 전략과 목표를 설정하고, 꾸준히 동기를 부여합니다.</li>
+              <li>✅ <strong>체계적인 습관 형성:</strong> 올바른 학습 습관을 형성하고, 자기주도적 학습자로 성장할 수 있도록 지원합니다.</li>
+              <li>✅ <strong>학부모-학생 소통:</strong> 정기적인 상담과 리포트를 통해 학부모님과 긴밀하게 소통하며 학생의 성장을 함께 돕습니다.</li>
+            </ul>
+          </AnimatedSection>
         </div>
       </div>
     </section>
@@ -495,6 +468,7 @@ export default function WhyDebutPage() {
       </Head>
 
       <main>
+        <EducationalPhilosophySection />
         <EducationalServicesSection />
         <LearningProcessBanner />
         <LearningStagesSection />

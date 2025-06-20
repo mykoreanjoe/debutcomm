@@ -36,7 +36,7 @@ const FloatingInquiryButton = () => {
   }
 
   return (
-    <div className="fixed bottom-6 right-6 flex flex-col items-center space-y-3 z-[1000]">
+    <div className="fixed bottom-6 left-6 flex flex-col items-center space-y-3 z-30">
       {/* 맨 위로 가기 아이콘 */}
       <button
         onClick={scrollToTop}
@@ -46,17 +46,6 @@ const FloatingInquiryButton = () => {
       >
         <ArrowUpCircle size={28} />
       </button>
-
-      {/* 캘린더 아이콘 */}
-      <Link
-        href="/news"
-        className="bg-red-500 hover:bg-red-600 text-white w-[60px] h-[60px] rounded-full shadow-lg transition-colors duration-300 flex flex-col items-center justify-center"
-        title="일정"
-        aria-label="NEWS 페이지로 이동"
-      >
-        <Calendar size={24} />
-        <span className="text-[11px] font-bold mt-0.5">일정</span>
-      </Link>
 
       {/* 카카오톡 문의 아이콘 */}
       <Link

@@ -19,6 +19,7 @@ const navItems = [
   { name: 'WHY DEBUT', href: '/why-debut' },
   { name: '커리큘럼', href: '/curriculum' },
   { name: '시간표', href: '/timetable' },
+  { name: '학사일정', href: '/news' },
   // { name: '학습경험', href: '/learning-experience' }, // 이 링크는 현재 404, 필요시 복원
   { name: '데뷰데이', href: '/debut-day' },
   { name: '데뷰인', href: '/debutian' },
@@ -64,11 +65,7 @@ export default function Header() {
         {/* Right side: Search button on mobile, Nav links on desktop */}
         <div className="flex items-center gap-2">
           {/* Mobile Search Button */}
-          <div className="md:hidden">
-            <button onClick={() => setIsSearchOpen(!isSearchOpen)} className="">
-              <Search className="h-6 w-6 text-gray-500 transition-colors duration-300 hover:text-indigo-600" />
-            </button>
-          </div>
+          
           {/* Desktop Nav Links */}
           <div className="hidden md:flex items-center space-x-1">
             {navItems.map((item) => (
@@ -103,16 +100,7 @@ export default function Header() {
       </div>
 
       {/* Mobile Search Input */}
-      <div className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out ${isSearchOpen ? 'max-h-20 p-4' : 'max-h-0'}`}>
-        <div className="relative">
-          <input
-            type="text"
-            placeholder="검색..."
-            className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
-          />
-          <Search className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-        </div>
-      </div>
+      
     </>
   );
 } 

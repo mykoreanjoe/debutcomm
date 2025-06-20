@@ -159,12 +159,12 @@ const DebutianPage = () => {
             </AnimatedSection>
             
             <AnimatedSection>
-                <ChampionSection title="스스로 학습 챔피언" badge="초등" items={suzohabohaItems} />
+                <ChampionSection title="스스보하 챔피언" badge="초등" items={suzohabohaItems} />
             </AnimatedSection>
 
              <AnimatedSection>
                 <div className="mt-8">
-                    <ChampionSection title="스스로 학습 챔피언" badge="중등" items={sunebohaItems} />
+                    <ChampionSection title="스내보하 챔피언" badge="중등" items={sunebohaItems} />
                 </div>
             </AnimatedSection>
 

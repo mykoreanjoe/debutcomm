@@ -7,7 +7,7 @@ import listPlugin from '@fullcalendar/list';
 import googleCalendarPlugin from '@fullcalendar/google-calendar';
 import interactionPlugin from '@fullcalendar/interaction';
 import { useWindowSize } from '@/lib/hooks';
-import { Calendar } from 'lucide-react';
+import { Calendar, ChevronLeft, ChevronRight } from 'lucide-react';
 
 interface GoogleCalendarViewProps {
   apiKey: string;
@@ -52,6 +52,7 @@ const GoogleCalendarView: React.FC<GoogleCalendarViewProps> = ({ apiKey, calenda
   const size = useWindowSize();
   const isMobile = size.width ? size.width < 768 : false;
   const [upcomingEvents, setUpcomingEvents] = useState<CalendarEvent[]>([]);
+  const [currentEventIndex, setCurrentEventIndex] = useState(0);
 
   useEffect(() => {
     const fetchUpcomingEvents = async () => {
@@ -74,6 +75,7 @@ const GoogleCalendarView: React.FC<GoogleCalendarViewProps> = ({ apiKey, calenda
         }
         const data = await response.json();
         setUpcomingEvents(data.items || []);
+        setCurrentEventIndex(0);
       } catch (error) {
         console.error("Error fetching upcoming events:", error);
       }
@@ -83,6 +85,14 @@ const GoogleCalendarView: React.FC<GoogleCalendarViewProps> = ({ apiKey, calenda
       fetchUpcomingEvents();
     }
   }, [apiKey, calendarId]);
+
+  const handlePrevEvent = () => {
+    setCurrentEventIndex(prevIndex => (prevIndex - 1 + upcomingEvents.length) % upcomingEvents.length);
+  };
+
+  const handleNextEvent = () => {
+    setCurrentEventIndex(prevIndex => (prevIndex + 1) % upcomingEvents.length);
+  };
 
   if (!apiKey || !calendarId) {
     return (
@@ -98,24 +108,61 @@ const GoogleCalendarView: React.FC<GoogleCalendarViewProps> = ({ apiKey, calenda
 
       {upcomingEvents.length > 0 && (
         <div className="mb-8 p-4 border rounded-lg bg-gray-50">
-          <h3 className="text-lg font-semibold mb-4 flex items-center text-gray-700">
+          <h3 className="text-lg font-semibold mb-4 flex items-center justify-center text-gray-700">
             <Calendar className="w-5 h-5 mr-2" />
-            다가오는 주요 일정 (7일 이내)
+            주요 일정 (1주일)
           </h3>
-          <div className="space-y-3">
-            {upcomingEvents.map(event => (
-              <a 
-                key={event.id}
-                href={event.htmlLink} 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="block p-3 bg-white rounded-md shadow-sm hover:shadow-md transition-shadow"
+          <div className="relative flex items-center justify-center text-center">
+            {upcomingEvents.length > 1 && (
+              <button
+                onClick={handlePrevEvent}
+                className="absolute left-0 p-2 bg-gray-200 rounded-full hover:bg-gray-300 transition-colors z-10"
+                aria-label="이전 일정"
               >
-                <p className="font-semibold text-gray-800">{event.summary}</p>
-                <p className="text-sm text-gray-600 mt-1">{formatEventDate(event.start)}</p>
-              </a>
-            ))}
+                <ChevronLeft size={20} />
+              </button>
+            )}
+
+            <div className="w-full px-12 min-h-[80px] flex items-center justify-center">
+              {upcomingEvents.map((event, index) => (
+                <div key={event.id} className={`${index === currentEventIndex ? 'block' : 'hidden'}`}>
+                  <a
+                    href={event.htmlLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block p-3 bg-white rounded-md"
+                  >
+                    <p className="font-semibold text-gray-800 text-lg">{event.summary}</p>
+                    <p className="text-sm text-gray-600 mt-2">{formatEventDate(event.start)}</p>
+                  </a>
+                </div>
+              ))}
+            </div>
+
+            {upcomingEvents.length > 1 && (
+              <button
+                onClick={handleNextEvent}
+                className="absolute right-0 p-2 bg-gray-200 rounded-full hover:bg-gray-300 transition-colors z-10"
+                aria-label="다음 일정"
+              >
+                <ChevronRight size={20} />
+              </button>
+            )}
           </div>
+          {upcomingEvents.length > 1 && (
+            <div className="flex justify-center mt-4 space-x-2">
+              {upcomingEvents.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => setCurrentEventIndex(index)}
+                  className={`w-3 h-3 rounded-full transition-colors ${
+                    index === currentEventIndex ? 'bg-blue-500' : 'bg-gray-300 hover:bg-gray-400'
+                  }`}
+                  aria-label={`일정 ${index + 1} 보기`}
+                />
+              ))}
+            </div>
+          )}
         </div>
       )}
       

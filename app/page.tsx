@@ -60,14 +60,14 @@ export default function HomePage() {
           <AnimatedSection delay={0.3}>
             <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
               <Button asChild size="lg" className="bg-[#03C75A] hover:bg-[#03B352] text-white shadow-lg transition-transform transform hover:scale-105">
-                <Link href="https://booking.naver.com/booking/13/bizes/1068331" target="_blank" rel="noopener noreferrer">
+                <a href="https://booking.naver.com/booking/13/bizes/1068331" target="_blank" rel="noopener noreferrer">
                   <Calendar className="mr-2 h-5 w-5" /> 테스트 예약
-                </Link>
+                </a>
               </Button>
               <Button asChild size="lg" className="bg-[#FEE500] hover:bg-[#f2da00] text-gray-800 shadow-lg transition-transform transform hover:scale-105">
-                <Link href="http://pf.kakao.com/_pGxkPn/chat" target="_blank" rel="noopener noreferrer">
+                <a href="http://pf.kakao.com/_pGxkPn/chat" target="_blank" rel="noopener noreferrer">
                   <MessageSquare className="mr-2 h-5 w-5" /> 카카오톡 상담
-                </Link>
+                </a>
               </Button>
               <Button asChild size="lg" variant="ghost" className="transition-colors">
                 <Link href="/why-debut">
