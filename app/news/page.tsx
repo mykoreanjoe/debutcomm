@@ -32,8 +32,7 @@ const NewsPage = () => {
                       iconColor="text-blue-500"
                     />
                     <div className="mt-8 bg-white p-4 sm:p-6 md:p-8 rounded-xl shadow-md border border-gray-100 max-w-4xl mx-auto">
-                      <GoogleCalendarView 
-                        apiKey={process.env.NEXT_PUBLIC_GOOGLE_CALENDAR_API_KEY!}
+                      <GoogleCalendarView
                         calendarId={process.env.NEXT_PUBLIC_DEBUT_CALENDAR_ID!}
                       />
                     </div>

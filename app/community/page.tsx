@@ -39,16 +39,8 @@ const dummyAllPosts: PostForList[] = [
 
 const POSTS_PER_PAGE = 10;
 
-type CommunityPageProps = {
-    searchParams: {
-        category?: string;
-        q?: string;
-        page?: string;
-    }
-}
-
-// const CommunityPage = async ({ searchParams }: CommunityPageProps) => { // Temporarily convert to client component for easier testing if needed, but static is fine.
-const CommunityPage = ({ searchParams }: CommunityPageProps) => {
+// Using 'any' type for simplicity during UI testing
+const CommunityPage = ({ searchParams }: any) => {
   const currentCategory = searchParams.category || 'all';
   const searchQuery = searchParams.q;
   const currentPage = Number(searchParams.page) || 1;

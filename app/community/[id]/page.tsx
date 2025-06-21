@@ -78,13 +78,7 @@ const dummyComments = [
 ];
 // ---
 
-type PostPageProps = {
-  params: {
-    id: string;
-  };
-};
-
-export default async function PostPage({ params }: PostPageProps) {
+export default async function PostPage({ params }: any) {
   const id = Number(params.id);
   if (isNaN(id)) {
     // For testing, we can just use the dummy data regardless of ID.

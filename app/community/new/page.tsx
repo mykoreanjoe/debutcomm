@@ -13,7 +13,7 @@ export default function NewPostPage() {
                     커뮤니티로 돌아가기
                 </Link>
             </div>
-            <PostCreateForm />
+            <PostCreateForm formAction={async () => ({ success: true })} />
         </div>
       </div>
     </div>

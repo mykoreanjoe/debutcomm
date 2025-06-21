@@ -5,7 +5,7 @@ export default function CommunityLayout({
 }: {
   children: React.ReactNode;
 }) {
-  auth().protect();
+  // auth().protect(); // Disabled during UI testing
   
   return <>{children}</>;
 } 

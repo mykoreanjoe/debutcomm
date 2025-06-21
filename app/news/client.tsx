@@ -8,11 +8,10 @@ import AnimatedSection from "@/components/AnimatedSection";
 import Link from "next/link";
 
 interface NewsClientPageProps {
-  apiKey: string;
   calendarId: string;
 }
 
-export default function NewsClientPage({ apiKey, calendarId }: NewsClientPageProps) {
+export default function NewsClientPage({ calendarId }: NewsClientPageProps) {
   return (
     <div className="bg-slate-50">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
@@ -46,7 +45,7 @@ export default function NewsClientPage({ apiKey, calendarId }: NewsClientPagePro
             <AnimatedSection>
                 <div className="bg-white p-4 sm:p-6 md:p-8 rounded-xl shadow-md border border-gray-100">
                      <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">학원 주요 일정</h2>
-                    <GoogleCalendarView apiKey={apiKey} calendarId={calendarId} />
+                    <GoogleCalendarView calendarId={calendarId} />
                 </div>
             </AnimatedSection>
         </div>

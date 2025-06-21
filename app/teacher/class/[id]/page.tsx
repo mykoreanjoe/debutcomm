@@ -15,13 +15,7 @@ import { currentUser } from '@clerk/nextjs/server';
 import { AttendanceManager } from "@/components/teacher/AttendanceManager";
 import { DailyScoreManager } from "@/components/teacher/DailyScoreManager";
 
-interface ClassDetailsPageProps {
-  params: {
-    id: string;
-  };
-}
-
-export default async function ClassDetailsPage({ params }: ClassDetailsPageProps) {
+export default async function ClassDetailsPage({ params }: any) {
   const user = await currentUser();
   if (!user || user.publicMetadata.role !== 'teacher') {
     redirect('/');

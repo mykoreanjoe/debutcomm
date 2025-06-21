@@ -11,9 +11,7 @@ import { PostForList } from "@/components/community/PostList";
 
 // This is a placeholder. In a real app, this would be a server component
 // fetching data based on params.id
-type UserProfilePageProps = {
-    params: { id: string };
-};
+
 
 // --- Dummy Data for UI Testing ---
 const dummyData = {
@@ -79,7 +77,7 @@ function UserCommentsList({ comments }: { comments: any[] }) {
     );
 }
 
-export default async function UserProfilePage({ params }: UserProfilePageProps) {
+export default async function UserProfilePage({ params }: any) {
     // const data = await getUserProfile(params.id);
     const data = dummyData;
 

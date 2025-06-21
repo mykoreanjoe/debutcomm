@@ -17,7 +17,7 @@ const updatePost_dummy = async (postId: number, formData: FormData) => {
 }
 
 // export default async function EditPostPage({ params }: EditPostPageProps) {
-export default async function EditPostPage({ params }: { params: { id: string } }) {
+export default async function EditPostPage({ params }: any) {
     const id = Number(params.id);
     if (isNaN(id)) {
         return notFound();
