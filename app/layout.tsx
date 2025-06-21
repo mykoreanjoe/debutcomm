@@ -36,6 +36,10 @@ export default function RootLayout({
           name="naver-site-verification"
           content="e9f7c31bafdaa9baf8373b13df3af5c1540dff2c"
         />
+        <meta
+          name="google-site-verification"
+          content="QkWVbVelBXP_-XyMHuInemyPHJgI9RVvagYKBkTM43Y"
+        />
       </head>
       <body
         className={cn(
