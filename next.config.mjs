@@ -5,9 +5,7 @@ const nextConfig = {
         // your project has ESLint errors.
         ignoreDuringBuilds: true,
     },
-    experimental: {
-        serverComponentsExternalPackages: ['@clerk/nextjs', '@clerk/clerk-sdk-node'],
-    },
+    serverExternalPackages: ['@supabase/supabase-js', '@clerk/nextjs'],
 };
 
 export default nextConfig; 
