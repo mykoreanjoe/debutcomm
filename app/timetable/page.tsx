@@ -1,8 +1,9 @@
 import React from 'react';
-import { CalendarDays, Sun, Award, Info, CheckSquare } from 'lucide-react';
+import { CalendarDays, Sun, Award, Info, CheckSquare, Calendar } from 'lucide-react';
 import type { Metadata } from 'next';
 import SectionTitle from '@/components/SectionTitle';
 import AnimatedSection from '@/components/AnimatedSection';
+import GoogleCalendarView from '@/components/GoogleCalendarView';
 import {
   Table,
   TableBody,
@@ -64,9 +65,17 @@ const InfoListItem = ({ children }: { children: React.ReactNode }) => (
 );
 
 export default function TimetablePage() {
+  // IMPORTANT: Replace this with your actual Google Calendar ID from your .env.local file
+  const calendarId = process.env.NEXT_PUBLIC_GOOGLE_CALENDAR_ID || '';
+
   return (
     <div className="bg-slate-50">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20">
+        
+        <AnimatedSection>
+          <GoogleCalendarView calendarId={calendarId} />
+        </AnimatedSection>
+        
         <AnimatedSection>
             <SectionTitle
                 icon={CalendarDays}

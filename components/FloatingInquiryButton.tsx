@@ -1,64 +1,24 @@
 "use client";
 
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import { MessageCircle } from 'lucide-react';
 import Link from 'next/link';
-import { MessageSquare, Calendar, ArrowUpCircle } from 'lucide-react';
 
 const FloatingInquiryButton = () => {
-  const [isVisible, setIsVisible] = useState(false);
+  // IMPORTANT: Replace with your actual KakaoTalk Channel URL
+  const kakaoChannelUrl = process.env.NEXT_PUBLIC_KAKAO_CHANNEL_URL || '#';
 
-  const toggleVisibility = () => {
-    if (window.scrollY > 200) {
-      setIsVisible(true);
-    } else {
-      setIsVisible(false);
-    }
-  };
-
-  const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth'
-    });
-  };
-  
-  useEffect(() => {
-    window.addEventListener('scroll', toggleVisibility);
-    return () => {
-      window.removeEventListener('scroll', toggleVisibility);
-    };
-  }, []);
-
-  const kakaoTalkUrl = "http://pf.kakao.com/_pGxkPn/chat"; 
-
-  if (!isVisible) {
+  if (kakaoChannelUrl === '#') {
+    // Don't render the button if the URL is not set
     return null;
   }
 
   return (
-    <div className="fixed bottom-6 left-6 flex flex-col items-center space-y-3 z-30">
-      {/* 맨 위로 가기 아이콘 */}
-      <button
-        onClick={scrollToTop}
-        className="bg-gray-500 hover:bg-gray-600 text-white p-4 rounded-full shadow-lg transition-all duration-300 flex items-center justify-center"
-        title="맨 위로 가기"
-        aria-label="맨 위로 가기"
-      >
-        <ArrowUpCircle size={28} />
-      </button>
-
-      {/* 카카오톡 문의 아이콘 */}
-      <Link
-        href={kakaoTalkUrl}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="bg-yellow-400 hover:bg-yellow-500 text-gray-800 p-4 rounded-full shadow-lg transition-colors duration-300 flex items-center justify-center"
-        title="카카오톡 문의하기"
-        aria-label="카카오톡으로 문의하기"
-      >
-        <MessageSquare size={28} />
-      </Link>
-    </div>
+    <Link href={kakaoChannelUrl} target="_blank" rel="noopener noreferrer">
+      <div className="fixed bottom-6 right-6 z-50 w-16 h-16 bg-[#FEE500] rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-transform duration-200 ease-in-out cursor-pointer">
+        <MessageCircle className="w-8 h-8 text-[#3C1E1E]" />
+      </div>
+    </Link>
   );
 };
 

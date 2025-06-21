@@ -3,8 +3,9 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from "@/components/ui/button";
 import AnimatedSection from '@/components/AnimatedSection';
-import { ArrowRight, Calendar, MessageSquare } from 'lucide-react';
+import { ArrowRight, Calendar, MessageSquare, Users } from 'lucide-react';
 import type { Metadata } from 'next';
+import { SignedIn, SignedOut, SignInButton } from '@clerk/nextjs';
 
 export const metadata: Metadata = {
   title: '목동데뷰영어 | 같이 완성하는 가장 완성도 높은 영어',
@@ -69,6 +70,39 @@ export default function HomePage() {
               </Button>
             </div>
           </AnimatedSection>
+        </div>
+      </section>
+
+      {/* Community Section */}
+      <section className="py-20 md:py-28 bg-white">
+        <div className="container mx-auto px-4 text-center">
+            <AnimatedSection>
+                <Users className="w-12 h-12 mx-auto text-red-500" />
+                <h2 className="mt-4 text-3xl md:text-4xl font-bold text-gray-800">
+                    같이 완성 커뮤니티
+                </h2>
+                <p className="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">
+                    데뷰의 학생, 학부모, 선생님이 함께 소통하며 성장하는 공간입니다.
+                    <br />
+                    학습 질문, 정보 공유 등 자유로운 이야기를 나눠보세요.
+                </p>
+                <div className="mt-8">
+                    <SignedIn>
+                        <Button asChild size="lg" variant="destructive" className="shadow-lg transition-transform transform hover:scale-105">
+                            <Link href="/community">
+                                커뮤니티 입장하기 <ArrowRight className="ml-2 h-5 w-5" />
+                            </Link>
+                        </Button>
+                    </SignedIn>
+                    <SignedOut>
+                        <SignInButton mode="modal">
+                             <Button size="lg" variant="destructive" className="shadow-lg transition-transform transform hover:scale-105">
+                                커뮤니티 입장하기 <ArrowRight className="ml-2 h-5 w-5" />
+                            </Button>
+                        </SignInButton>
+                    </SignedOut>
+                </div>
+            </AnimatedSection>
         </div>
       </section>
     </div>
