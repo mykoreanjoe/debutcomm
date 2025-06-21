@@ -1,4 +1,4 @@
-import { getUnrewardedPosts } from "@/app/actions/admin";
+// import { getUnrewardedPosts } from "@/app/actions/admin";
 import { RewardForm } from "@/components/admin/RewardForm";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -6,7 +6,8 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import Link from "next/link";
 
 export default async function PointRewardPage() {
-    const posts = await getUnrewardedPosts();
+    // const posts = await getUnrewardedPosts();
+    const posts: any[] = []; // Return empty array for UI testing
 
     return (
         <Card>

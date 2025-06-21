@@ -1,7 +1,7 @@
 'use client'; // form status hook을 위해 클라이언트 컴포넌트로 전환
 
 import { useFormState, useFormStatus } from "react-dom";
-import { rewardPoints } from "@/app/actions/admin";
+// import { rewardPoints } from "@/app/actions/admin";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -19,14 +19,28 @@ function SubmitButton() {
     )
 }
 
-const initialState = {
+const initialState: {
+    message?: string;
+    error?: string;
+    success: boolean;
+} = {
     message: undefined,
     error: undefined,
     success: false,
 };
 
+// Dummy action for UI testing
+const rewardPoints_dummy = async (prevState: any, formData: FormData): Promise<typeof initialState> => {
+    console.log("Dummy rewardPoints action triggered for post:", formData.get('postId'));
+    await new Promise(res => setTimeout(res, 1000));
+    // Simulate success
+    return { success: true, message: "UI 테스트: 포인트가 지급되었습니다." };
+    // Simulate error
+    // return { success: false, error: "UI 테스트: 에러 발생." };
+}
+
 export function RewardForm({ postId, userId }: { postId: number, userId: string }) {
-    const [state, formAction] = useFormState(rewardPoints, initialState);
+    const [state, formAction] = useFormState(rewardPoints_dummy, initialState);
 
     useEffect(() => {
         if (state.success && state.message) {

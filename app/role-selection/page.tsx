@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { updateUserRole } from '@/app/actions/user';
+// import { updateUserRole } from '@/app/actions/user';
 import { Button } from '@/components/ui/button';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Label } from '@/components/ui/label';
@@ -27,8 +27,15 @@ export default function RoleSelectionPage() {
     setError('');
     setIsSubmitting(true);
 
-    const result = await updateUserRole(role);
+    // const result = await updateUserRole(role);
+    console.log('Role selection submitted (currently disabled for testing):', role);
 
+    // For UI testing, we'll just simulate a success and redirect.
+    setTimeout(() => {
+        router.push('/community');
+    }, 1000);
+    
+    /* Original Logic:
     if (result.success) {
       await user?.reload(); // Reload user data to get the new metadata
       router.push('/community');
@@ -36,6 +43,7 @@ export default function RoleSelectionPage() {
       setError(result.error || '역할을 업데이트하는 중 오류가 발생했습니다.');
       setIsSubmitting(false);
     }
+    */
   };
 
   return (
