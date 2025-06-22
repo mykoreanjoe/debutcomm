@@ -1,23 +1,31 @@
 import type { Metadata } from 'next';
-import "./globals.css";
-import { cn } from "@/lib/utils";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
+import './globals.css';
+import Header from '@/components/Header';
+import Footer from '@/components/Footer';
 import PageTransitionWrapper from '@/components/PageTransitionWrapper';
 import FloatingInquiryButton from "@/components/FloatingInquiryButton";
+import { Toaster } from 'sonner';
+import AuthButton from '@/components/AuthButton';
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://www.debutenglish.com'), // 실제 운영 도메인으로 변경해야 합니다.
+  metadataBase: new URL('https://www.debutenglish.com'),
   title: {
-    default: '목동데뷰영어',
+    default: '목동데뷰영어 | 대한민국 최상위 1% 영어',
     template: '%s | 목동데뷰영어',
   },
-  description: '가장 완성도 높은 영어, 같이 완성합니다. 목동 대표 영어학원, 데뷰.',
+  description: '대한민국 최상위 1%의 영어 학습법, 데뷰영어에서 만나보세요.',
   openGraph: {
     title: '목동데뷰영어',
-    description: '가장 완성도 높은 영어, 같이 완성합니다.',
-    images: ['/debutlogo.png'],
-    siteName: '목동데뷰영어',
+    description: '대한민국 최상위 1%의 영어 학습법',
+    url: 'https://www.debutenglish.com',
+    siteName: '데뷰영어',
+    images: [
+      {
+        url: '/debutlogo.png',
+        width: 800,
+        height: 600,
+      },
+    ],
     locale: 'ko_KR',
     type: 'website',
   },
@@ -29,30 +37,20 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ko" suppressHydrationWarning>
-      <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta
-          name="naver-site-verification"
-          content="e9f7c31bafdaa9baf8373b13df3af5c1540dff2c"
-        />
-        <meta
-          name="google-site-verification"
-          content="QkWVbVelBXP_-XyMHuInemyPHJgI9RVvagYKBkTM43Y"
-        />
-      </head>
-      <body
-        className={cn(
-          "min-h-screen bg-background antialiased"
-        )}
-      >
-        <div className="relative flex min-h-screen flex-col">
-          <Header />
-          <PageTransitionWrapper>
-            {children}
-          </PageTransitionWrapper>
-          <Footer />
+    <html lang="ko">
+      <body>
+        <div className="flex flex-col min-h-screen">
+          <Header>
+            <AuthButton />
+          </Header>
+          <main className="flex-grow">
+            <PageTransitionWrapper>
+              {children}
+            </PageTransitionWrapper>
+          </main>
+          <Toaster />
           <FloatingInquiryButton />
+          <Footer />
         </div>
       </body>
     </html>

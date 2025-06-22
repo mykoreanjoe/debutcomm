@@ -3,16 +3,15 @@
 import React from 'react';
 // import Image from 'next/image';
 import Link from 'next/link';
-import { Menu, Search, Rss } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-// Clerk 관련 import 주석 처리 또는 삭제
+import { Menu } from 'lucide-react';
+import AuthButton from './AuthButton';
 // import {
 //   SignInButton,
-//   SignUpButton,
 //   SignedIn,
 //   SignedOut,
 //   UserButton,
 // } from "@clerk/nextjs";
+// import UserProfile from './UserProfile'; // UserProfile 컴포넌트 import
 
 const navItems = [
   { name: '스토리', href: '/story' },
@@ -29,9 +28,8 @@ const navItems = [
   { name: '같이완성 커뮤니티', href: '/community' },
 ];
 
-export default function Header() {
+export default function Header({ children }: { children: React.ReactNode }) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
-  const [isSearchOpen, setIsSearchOpen] = React.useState(false);
 
   return (
     <>
@@ -62,9 +60,8 @@ export default function Header() {
           </Link>
         </div>
 
-        {/* Right side: Search button on mobile, Nav links on desktop */}
-        <div className="flex items-center gap-2">
-          {/* Mobile Search Button */}
+        {/* Right side: Auth buttons and Nav links on desktop */}
+        <div className="flex items-center gap-4">
           
           {/* Desktop Nav Links */}
           <div className="hidden md:flex items-center space-x-1">
@@ -72,11 +69,16 @@ export default function Header() {
               <Link
                 key={item.name}
                 href={item.href}
-                  className="py-2 px-3 text-sm text-gray-500 hover:text-blue-700 hover:underline hover:shadow-md rounded transition-all duration-300"
+                className="py-2 px-3 text-sm text-gray-500 hover:text-blue-700 hover:underline rounded transition-all duration-300"
               >
                 {item.name}
               </Link>
             ))}
+          </div>
+
+          {/* Auth Buttons */}
+          <div className="hidden md:flex items-center gap-2">
+            {children}
           </div>
         </div>
       </nav>
@@ -96,11 +98,11 @@ export default function Header() {
               </Link>
             </li>
           ))}
+          <li className="w-full mt-4 border-t pt-4 px-3 py-2">
+            {children}
+          </li>
         </ul>
       </div>
-
-      {/* Mobile Search Input */}
-      
     </>
   );
 } 
