@@ -51,14 +51,12 @@ export default async function RootLayout({
 
   return (
     <html lang="ko" className={pretendard.variable} suppressHydrationWarning>
-      <body className={pretendard.className} suppressHydrationWarning>
-        <PageTransitionWrapper>
-          <Header user={user} />
-          <main className="pt-16 bg-slate-50">
-            {children}
-          </main>
-          <Footer />
-        </PageTransitionWrapper>
+      <body className={`${pretendard.className} flex flex-col min-h-screen`} suppressHydrationWarning>
+        <Header user={user} />
+        <main className="flex-grow">
+          {children}
+        </main>
+        <Footer />
         <FloatingInquiryButton />
         <Toaster />
         <Analytics />
