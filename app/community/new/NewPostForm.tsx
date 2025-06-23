@@ -10,6 +10,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { createPost } from '../actions';
 import { toast } from 'sonner';
 import TiptapEditor from '@/components/editor/TiptapEditor';
+import { Loader2 } from 'lucide-react';
 
 type Board = {
     id: number;
@@ -20,8 +21,15 @@ interface NewPostFormProps {
     boards: Board[];
 }
 
-const initialState = {
+const initialState: {
+  error?: string | null;
+  success?: boolean;
+  message?: string;
+  redirectTo?: string | null;
+} = {
   error: null,
+  success: false,
+  message: null,
   redirectTo: null,
 };
 
@@ -29,6 +37,7 @@ function SubmitButton() {
     const [isPending] = useTransition();
     return (
         <Button type="submit" disabled={isPending}>
+            {isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
             {isPending ? '등록 중...' : '등록'}
         </Button>
     );
@@ -44,6 +53,11 @@ export default function NewPostForm({ boards }: NewPostFormProps) {
     useEffect(() => {
         if (state?.error) {
             toast.error(state.error);
+        }
+        if (state?.success) {
+            toast.success("게시글이 등록되었습니다.", {
+              description: state.message,
+            });
             if (state.redirectTo) {
                 router.push(state.redirectTo);
             }
@@ -68,8 +82,8 @@ export default function NewPostForm({ boards }: NewPostFormProps) {
                             />
                         </div>
                         <div className="space-y-2">
-                            <label htmlFor="boardId">게시판</label>
-                            <Select name="boardId" required>
+                            <label htmlFor="board_id">게시판</label>
+                            <Select name="board_id" required>
                                 <SelectTrigger>
                                     <SelectValue placeholder="게시판을 선택하세요" />
                                 </SelectTrigger>

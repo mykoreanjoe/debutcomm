@@ -1,4 +1,5 @@
-import { createClient } from "@/lib/supabase/server";
+import { PostWithAuthor, getPosts } from "./actions";
+import PaginationControls from "@/app/community/PaginationControls";
 import {
   Table,
   TableBody,
@@ -9,30 +10,14 @@ import {
 } from "@/components/ui/table";
 import PointManager from "./PointManager";
 
-export default async function AdminPostsPage() {
-  const supabase = createClient();
-  const { data: posts, error } = await supabase
-    .from("posts")
-    .select(
-      `
-      id,
-      title,
-      created_at,
-      points,
-      user_profile (
-        nickname
-      )
-    `
-    )
-    .order("created_at", { ascending: false });
-
-  if (error) {
-    return <p>게시글을 불러오는 중 오류가 발생했습니다: {error.message}</p>;
-  }
-
-  if (!posts) {
-    return <p>게시글이 없습니다.</p>;
-  }
+export default async function AdminPostsPage({
+  searchParams,
+}: {
+  searchParams: { page?: string };
+}) {
+  const page = Number(searchParams.page ?? "1");
+  const { posts, totalCount } = await getPosts(page);
+  const POSTS_PER_PAGE = 10;
 
   return (
     <div className="container mx-auto py-10">
@@ -48,21 +33,26 @@ export default async function AdminPostsPage() {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {posts.map((post: any) => (
+          {posts.map((post: PostWithAuthor) => (
             <TableRow key={post.id}>
               <TableCell className="font-medium">{post.title}</TableCell>
               <TableCell>{post.user_profile?.nickname || "익명"}</TableCell>
               <TableCell>
                 {new Date(post.created_at).toLocaleDateString()}
               </TableCell>
-              <TableCell>{post.points}</TableCell>
+              <TableCell>{post.points_reward}</TableCell>
               <TableCell>
-                <PointManager postId={post.id} currentPoints={post.points} />
+                <PointManager postId={post.id} currentPoints={post.points_reward} />
               </TableCell>
             </TableRow>
           ))}
         </TableBody>
       </Table>
+      <PaginationControls
+        currentPage={page}
+        totalCount={totalCount}
+        postsPerPage={POSTS_PER_PAGE}
+      />
     </div>
   );
 } 

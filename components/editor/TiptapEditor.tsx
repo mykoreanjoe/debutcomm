@@ -117,6 +117,7 @@ export default function TiptapEditor({ content, onChange, placeholder }: TiptapE
                 class: 'prose dark:prose-invert max-w-none w-full border border-gray-300 rounded-b-md p-4 min-h-[300px] focus:outline-none',
             },
         },
+        immediatelyRender: false,
     });
 
     return (

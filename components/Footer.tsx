@@ -53,6 +53,15 @@ const Footer = () => {
         </div>
       </div>
       <div className="mt-8 pt-8 border-t border-gray-700 text-center text-sm">
+        <div className="flex justify-center items-center space-x-4 mb-4">
+          <Link href="/terms-of-service" className="hover:text-white transition-colors">
+            이용약관
+          </Link>
+          <span className="text-gray-500">|</span>
+          <Link href="/privacy-policy" className="hover:text-white transition-colors">
+            개인정보처리방침
+          </Link>
+        </div>
         <p>&copy; {new Date().getFullYear()} 데뷰 영어학원. All rights reserved.</p>
       </div>
     </footer>

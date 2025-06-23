@@ -3,6 +3,50 @@
 import { createClient } from "@/lib/supabase/server";
 import { revalidatePath } from "next/cache";
 
+export type PostWithAuthor = {
+  id: number;
+  title: string;
+  created_at: string;
+  points_reward: number;
+  user_profile: {
+    nickname: string | null;
+  } | null;
+};
+
+const POSTS_PER_PAGE = 10;
+
+export async function getPosts(page: number = 1): Promise<{ posts: PostWithAuthor[], totalCount: number }> {
+  const supabase = createClient();
+  const from = (page - 1) * POSTS_PER_PAGE;
+  const to = from + POSTS_PER_PAGE - 1;
+
+  const { data, error, count } = await supabase
+    .from('posts')
+    .select(`
+      id,
+      title,
+      created_at,
+      points_reward,
+      user_profile (
+        nickname
+      )
+    `, { count: 'exact' })
+    .order('created_at', { ascending: false })
+    .range(from, to);
+
+  if (error) {
+    console.error('Error fetching posts:', error);
+    return { posts: [], totalCount: 0 };
+  }
+
+  const formattedPosts = data?.map(post => ({
+    ...post,
+    user_profile: Array.isArray(post.user_profile) ? post.user_profile[0] : post.user_profile
+  })) || [];
+
+  return { posts: formattedPosts as PostWithAuthor[], totalCount: count ?? 0 };
+}
+
 export async function updatePostPoints(postId: number, points: number) {
   const supabase = createClient();
   const {
@@ -25,7 +69,7 @@ export async function updatePostPoints(postId: number, points: number) {
 
   const { error } = await supabase
     .from("posts")
-    .update({ points })
+    .update({ points_reward: points })
     .eq("id", postId);
 
   if (error) {

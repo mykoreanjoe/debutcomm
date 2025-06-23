@@ -1,14 +1,17 @@
 "use client";
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useActionState } from 'react';
 import { notFound, useRouter } from 'next/navigation';
-import { useUser } from '@clerk/nextjs';
-import { supabase } from '@/lib/supabaseClient';
+import { createClient } from '@/lib/supabase/client';
 import { updatePost } from '@/app/community/actions';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
+import { toast } from 'sonner';
+import { getPostForEdit } from "../actions";
+import NewPostForm from "../../new/NewPostForm";
+import { createClient as serverCreateClient } from "@/lib/supabase/server";
 
 type EditPostPageProps = {
   params: { id: string };
@@ -21,49 +24,62 @@ type Post = {
   user_id: string;
 };
 
+const initialState: { error: string | null } = {
+  error: null,
+};
+
+function SubmitButton() {
+  // useFormStatus is not available with useActionState yet
+  // const { pending } = useFormStatus();
+  return <Button type="submit">수정 완료</Button>;
+}
+
 export default function EditPostPage({ params }: EditPostPageProps) {
   const postId = parseInt(params.id, 10);
-  const { user, isLoaded } = useUser();
   const router = useRouter();
+  const supabase = createClient();
 
   const [post, setPost] = useState<Post | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState('');
+  
+  const [state, formAction] = useActionState(updatePost.bind(null, postId), initialState);
 
   useEffect(() => {
-    const fetchPost = async () => {
-      const { data, error } = await supabase
+    const fetchPostAndUser = async () => {
+      setIsLoading(true);
+
+      const { data: { user } } = await supabase.auth.getUser();
+      
+      const { data: postData, error: postError } = await supabase
         .from('posts')
         .select('id, title, content, user_id')
         .eq('id', postId)
         .single();
 
-      if (error || !data) {
+      if (postError || !postData) {
         return notFound();
       }
+
+      if (!user || user.id !== postData.user_id) {
+        toast.error('수정할 권한이 없습니다.');
+        router.back();
+        return;
+      }
       
-      setPost(data);
+      setPost(postData);
       setIsLoading(false);
     };
 
-    fetchPost();
-  }, [postId]);
-
-  useEffect(() => {
-    if (isLoaded && post && user?.id !== post.user_id) {
-      alert('수정할 권한이 없습니다.');
-      router.back();
-    }
-  }, [user, post, isLoaded, router]);
-
-  const handleSubmit = async (formData: FormData) => {
-    const result = await updatePost(postId, formData);
-    if (result?.error) {
-      setError(result.error);
-    }
-  };
+    fetchPostAndUser();
+  }, [postId, router, supabase]);
   
-  if (isLoading || !isLoaded) {
+  useEffect(() => {
+    if (state?.error) {
+      toast.error(state.error);
+    }
+  }, [state]);
+
+  if (isLoading) {
     return <div className="text-center py-10">로딩 중...</div>;
   }
 
@@ -73,7 +89,7 @@ export default function EditPostPage({ params }: EditPostPageProps) {
   
   return (
     <div className="container mx-auto max-w-2xl py-10">
-      <form action={handleSubmit}>
+      <form action={formAction}>
         <Card>
           <CardHeader>
             <CardTitle className="text-2xl font-bold">게시글 수정</CardTitle>
@@ -100,15 +116,13 @@ export default function EditPostPage({ params }: EditPostPageProps) {
                 rows={10}
               />
             </div>
-            {error && <p className="text-red-500 text-sm">{error}</p>}
+            {state?.error && <p className="text-red-500 text-sm">{state.error}</p>}
           </CardContent>
           <CardFooter className="flex justify-end gap-2">
             <Button type="button" variant="outline" onClick={() => router.back()}>
               취소
             </Button>
-            <Button type="submit">
-              수정 완료
-            </Button>
+            <SubmitButton />
           </CardFooter>
         </Card>
       </form>

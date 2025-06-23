@@ -50,12 +50,10 @@ export default async function RootLayout({
   const { data: { user } } = await supabase.auth.getUser();
 
   return (
-    <html lang="ko" className={pretendard.variable}>
-      <body className={pretendard.className}>
+    <html lang="ko" className={pretendard.variable} suppressHydrationWarning>
+      <body className={pretendard.className} suppressHydrationWarning>
         <PageTransitionWrapper>
-          <Header>
-            <AuthButton />
-          </Header>
+          <Header user={user} />
           <main className="pt-16 bg-slate-50">
             {children}
           </main>

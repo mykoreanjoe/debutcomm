@@ -2,32 +2,90 @@
 
 import { createClient } from "@/lib/supabase/server";
 import { revalidatePath } from "next/cache";
+import { redirect } from 'next/navigation';
 
 type FormState = {
   error: string | null;
   success: string | null;
 };
 
-export async function getProfile() {
-  const supabase = createClient();
-  const { data: { user } } = await supabase.auth.getUser();
+export type PointHistoryEntry = {
+    id: number;
+    created_at: string;
+    reason: string;
+    amount: number;
+};
 
-  if (!user) {
-    return null;
-  }
+export async function getAuthenticatedUser() {
+    const supabase = createClient();
+    const { data: { user } } = await supabase.auth.getUser();
+    return user;
+}
 
-  const { data: profile, error } = await supabase
-    .from("user_profile")
-    .select("nickname, point")
-    .eq("id", user.id)
-    .single();
+export async function getProfile(userId: string) {
+    const supabase = createClient();
+    const { data: profile } = await supabase
+        .from('user_profile')
+        .select('*')
+        .eq('id', userId)
+        .single();
+    return profile;
+}
 
-  if (error) {
-    console.error("Error fetching profile", error);
-    return null;
-  }
+export async function getPointHistory(): Promise<PointHistoryEntry[]> {
+    const supabase = createClient();
+    const user = await getAuthenticatedUser();
+    if (!user) return [];
 
-  return profile;
+    const { data: pointHistory, error } = await supabase
+        .from('point_history')
+        .select('id, created_at, reason, amount')
+        .eq('user_id', user.id)
+        .order('created_at', { ascending: false });
+    
+    if (error) {
+        console.error("Error fetching point history:", error);
+        return [];
+    }
+
+    return pointHistory || [];
+}
+
+export async function getUserPosts() {
+    const supabase = createClient();
+    const user = await getAuthenticatedUser();
+    if (!user) return [];
+
+    const { data: userPosts, error } = await supabase
+        .from('posts')
+        .select('id, title, created_at, view_count')
+        .eq('user_id', user.id)
+        .order('created_at', { ascending: false });
+
+    if (error) {
+        console.error("Error fetching user posts:", error);
+        return [];
+    }
+
+    return userPosts || [];
+}
+
+export async function getProfileData() {
+    const supabase = createClient();
+    const { data: { user } } = await supabase.auth.getUser();
+
+    if (!user) {
+        redirect('/login');
+    }
+
+    const { data: profile } = await supabase
+        .from('user_profile')
+        .select('*')
+        .eq('id', user.id)
+        .single();
+
+    // The rest of the data will be fetched by their respective components.
+    return { user, profile: profile || null };
 }
 
 export async function updateProfile(

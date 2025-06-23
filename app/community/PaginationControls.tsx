@@ -1,4 +1,6 @@
-import { createClient } from '@/lib/supabase/server';
+'use client';
+
+import { useSearchParams, useRouter, usePathname } from 'next/navigation';
 import {
   Pagination,
   PaginationContent,
@@ -8,68 +10,70 @@ import {
   PaginationPrevious,
 } from '@/components/ui/pagination';
 
-const POSTS_PER_PAGE = 10;
-
-async function getTotalPostCount(boardSlug?: string): Promise<number> {
-    const supabase = createClient();
-    let query = supabase
-        .from('posts_with_counts')
-        .select('*', { count: 'exact', head: true });
-
-    if (boardSlug) {
-        query = query.eq('board_slug', boardSlug);
-    }
-    
-    const { count, error } = await query;
-    
-    if (error) {
-        console.error('Error fetching total post count:', error);
-        return 0;
-    }
-    
-    return count || 0;
-}
-
-
 interface PaginationControlsProps {
-    currentPage: number;
-    boardSlug: string | undefined;
-    sortOrder: string;
+  currentPage: number;
+  totalCount: number;
+  postsPerPage: number;
 }
 
-export default async function PaginationControls({ currentPage, boardSlug, sortOrder }: PaginationControlsProps) {
-    const totalCount = await getTotalPostCount(boardSlug);
-    const totalPages = Math.ceil(totalCount / POSTS_PER_PAGE);
+export default function PaginationControls({ currentPage, totalCount, postsPerPage }: PaginationControlsProps) {
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
 
-    const createPageURL = (pageNumber: number | string) => {
-        const params = new URLSearchParams();
-        if (boardSlug) params.set('board', boardSlug);
-        if (sortOrder !== 'newest') params.set('sort', sortOrder);
-        params.set('page', pageNumber.toString());
-        return `/community?${params.toString()}`;
-    };
+  const totalPages = Math.ceil(totalCount / postsPerPage);
 
-    if (totalPages <= 1) {
-        return null;
-    }
-    
-    return (
-        <Pagination>
-            <PaginationContent>
-                <PaginationItem>
-                    <PaginationPrevious href={createPageURL(currentPage - 1)} aria-disabled={currentPage <= 1} />
-                </PaginationItem>
-                {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-                    <PaginationItem key={page}>
-                        <PaginationLink href={createPageURL(page)} isActive={currentPage === page}>
-                            {page}
-                        </PaginationLink>
-                    </PaginationItem>
-                ))}
-                <PaginationItem>
-                    <PaginationNext href={createPageURL(currentPage + 1)} aria-disabled={currentPage >= totalPages} />
-                </PaginationItem>
-            </PaginationContent>
-        </Pagination>
-    );
+  if (totalPages <= 1) {
+    return null; // 페이지가 하나 이하면 페이지네이션을 보여주지 않음
+  }
+
+  const handlePageChange = (page: number) => {
+    const current = new URLSearchParams(Array.from(searchParams.entries()));
+    current.set('page', page.toString());
+    const search = current.toString();
+    const query = search ? `?${search}` : '';
+    router.push(`${pathname}${query}`);
+  };
+
+  return (
+    <Pagination>
+      <PaginationContent>
+        <PaginationItem>
+          <PaginationPrevious
+            href="#"
+            onClick={(e) => {
+              e.preventDefault();
+              if (currentPage > 1) handlePageChange(currentPage - 1);
+            }}
+            className={currentPage === 1 ? 'pointer-events-none opacity-50' : undefined}
+          />
+        </PaginationItem>
+        {/* 페이지 번호 로직은 단순화를 위해 생략, 필요시 추가 구현 */}
+        {[...Array(totalPages)].map((_, i) => (
+           <PaginationItem key={i}>
+             <PaginationLink 
+                href="#"
+                onClick={(e) => {
+                  e.preventDefault();
+                  handlePageChange(i + 1);
+                }}
+                isActive={currentPage === i + 1}
+              >
+               {i + 1}
+             </PaginationLink>
+           </PaginationItem>
+        ))}
+        <PaginationItem>
+          <PaginationNext
+            href="#"
+            onClick={(e) => {
+              e.preventDefault();
+              if (currentPage < totalPages) handlePageChange(currentPage + 1);
+            }}
+            className={currentPage === totalPages ? 'pointer-events-none opacity-50' : undefined}
+          />
+        </PaginationItem>
+      </PaginationContent>
+    </Pagination>
+  );
 } 

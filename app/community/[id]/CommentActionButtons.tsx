@@ -5,12 +5,11 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { MoreHorizontal, Trash2, Edit, Flag } from "lucide-react";
-import { deleteComment } from '../actions'; // deleteComment 액션 import
+import { deleteComment } from '@/app/community/actions'; // deleteComment 액션 import
 import { toast } from 'sonner';
 import { ReportDialog } from './ReportDialog';
 

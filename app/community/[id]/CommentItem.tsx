@@ -8,29 +8,26 @@ import { CommentActionButtons } from "./CommentActionButtons";
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { useTransition } from 'react';
-import { updateComment } from '../actions';
+import { updateComment } from "@/app/community/actions";
 import { toast } from 'sonner';
+import type { CommentWithChildren } from "./page";
+import CommentForm from "./CommentForm";
+import PostContentView from "@/components/community/PostContentView";
+import { MessageSquare } from "lucide-react";
 
-export type CommentWithProfile = {
-  id: number;
-  created_at: string;
-  content: string;
-  user_id: string;
-  user_profile: {
-    nickname: string | null;
-    avatar_url: string | null;
-  } | null;
+type CommentItemProps = {
+  comment: CommentWithChildren;
+  currentUserId?: string;
+  boardSlug?: string;
+  postId: number;
 };
 
-interface CommentItemProps {
-  comment: CommentWithProfile;
-  currentUserId: string | undefined;
-}
-
-export default function CommentItem({ comment, currentUserId }: CommentItemProps) {
+export default function CommentItem({ comment, currentUserId, boardSlug, postId }: CommentItemProps) {
   const [isEditing, setIsEditing] = useState(false);
   const [editedContent, setEditedContent] = useState(comment.content);
   const [isPending, startTransition] = useTransition();
+  const [isReplyFormOpen, setIsReplyFormOpen] = useState(false);
+  const isAnonymous = comment.nickname === '익명';
 
   const isAuthor = currentUserId === comment.user_id;
 
@@ -47,52 +44,90 @@ export default function CommentItem({ comment, currentUserId }: CommentItemProps
   };
 
   return (
-    <div className="flex items-start space-x-4 py-4">
-      <Avatar>
-        <AvatarImage src={comment.user_profile?.avatar_url || ''} alt={comment.user_profile?.nickname || '익명'} />
-        <AvatarFallback>{comment.user_profile?.nickname?.charAt(0) ?? '익'}</AvatarFallback>
-      </Avatar>
-      <div className="flex-1">
-        <div className="flex items-center justify-between">
-          <p className="font-semibold text-sm">
-            {comment.user_profile?.nickname ?? '익명'}
-          </p>
-          <div className="text-xs text-gray-500 flex items-center space-x-2">
-            <span>
-              {formatDistanceToNow(new Date(comment.created_at), { addSuffix: true, locale: ko })}
-            </span>
-            {isAuthor && !isEditing && (
-              <CommentActionButtons
-                commentId={comment.id}
-                authorId={comment.user_id}
-                currentUserId={currentUserId}
-                onEdit={() => setIsEditing(true)}
-              />
-            )}
-          </div>
-        </div>
-
-        {!isEditing ? (
-          <p className="text-gray-700 whitespace-pre-wrap mt-1">{comment.content}</p>
-        ) : (
-          <div className="mt-2 space-y-2">
-            <Textarea
-              value={editedContent}
-              onChange={(e) => setEditedContent(e.target.value)}
-              rows={3}
-              className="resize-none"
-            />
-            <div className="flex justify-end space-x-2">
-              <Button variant="ghost" size="sm" onClick={() => setIsEditing(false)} disabled={isPending}>
-                취소
-              </Button>
-              <Button size="sm" onClick={handleUpdate} disabled={isPending}>
-                {isPending ? "저장 중..." : "저장"}
-              </Button>
+    <div className="flex flex-col">
+      <div className="flex items-start space-x-4">
+        <Avatar>
+          {boardSlug !== 'anonymous' && (
+            <AvatarImage src={!isAnonymous ? comment.avatar_url ?? undefined : undefined} alt={comment.nickname ?? "익명"} />
+          )}
+          <AvatarFallback>
+            {isAnonymous ? '익' : (comment.nickname?.[0] || '익')}
+          </AvatarFallback>
+        </Avatar>
+        <div className="flex-1">
+          <div className="flex items-center justify-between">
+            <p className="font-semibold">
+              {boardSlug === 'anonymous' ? '익명' : (comment.nickname || '익명')}
+            </p>
+            <div className="text-xs text-gray-500 flex items-center space-x-2">
+              <span>
+                {formatDistanceToNow(new Date(comment.created_at), { addSuffix: true, locale: ko })}
+              </span>
+              {isAuthor && (
+                <CommentActionButtons
+                  commentId={comment.id}
+                  authorId={comment.user_id}
+                  currentUserId={currentUserId}
+                  onEdit={() => setIsEditing(true)}
+                />
+              )}
             </div>
           </div>
-        )}
+          
+          {!isEditing ? (
+            <div className="prose dark:prose-invert max-w-none mt-2">
+              <PostContentView htmlContent={comment.content} />
+            </div>
+          ) : (
+            <div className="mt-2 space-y-2">
+              <Textarea
+                value={editedContent}
+                onChange={(e) => setEditedContent(e.target.value)}
+                rows={3}
+                className="resize-none"
+              />
+              <div className="flex justify-end space-x-2">
+                <Button variant="ghost" size="sm" onClick={() => setIsEditing(false)} disabled={isPending}>
+                  취소
+                </Button>
+                <Button size="sm" onClick={handleUpdate} disabled={isPending}>
+                  {isPending ? "저장 중..." : "저장"}
+                </Button>
+              </div>
+            </div>
+          )}
+
+          <div className="mt-2 flex items-center space-x-4">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => setIsReplyFormOpen(!isReplyFormOpen)}
+            >
+              <MessageSquare className="mr-2 h-4 w-4" />
+              답글 달기
+            </Button>
+          </div>
+        </div>
       </div>
+      
+      {isReplyFormOpen && (
+        <div className="ml-16 mt-4">
+          <CommentForm 
+            postId={postId}
+            userId={currentUserId}
+            parentId={comment.id}
+            onReplySuccess={() => setIsReplyFormOpen(false)} 
+          />
+        </div>
+      )}
+
+      {comment.children && comment.children.length > 0 && (
+        <div className="ml-12 mt-4 space-y-4 border-l-2 pl-4">
+          {comment.children.map((childComment) => (
+            <CommentItem key={childComment.id} comment={childComment} currentUserId={currentUserId} postId={postId} />
+          ))}
+        </div>
+      )}
     </div>
   );
-} 
+}

@@ -1,17 +1,29 @@
 import { createClient } from '@/lib/supabase/server';
 import { notFound } from 'next/navigation';
-import { Badge } from '@/components/ui/badge';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { Avatar, AvatarFallback } from '@/components/ui/avatar';
-import { MessageCircle } from 'lucide-react';
-import CommentForm from './CommentForm'; // 댓글 폼 (클라이언트 컴포넌트)
-import LikeButton from './LikeButton'; // 좋아요 버튼 컴포넌트
-import PostActionButtons from './PostActionButtons'; // 게시글 수정/삭제 버튼 컴포넌트
-import CommentItem, { CommentWithProfile } from './CommentItem'; // 새로 만든 댓글 아이템 컴포넌트
-import PostContentView from '@/components/community/PostContentView'; // 새로 추가
+import LikeButton from './LikeButton';
+import PostActionButtons from './PostActionButtons';
+import PostContentView from '@/components/community/PostContentView';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, Terminal } from 'lucide-react';
 import Link from 'next/link';
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Suspense } from 'react';
+import CommentSection from "./CommentSection";
+import { CommentSectionSkeleton } from "./CommentSectionSkeleton";
+import { SupabaseClient } from "@supabase/supabase-js";
+
+export type CommentWithChildren = {
+  id: number;
+  post_id: number;
+  user_id: string;
+  content: string;
+  created_at: string;
+  point_status: string;
+  parent_id: number | null;
+  nickname: string;
+  avatar_url: string | null;
+  children: CommentWithChildren[] | null;
+};
 
 type PostPageProps = {
   params: {
@@ -19,159 +31,131 @@ type PostPageProps = {
   };
 };
 
-type PostData = {
-  id: number;
-  title: string;
-  content: string | null;
-  created_at: string;
-  user_id: string;
-  view_count: number;
-  likes: number;
-  user_has_liked: boolean;
-  user_profile: {
-    nickname: string | null;
-  } | null;
-  board: {
-    name: string | null;
-    slug: string | null;
-  } | null;
-};
+async function getPostData(supabase: SupabaseClient, postId: number, userId: string) {
+    const postQuery = supabase
+        .from('posts')
+        .select('*, user_profile(nickname, avatar_url), board(name, slug)')
+        .eq('id', postId)
+        .single();
 
-async function getPost(id: number, userId?: string): Promise<PostData | null> {
-  const supabase = createClient();
-  const { data, error } = await supabase
-    .from('posts')
-    .select(`
-      id,
-      title,
-      content,
-      created_at,
-      user_id,
-      view_count,
-      user_profile!inner ( nickname ),
-      board!inner ( name, slug )
-    `)
-    .eq('id', id)
-    .single();
+    const likeQuery = supabase
+        .from('likes')
+        .select('*', { count: 'exact' })
+        .eq('post_id', postId);
 
-  if (error) {
-    console.error('Error fetching post:', error);
-    return null;
-  }
-  
-  const { count: likes } = await supabase
-    .from('likes')
-    .select('*', { count: 'exact', head: true })
-    .eq('post_id', id);
+    const userLikeQuery = supabase
+        .from('likes')
+        .select('*', { count: 'exact' })
+        .eq('post_id', postId)
+        .eq('user_id', userId);
 
-  let user_has_liked = false;
-  if (userId) {
-    const { data: like } = await supabase
-      .from('likes')
-      .select('id')
-      .eq('post_id', id)
-      .eq('user_id', userId)
-      .single();
-    user_has_liked = !!like;
-  }
+    const [postResult, likeResult, userLikeResult] = await Promise.all([postQuery, likeQuery, userLikeQuery]);
 
-  // Supabase는 !inner를 사용해도 결과를 배열로 감쌀 수 있으므로, 객체로 변환합니다.
-  const postData = {
-    ...data,
-    user_profile: Array.isArray(data.user_profile) ? data.user_profile[0] : data.user_profile,
-    board: Array.isArray(data.board) ? data.board[0] : data.board,
-    likes: likes ?? 0,
-    user_has_liked,
-  };
+    if (postResult.error || !postResult.data) {
+        return null;
+    }
 
-  return postData as PostData;
-}
-
-async function getComments(postId: number): Promise<CommentWithProfile[]> {
-  const supabase = createClient();
-  const { data, error } = await supabase
-    .from('comments')
-    .select(`
-      id,
-      created_at,
-      content,
-      user_id,
-      user_profile!inner (
-        nickname,
-        avatar_url
-      )
-    `)
-    .eq('post_id', postId)
-    .order('created_at', { ascending: true });
-
-  if (error) {
-    console.error('Error fetching comments:', error);
-    return [];
-  }
-  
-  return data.map(c => ({
-    ...c,
-    user_profile: Array.isArray(c.user_profile) ? c.user_profile[0] : c.user_profile
-  }));
+    return {
+        post: postResult.data,
+        likes: likeResult.count ?? 0,
+        user_has_liked: (userLikeResult.count ?? 0) > 0,
+    };
 }
 
 export default async function PostPage({ params }: PostPageProps) {
   const supabase = createClient();
   const { data: { user } } = await supabase.auth.getUser();
-  
-  const post = await getPost(Number(params.id), user?.id);
-  
-  if (!post) {
+
+  if (!user) {
+    // This case should be handled by middleware, but as a fallback
+    return notFound();
+  }
+
+  const postId = Number(params.id);
+  if (isNaN(postId)) {
     notFound();
   }
 
-  // TODO: Implement view count logic
+  // 게시글 열람 처리 함수 호출
+  const { data: viewResult, error: viewError } = await supabase.rpc('handle_post_view', {
+    p_post_id: postId,
+    p_user_id: user.id
+  });
 
-  const comments = await getComments(post.id);
+  if (viewError) {
+    console.error('Error handling post view:', viewError);
+    // Let's show a generic error page
+  }
+  
+  if (viewResult === 'INSUFFICIENT_POINTS') {
+    return (
+      <main className="container mx-auto max-w-4xl py-8">
+        <Alert variant="destructive">
+          <Terminal className="h-4 w-4" />
+          <AlertTitle>포인트 부족</AlertTitle>
+          <AlertDescription>
+            <p>게시글을 열람하려면 10포인트가 필요합니다.</p>
+            <p className="mt-2">활발한 커뮤니티 활동으로 포인트를 획득해주세요.</p>
+          </AlertDescription>
+        </Alert>
+        <div className="mt-6 text-center">
+            <Button asChild variant="outline">
+              <Link href="/community">
+                <ArrowLeft className="w-4 h-4 mr-2" />
+                커뮤니티로 돌아가기
+              </Link>
+            </Button>
+        </div>
+      </main>
+    );
+  }
+
+  const postData = await getPostData(supabase, postId, user.id);
+
+  if (!postData) {
+    notFound();
+  }
+  
+  const { post, likes, user_has_liked } = postData;
 
   return (
-    <div className="max-w-4xl mx-auto p-4 sm:p-6 lg:p-8">
-      <Link href={`/community${post.board?.slug ? `?board=${post.board.slug}` : ''}`} className="inline-flex items-center text-sm text-gray-600 hover:text-gray-900 mb-4">
+    <main className="container mx-auto max-w-4xl py-8">
+      <Link href={`/community${post.board?.slug ? `?board=${post.board.slug}` : ''}`} className="inline-flex items-center text-sm text-muted-foreground hover:text-primary mb-4">
         <ArrowLeft className="w-4 h-4 mr-2" />
         {post.board?.name || '전체 목록'}으로 돌아가기
       </Link>
       <article>
         <header className="mb-4 border-b pb-4">
-          <p className="text-sm text-indigo-600 font-semibold">{post.board?.name || '자유게시판'}</p>
-          <h1 className="text-3xl font-bold mt-1">{post.title}</h1>
-          <div className="flex items-center space-x-4 text-sm text-gray-500 mt-2">
-            <span>{post.user_profile?.nickname || '익명'}</span>
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <span className="bg-muted text-muted-foreground px-2 py-1 text-xs rounded-md">{post.board?.name || '기타'}</span>
+            </div>
+            <PostActionButtons postId={post.id} authorId={post.user_id} currentUserId={user.id} />
+          </div>
+          <h1 className="text-3xl font-bold mt-4 break-words">{post.title}</h1>
+          <div className="flex items-center justify-between mt-4 text-sm text-muted-foreground">
+            <div className="flex items-center gap-2">
+                <span>{post.user_profile?.nickname || '탈퇴한 사용자'}</span>
+            </div>
             <span>{new Date(post.created_at).toLocaleDateString()}</span>
-            <span>조회수 {post.view_count}</span>
           </div>
         </header>
-        
-        <div className="prose max-w-none">
-            <PostContentView htmlContent={post.content || ''} />
+
+        <div className="prose dark:prose-invert max-w-none mt-6 min-h-[200px]">
+          <PostContentView htmlContent={post.content} />
         </div>
 
-        <div className="flex items-center justify-between mt-4">
-          <LikeButton postId={post.id} initialLikes={post.likes} initialHasLiked={post.user_has_liked} />
-          {user?.id === post.user_id && (
-            <PostActionButtons postId={post.id} authorId={post.user_id} currentUserId={user?.id} />
-          )}
+        <div className="mt-8 flex justify-center">
+          <LikeButton postId={post.id} initialLikes={likes} initialLiked={user_has_liked} />
         </div>
       </article>
 
-      <div className="mt-8">
-        <h2 className="text-2xl font-bold mb-4">댓글</h2>
-        <CommentForm postId={post.id} />
-
-        <div className="mt-6 space-y-4">
-          {comments.map((comment) => (
-            <CommentItem key={comment.id} comment={comment} currentUserId={user?.id} />
-          ))}
-          {comments.length === 0 && (
-            <p className="text-center text-gray-500">아직 댓글이 없습니다. 첫 댓글을 남겨주세요!</p>
-          )}
-        </div>
-      </div>
+      <hr className="my-8" />
       
+      <Suspense fallback={<CommentSectionSkeleton />}>
+        <CommentSection postId={post.id} />
+      </Suspense>
+
       <div className="mt-8 text-center">
         <Button asChild variant="outline">
           <Link href={`/community${post.board?.slug ? `?board=${post.board.slug}` : ''}`}>
@@ -180,6 +164,6 @@ export default async function PostPage({ params }: PostPageProps) {
           </Link>
         </Button>
       </div>
-    </div>
+    </main>
   );
 } 

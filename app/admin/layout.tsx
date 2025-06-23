@@ -7,24 +7,21 @@ export default async function AdminLayout({
   children: React.ReactNode;
 }) {
   const supabase = createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+
+  const { data: { user } } = await supabase.auth.getUser();
 
   if (!user) {
-    redirect("/login");
+    redirect('/login?message=관리자 페이지에 접근하려면 로그인이 필요합니다.');
   }
 
   const { data: userProfile } = await supabase
-    .from("user_profile")
-    .select("id")
-    .eq("id", user.id)
+    .from('user_profile')
+    .select('is_admin')
+    .eq('id', user.id)
     .single();
 
-  if (!userProfile) {
-    // If the user is authenticated but has no profile,
-    // redirect them to the account page to create one.
-    redirect("/account");
+  if (!userProfile?.is_admin) {
+    redirect('/?error=접근 권한이 없습니다.');
   }
 
   return (

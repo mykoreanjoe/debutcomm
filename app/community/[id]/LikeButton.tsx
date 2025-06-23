@@ -6,18 +6,19 @@ import { Button } from '@/components/ui/button';
 import { Heart } from 'lucide-react';
 import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
-import { likePost, unlikePost } from '../actions';
+import { likePost, unlikePost } from '@/app/community/actions';
+import { cn } from '@/lib/utils';
 
 interface LikeButtonProps {
   postId: number;
   initialLikes: number;
-  initialHasLiked: boolean;
+  initialLiked: boolean;
 }
 
-export default function LikeButton({ postId, initialLikes, initialHasLiked }: LikeButtonProps) {
+export default function LikeButton({ postId, initialLikes, initialLiked }: LikeButtonProps) {
   const router = useRouter();
   const [likes, setLikes] = useState(initialLikes);
-  const [hasLiked, setHasLiked] = useState(initialHasLiked);
+  const [hasLiked, setHasLiked] = useState(initialLiked);
   const [isPending, startTransition] = useTransition();
 
   const handleLike = async () => {
