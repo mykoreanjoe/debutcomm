@@ -81,18 +81,27 @@ export async function updatePost(postId: number, previousState: unknown, formDat
   const { data: { user } } = await supabase.auth.getUser();
 
   if (!user) {
-    return { error: '로그인이 필요합니다.' };
+    return { message: "인증되지 않은 사용자입니다.", success: false };
   }
+  
+  const validatedFields = CreatePostSchema.safeParse({
+    title: formData.get('title'),
+    content: formData.get('content'),
+    boardId: formData.get('board_id'),
+  });
 
-  const title = formData.get('title') as string;
-  const content = formData.get('content') as string;
+  if (!validatedFields.success) {
+    return {
+      errors: validatedFields.error.flatten().fieldErrors,
+      message: "입력값이 올바르지 않습니다.",
+      success: false
+    };
+  }
+  
+  const { title, content, boardId } = validatedFields.data;
   const sanitizedContent = sanitize(content);
 
-  if (!title || !sanitizedContent) {
-    return { error: '제목과 내용을 모두 입력해주세요.' };
-  }
-
-  // 게시글 작성자와 현재 사용자가 동일한지 확인
+  // Check if the user is the author of the post
   const { data: post, error: fetchError } = await supabase
     .from('posts')
     .select('user_id')
@@ -100,111 +109,124 @@ export async function updatePost(postId: number, previousState: unknown, formDat
     .single();
 
   if (fetchError || !post) {
-    return { error: '게시글을 찾을 수 없습니다.' };
+    return { message: "게시글을 찾을 수 없습니다.", success: false };
   }
 
   if (post.user_id !== user.id) {
-    return { error: '수정할 권한이 없습니다.' };
+    return { message: "게시글을 수정할 권한이 없습니다.", success: false };
   }
 
-  try {
-    const { error: updateError } = await supabase
-      .from('posts')
-      .update({ title, content: sanitizedContent, updated_at: new Date().toISOString() })
-      .eq('id', postId);
+  const { error } = await supabase
+    .from('posts')
+    .update({ 
+      title, 
+      content: sanitizedContent, 
+      board_id: boardId 
+    })
+    .eq('id', postId);
 
-    if (updateError) throw updateError;
-
-  } catch (error) {
-    console.error('Error updating post:', error);
-    return { error: '게시글 수정 중 오류가 발생했습니다.' };
+  if (error) {
+    return { message: '게시글 수정에 실패했습니다.', success: false };
   }
 
-  revalidatePath('/community', 'layout');
+  revalidatePath('/community');
   revalidatePath(`/community/${postId}`);
-  redirect(`/community/${postId}`);
+  
+  return { 
+    message: '게시글이 성공적으로 수정되었습니다.', 
+    success: true, 
+    redirectTo: `/community/${postId}` 
+  };
 }
 
 export async function deleteComment(commentId: number) {
-    const supabase = createClient();
-    const { data: { user } } = await supabase.auth.getUser();
+  const supabase = createClient();
+  const { data: { user } } = await supabase.auth.getUser();
 
-    if (!user) {
-        return { error: '로그인이 필요합니다.' };
-    }
+  if (!user) {
+    return { error: '로그인이 필요합니다.' };
+  }
 
-    const { data: comment, error: fetchError } = await supabase
-        .from('comments')
-        .select('id, user_id, post_id')
-        .eq('id', commentId)
-        .single();
+  // First, get the comment to check for ownership
+  const { data: comment, error: fetchError } = await supabase
+    .from('comments')
+    .select('user_id, post_id')
+    .eq('id', commentId)
+    .single();
 
-    if (fetchError || !comment) {
-        return { error: '댓글을 찾을 수 없습니다.' };
-    }
+  if (fetchError || !comment) {
+    return { error: '댓글을 찾을 수 없습니다.' };
+  }
 
-    if (comment.user_id !== user.id) {
-        return { error: '삭제할 권한이 없습니다.' };
-    }
+  if (comment.user_id !== user.id) {
+    return { error: '댓글을 삭제할 권한이 없습니다.' };
+  }
 
-    try {
-        const { error: deleteError } = await supabase
-            .from('comments')
-            .delete()
-            .eq('id', commentId);
+  const { error: deleteError } = await supabase
+    .from('comments')
+    .delete()
+    .eq('id', commentId);
 
-        if (deleteError) throw deleteError;
-        
-    } catch (error) {
-        console.error('Error deleting comment:', error);
-        return { error: '댓글 삭제 중 오류가 발생했습니다.' };
-    }
+  if (deleteError) {
+    console.error('Error deleting comment:', deleteError);
+    return { error: '댓글 삭제 중 오류가 발생했습니다.' };
+  }
 
-    revalidatePath(`/community/${comment.post_id}`, 'layout');
-    return { success: true };
+  revalidatePath(`/community/${comment.post_id}`);
+  return { success: true };
 }
 
-export async function updateComment(commentId: number, content: string) {
-    const supabase = createClient();
-    const { data: { user } } = await supabase.auth.getUser();
-    
-    if (!user) {
-        return { error: '로그인이 필요합니다.' };
-    }
-    
-    if (!content.trim()) {
-        return { error: '댓글 내용을 입력해주세요.' };
-    }
+const updateCommentSchema = z.object({
+  content: z.string().min(1, '댓글 내용은 비워둘 수 없습니다.'),
+});
 
-    const { data: comment, error: fetchError } = await supabase
-        .from('comments')
-        .select('id, user_id, post_id')
-        .eq('id', commentId)
-        .single();
+export async function updateComment(commentId: number, prevState: unknown, formData: FormData) {
+  const supabase = createClient();
+  const { data: { user } } = await supabase.auth.getUser();
 
-    if (fetchError || !comment) {
-        return { error: '댓글을 찾을 수 없습니다.' };
-    }
+  if (!user) {
+    return { success: false, message: '인증이 필요합니다.' };
+  }
+  
+  const validatedFields = updateCommentSchema.safeParse({
+    content: formData.get('content'),
+  });
 
-    if (comment.user_id !== user.id) {
-        return { error: '수정할 권한이 없습니다.' };
-    }
-    
-    try {
-        const { error: updateError } = await supabase
-            .from('comments')
-            .update({ content: content.trim(), updated_at: new Date().toISOString() })
-            .eq('id', commentId);
+  if (!validatedFields.success) {
+    return {
+      success: false,
+      errors: validatedFields.error.flatten().fieldErrors,
+      message: '입력값이 올바르지 않습니다.',
+    };
+  }
+  
+  const { content } = validatedFields.data;
 
-        if (updateError) throw updateError;
-        
-    } catch (error) {
-        console.error('Error updating comment:', error);
-        return { error: '댓글 수정 중 오류가 발생했습니다.' };
-    }
+  const { data: comment, error: fetchError } = await supabase
+    .from('comments')
+    .select('user_id, post_id')
+    .eq('id', commentId)
+    .single();
+  
+  if (fetchError || !comment) {
+    return { success: false, message: '댓글을 찾을 수 없습니다.' };
+  }
 
-    revalidatePath(`/community/${comment.post_id}`, 'layout');
-    return { success: true };
+  if (comment.user_id !== user.id) {
+    return { success: false, message: '댓글을 수정할 권한이 없습니다.' };
+  }
+
+  const { error } = await supabase
+    .from('comments')
+    .update({ content: sanitize(content), updated_at: new Date().toISOString() })
+    .eq('id', commentId);
+
+  if (error) {
+    return { success: false, message: '댓글 수정에 실패했습니다.' };
+  }
+
+  revalidatePath(`/community/${comment.post_id}`);
+  return { success: true, message: '댓글이 성공적으로 수정되었습니다.' };
 }
 
 type PointLogPayload = {

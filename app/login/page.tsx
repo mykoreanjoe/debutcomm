@@ -1,5 +1,6 @@
 "use client";
 
+import { useFormState } from 'react-dom';
 import { login, signup, signInWithKakao, signInWithGoogle } from './actions';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -7,13 +8,19 @@ import { Label } from '@/components/ui/label';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 
+const initialState = {
+  message: '',
+};
+
 export default function LoginPage() {
   const searchParams = useSearchParams();
-  const message = searchParams.get('message');
+  const initialMessage = searchParams.get('message');
   const mode = searchParams.get('mode');
   const isSigningUp = mode === 'signup';
   
   const formAction = isSigningUp ? signup : login;
+  const [state, dispatch] = useFormState(formAction, { message: initialMessage ?? '' });
+
   const buttonText = isSigningUp ? '회원가입' : '로그인';
   const toggleLink = isSigningUp ? '/login' : '/login?mode=signup';
   const toggleText = isSigningUp ? '이미 계정이 있으신가요? 로그인' : '계정이 없으신가요? 회원가입';
@@ -23,7 +30,7 @@ export default function LoginPage() {
       <div className="w-full max-w-sm p-8 space-y-6 bg-white rounded-lg shadow-md">
         <h1 className="text-2xl font-bold text-center">{buttonText}</h1>
         
-        <form action={formAction} className="space-y-6">
+        <form action={dispatch} className="space-y-6">
           {!isSigningUp && <input type="hidden" name="redirectTo" value="/community" />}
           {isSigningUp && (
             <div className="space-y-2">
@@ -55,9 +62,9 @@ export default function LoginPage() {
             {buttonText}
           </Button>
           
-          {message && (
+          {state.message && (
             <p className="mt-4 p-4 bg-foreground/10 text-foreground text-center">
-              {message}
+              {state.message}
             </p>
           )}
         </form>

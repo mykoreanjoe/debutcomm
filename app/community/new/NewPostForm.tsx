@@ -1,77 +1,80 @@
 "use client";
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { useActionState, useTransition } from 'react';
+import { useFormState, useFormStatus } from 'react-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { createPost } from '../actions';
 import { toast } from 'sonner';
 import TiptapEditor from '@/components/editor/TiptapEditor';
 import { Loader2 } from 'lucide-react';
+import { PostForList } from '@/app/community/actions';
 
 type Board = {
     id: number;
     name: string;
 };
 
-interface NewPostFormProps {
-    boards: Board[];
-}
-
-const initialState: {
-  error?: string | null;
-  success?: boolean;
+type PostFormState = {
+  errors?: {
+    title?: string[];
+    content?: string[];
+    boardId?: string[];
+  }
   message?: string;
-  redirectTo?: string | null;
-} = {
-  error: null,
-  success: false,
-  message: null,
-  redirectTo: null,
+  success?: boolean;
+  redirectTo?: string;
 };
 
-function SubmitButton() {
-    const [isPending] = useTransition();
+interface PostFormProps {
+    boards: Board[];
+    formAction: (prevState: PostFormState, formData: FormData) => Promise<PostFormState>;
+    initialState: PostFormState;
+    initialData?: {
+        title: string;
+        content: string;
+        board_id: number;
+    };
+}
+
+function SubmitButton({ isUpdate }: { isUpdate: boolean }) {
+    const { pending } = useFormStatus();
     return (
-        <Button type="submit" disabled={isPending}>
-            {isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-            {isPending ? '등록 중...' : '등록'}
+        <Button type="submit" disabled={pending}>
+            {pending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+            {pending ? (isUpdate ? '수정 중...' : '등록 중...') : (isUpdate ? '수정' : '등록')}
         </Button>
     );
 }
 
-export default function NewPostForm({ boards }: NewPostFormProps) {
+export default function NewPostForm({ boards, formAction, initialState, initialData }: PostFormProps) {
     const router = useRouter();
-    const [state, formAction] = useActionState(createPost, initialState);
-    
-    // Hidden input for tiptap editor content
-    const [content, setContent] = React.useState('');
+    const [state, dispatch] = useFormState(formAction, initialState);
+    const [content, setContent] = useState(initialData?.content || '');
 
     useEffect(() => {
-        if (state?.error) {
-            toast.error(state.error);
+        if (state.message) {
+          if(state.success) {
+            toast.success(initialData ? '수정 성공' : '등록 성공', { description: state.message });
+          } else {
+            toast.error('오류 발생', { description: state.message });
+          }
         }
-        if (state?.success) {
-            toast.success("게시글이 등록되었습니다.", {
-              description: state.message,
-            });
-            if (state.redirectTo) {
-                router.push(state.redirectTo);
-            }
+        if (state.success && state.redirectTo) {
+          router.push(state.redirectTo);
         }
-    }, [state, router]);
+      }, [state, router, initialData]);
 
     return (
         <div className="container mx-auto max-w-4xl py-10">
             <Card>
                 <CardHeader>
-                    <CardTitle className="text-2xl font-bold">새 글 작성</CardTitle>
+                    <CardTitle className="text-2xl font-bold">{initialData ? '게시글 수정' : '새 글 작성'}</CardTitle>
                 </CardHeader>
                 <CardContent>
-                    <form action={formAction} className="space-y-6">
+                    <form action={dispatch} className="space-y-6">
                         <div className="space-y-2">
                             <label htmlFor="title">제목</label>
                             <Input
@@ -79,11 +82,13 @@ export default function NewPostForm({ boards }: NewPostFormProps) {
                                 name="title"
                                 placeholder="제목을 입력하세요"
                                 required
+                                defaultValue={initialData?.title}
                             />
+                             {state.errors?.title && <p className="text-red-500 text-sm">{state.errors.title[0]}</p>}
                         </div>
                         <div className="space-y-2">
                             <label htmlFor="board_id">게시판</label>
-                            <Select name="board_id" required>
+                            <Select name="board_id" required defaultValue={initialData?.board_id ? String(initialData.board_id) : undefined}>
                                 <SelectTrigger>
                                     <SelectValue placeholder="게시판을 선택하세요" />
                                 </SelectTrigger>
@@ -95,6 +100,7 @@ export default function NewPostForm({ boards }: NewPostFormProps) {
                                     ))}
                                 </SelectContent>
                             </Select>
+                            {state.errors?.boardId && <p className="text-red-500 text-sm">{state.errors.boardId[0]}</p>}
                         </div>
                         <div className="space-y-2">
                              <label htmlFor="content">내용</label>
@@ -104,9 +110,10 @@ export default function NewPostForm({ boards }: NewPostFormProps) {
                                  onChange={setContent}
                                  placeholder="내용을 입력하세요..."
                              />
+                             {state.errors?.content && <p className="text-red-500 text-sm">{state.errors.content[0]}</p>}
                         </div>
                         <div className="flex justify-end">
-                            <SubmitButton />
+                            <SubmitButton isUpdate={!!initialData} />
                         </div>
                     </form>
                 </CardContent>

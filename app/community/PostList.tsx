@@ -1,51 +1,26 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
-import { getPosts, PostForList } from "./actions";
+import { PostForList } from "./actions";
 import { Card, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { MessageSquare, ThumbsUp } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { formatDistanceToNow } from 'date-fns';
 import { ko } from 'date-fns/locale';
-import { PostListSkeleton } from "./PostListSkeleton";
 
-const POSTS_PER_PAGE = 10;
+interface PostListProps {
+    initialPosts: PostForList[];
+}
 
-export default function PostList() {
-    const searchParams = useSearchParams();
-    const [posts, setPosts] = useState<PostForList[]>([]);
-    const [totalCount, setTotalCount] = useState(0);
-    const [isLoading, setIsLoading] = useState(true);
-
-    useEffect(() => {
-        const boardSlug = searchParams.get("board") || 'all';
-        const currentPage = Number(searchParams.get("page")) || 1;
-        
-        setIsLoading(true);
-        getPosts(currentPage, POSTS_PER_PAGE, boardSlug)
-            .then(({ posts: newPosts, count }) => {
-                setPosts(newPosts);
-                setTotalCount(count);
-            })
-            .finally(() => {
-                setIsLoading(false);
-            });
-    }, [searchParams]);
-
-    if (isLoading) {
-        return <PostListSkeleton />;
-    }
-
-    if (posts.length === 0) {
+export default function PostList({ initialPosts }: PostListProps) {
+    if (initialPosts.length === 0) {
         return <div className="text-center text-gray-500 py-10">게시글이 없습니다.</div>;
     }
 
     return (
         <div className="space-y-4">
-            {posts.map((post) => (
+            {initialPosts.map((post) => (
                 <Link href={`/community/${post.id}`} key={post.id} className="block">
                     <Card className="hover:bg-gray-50 transition-colors">
                         <CardHeader>

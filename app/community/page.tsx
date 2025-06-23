@@ -100,7 +100,7 @@ async function PostListSection({ page, boardSlug }: { page: number, boardSlug?: 
   
   return (
     <div>
-      <PostList initialPosts={posts} currentPage={page} boardSlug={boardSlug} />
+      <PostList initialPosts={posts} />
       <div className="mt-6 flex justify-center">
         <PaginationControls
           currentPage={page}

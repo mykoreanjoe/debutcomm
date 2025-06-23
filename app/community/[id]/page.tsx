@@ -10,7 +10,6 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Suspense } from 'react';
 import CommentSection from "./CommentSection";
 import { CommentSectionSkeleton } from "./CommentSectionSkeleton";
-import { SupabaseClient } from "@supabase/supabase-js";
 
 export type CommentWithChildren = {
   id: number;
@@ -31,37 +30,6 @@ type PostPageProps = {
   };
 };
 
-async function getPostData(supabase: SupabaseClient, postId: number, userId: string) {
-    const postQuery = supabase
-        .from('posts')
-        .select('*, user_profile(nickname, avatar_url), board(name, slug)')
-        .eq('id', postId)
-        .single();
-
-    const likeQuery = supabase
-        .from('likes')
-        .select('*', { count: 'exact' })
-        .eq('post_id', postId);
-
-    const userLikeQuery = supabase
-        .from('likes')
-        .select('*', { count: 'exact' })
-        .eq('post_id', postId)
-        .eq('user_id', userId);
-
-    const [postResult, likeResult, userLikeResult] = await Promise.all([postQuery, likeQuery, userLikeQuery]);
-
-    if (postResult.error || !postResult.data) {
-        return null;
-    }
-
-    return {
-        post: postResult.data,
-        likes: likeResult.count ?? 0,
-        user_has_liked: (userLikeResult.count ?? 0) > 0,
-    };
-}
-
 export default async function PostPage({ params }: PostPageProps) {
   const supabase = createClient();
   const { data: { user } } = await supabase.auth.getUser();
@@ -76,11 +44,37 @@ export default async function PostPage({ params }: PostPageProps) {
     notFound();
   }
 
-  // 게시글 열람 처리 함수 호출
-  const { data: viewResult, error: viewError } = await supabase.rpc('handle_post_view', {
+  // 게시글 열람 처리 및 데이터 병렬 조회
+  const viewPromise = supabase.rpc('handle_post_view', {
     p_post_id: postId,
     p_user_id: user.id
   });
+
+  const postPromise = supabase
+    .from('posts')
+    .select('*, user_profile(nickname, avatar_url), board(name, slug)')
+    .eq('id', postId)
+    .single();
+
+  const likePromise = supabase
+    .from('likes')
+    .select('*', { count: 'exact' })
+    .eq('post_id', postId);
+
+  const userLikePromise = supabase
+    .from('likes')
+    .select('*', { count: 'exact' })
+    .eq('post_id', postId)
+    .eq('user_id', user.id);
+  
+  const [
+    { data: viewResult, error: viewError },
+    { data: post, error: postError },
+    { count: likes },
+    { count: userLikeCount }
+  ] = await Promise.all([viewPromise, postPromise, likePromise, userLikePromise]);
+  
+  const user_has_liked = (userLikeCount ?? 0) > 0;
 
   if (viewError) {
     console.error('Error handling post view:', viewError);
@@ -110,14 +104,10 @@ export default async function PostPage({ params }: PostPageProps) {
     );
   }
 
-  const postData = await getPostData(supabase, postId, user.id);
-
-  if (!postData) {
+  if (postError || !post) {
     notFound();
   }
   
-  const { post, likes, user_has_liked } = postData;
-
   return (
     <main className="container mx-auto max-w-4xl py-8">
       <Link href={`/community${post.board?.slug ? `?board=${post.board.slug}` : ''}`} className="inline-flex items-center text-sm text-muted-foreground hover:text-primary mb-4">
@@ -146,7 +136,7 @@ export default async function PostPage({ params }: PostPageProps) {
         </div>
 
         <div className="mt-8 flex justify-center">
-          <LikeButton postId={post.id} initialLikes={likes} initialLiked={user_has_liked} />
+          <LikeButton postId={post.id} initialLikes={likes ?? 0} initialLiked={user_has_liked} />
         </div>
       </article>
 
