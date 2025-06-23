@@ -1,21 +1,22 @@
-import { auth } from "@clerk/nextjs/server";
+import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import { VerificationForm } from "./VerificationForm";
-import { supabase } from "@/lib/supabaseClient";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Rocket, AlertCircle } from "lucide-react";
 
 export default async function VerificationPage() {
-    const { userId } = await auth();
-    if (!userId) {
-        redirect("/sign-in");
+    const supabase = createClient();
+    const { data: { user } } = await supabase.auth.getUser();
+
+    if (!user) {
+        redirect("/login");
     }
 
     const { data: profile, error } = await supabase
         .from("user_profile")
         .select("is_verified, request_verified, student_name, reject_reason")
-        .eq("id", userId)
+        .eq("id", user.id)
         .single();
     
     if (error) {

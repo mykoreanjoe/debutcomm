@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from 'react';
 import { notFound, useRouter } from 'next/navigation';
-import { useUser } from '@clerk/nextjs';
-import { supabase } from '@/lib/supabaseClient';
+import { createClient } from '@/lib/supabase/client';
+import { User as AuthUser } from '@supabase/supabase-js';
 import { updatePost } from '@/app/community/actions';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -23,8 +23,9 @@ type Post = {
 
 export default function EditPostPage({ params }: EditPostPageProps) {
   const postId = parseInt(params.id, 10);
-  const { user, isLoaded } = useUser();
   const router = useRouter();
+  const [user, setUser] = useState<AuthUser | null>(null);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   const [post, setPost] = useState<Post | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -32,6 +33,7 @@ export default function EditPostPage({ params }: EditPostPageProps) {
 
   useEffect(() => {
     const fetchPost = async () => {
+      const supabase = createClient();
       const { data, error } = await supabase
         .from('posts')
         .select('id, title, content, user_id')
@@ -48,6 +50,20 @@ export default function EditPostPage({ params }: EditPostPageProps) {
 
     fetchPost();
   }, [postId]);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const supabase = createClient();
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) {
+        router.push(`/login?redirectTo=/community/${postId}/edit`);
+      }
+      setUser(user);
+      setIsLoaded(true);
+    };
+
+    fetchUser();
+  }, [postId, router]);
 
   useEffect(() => {
     if (isLoaded && post && user?.id !== post.user_id) {
