@@ -1,11 +1,21 @@
 import type { Metadata } from 'next';
+import { Toaster } from "@/components/ui/sonner"
+import localFont from 'next/font/local'
 import './globals.css';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import PageTransitionWrapper from '@/components/PageTransitionWrapper';
 import FloatingInquiryButton from "@/components/FloatingInquiryButton";
-import { Toaster } from 'sonner';
 import AuthButton from '@/components/AuthButton';
+import { createClient } from '@/lib/supabase/server';
+import { Analytics } from "@vercel/analytics/react"
+
+const pretendard = localFont({
+  src: '../public/fonts/PretendardVariable.woff2',
+  display: 'swap',
+  weight: '45 920',
+  variable: '--font-pretendard',
+})
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.debutenglish.com'),
@@ -31,27 +41,29 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const supabase = createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+
   return (
-    <html lang="ko">
-      <body>
-        <div className="flex flex-col min-h-screen">
+    <html lang="ko" className={pretendard.variable}>
+      <body className={pretendard.className}>
+        <PageTransitionWrapper>
           <Header>
             <AuthButton />
           </Header>
-          <main className="flex-grow">
-            <PageTransitionWrapper>
-              {children}
-            </PageTransitionWrapper>
+          <main className="pt-16 bg-slate-50">
+            {children}
           </main>
-          <Toaster />
-          <FloatingInquiryButton />
           <Footer />
-        </div>
+        </PageTransitionWrapper>
+        <FloatingInquiryButton />
+        <Toaster />
+        <Analytics />
       </body>
     </html>
   );

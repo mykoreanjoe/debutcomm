@@ -1,75 +1,64 @@
-"use client";
+import { login, signup, signInWithKakao } from './actions'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import { createClient } from '@/lib/supabase/server'
+import { redirect } from 'next/navigation'
 
-import { useState } from 'react';
-import { createClient } from '@/lib/supabase/client';
-import { useRouter } from 'next/navigation';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
+export default async function LoginPage({
+  searchParams,
+}: {
+  searchParams: { message: string, redirectTo?: string }
+}) {
+  const supabase = createClient()
+  const { data: { user } } = await supabase.auth.getUser()
 
-export default function LoginPage() {
-  const router = useRouter();
-  const supabase = createClient();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState<string | null>(null);
-
-  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setError(null);
-
-    const { error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
-
-    if (error) {
-      setError(error.message);
-    } else {
-      router.push('/');
-      router.refresh();
-    }
-  };
-
-  const handleOAuthLogin = async (provider: 'kakao') => {
-    const { error } = await supabase.auth.signInWithOAuth({ provider });
-    if (error) {
-      setError(error.message);
-    }
-  };
+  if (user) {
+    return redirect(searchParams.redirectTo || '/community')
+  }
 
   return (
-    <div className="flex justify-center items-center h-screen bg-gray-50">
-      <div className="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-md">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-slate-50">
+      <div className="w-full max-w-md p-8 space-y-8 bg-white rounded-lg shadow-md">
         <h1 className="text-2xl font-bold text-center">로그인</h1>
-        <form onSubmit={handleLogin} className="space-y-6">
-          <div>
+        <form action={login} className="space-y-6">
+          <div className="space-y-2">
             <Label htmlFor="email">이메일</Label>
             <Input
               id="email"
+              name="email"
               type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
               placeholder="you@example.com"
+              required
             />
           </div>
-          <div>
+          <div className="space-y-2">
             <Label htmlFor="password">비밀번호</Label>
             <Input
               id="password"
+              name="password"
               type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
               required
-              placeholder="••••••••"
             />
           </div>
-          {error && <p className="text-sm text-red-500">{error}</p>}
+          <input type="hidden" name="redirectTo" value={searchParams.redirectTo} />
           <Button type="submit" className="w-full">
             로그인
           </Button>
+          {searchParams?.message && (
+            <p className="mt-4 p-4 bg-foreground/10 text-foreground text-center">
+              {searchParams.message}
+            </p>
+          )}
         </form>
+        <div className="text-center text-sm">
+          계정이 없으신가요?{' '}
+          <form action={signup} className="inline-block">
+            <button type="submit" className="underline">
+              회원가입
+            </button>
+          </form>
+        </div>
 
         <div className="relative">
           <div className="absolute inset-0 flex items-center">
@@ -82,17 +71,16 @@ export default function LoginPage() {
           </div>
         </div>
 
-        <Button variant="outline" className="w-full" onClick={() => handleOAuthLogin('kakao')}>
-          카카오로 로그인
-        </Button>
+        <form action={signInWithKakao}>
+          <Button 
+            variant="outline" 
+            className="w-full bg-[#FEE500] text-black hover:bg-[#FEE500]/90"
+          >
+            카카오로 시작하기
+          </Button>
+        </form>
 
-        <p className="text-sm text-center text-gray-600">
-          계정이 없으신가요?{' '}
-          <a href="/signup" className="font-medium text-blue-600 hover:underline">
-            회원가입
-          </a>
-        </p>
       </div>
     </div>
-  );
+  )
 } 

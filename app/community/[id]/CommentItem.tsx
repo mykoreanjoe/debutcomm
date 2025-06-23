@@ -1,93 +1,98 @@
 "use client";
 
 import { useState } from 'react';
-import { useAuth } from '@clerk/nextjs';
-import { Card, CardContent, CardHeader } from '@/components/ui/card';
-import { Avatar, AvatarFallback } from '@/components/ui/avatar';
-import { Textarea } from '@/components/ui/textarea';
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { formatDistanceToNow } from "date-fns";
+import { ko } from "date-fns/locale";
+import { CommentActionButtons } from "./CommentActionButtons";
 import { Button } from '@/components/ui/button';
-import CommentActionButtons from './CommentActionButtons';
+import { Textarea } from '@/components/ui/textarea';
+import { useTransition } from 'react';
 import { updateComment } from '../actions';
+import { toast } from 'sonner';
 
-type Comment = {
+export type CommentWithProfile = {
   id: number;
   created_at: string;
   content: string;
-  nickname: string;
   user_id: string;
+  user_profile: {
+    nickname: string | null;
+    avatar_url: string | null;
+  } | null;
 };
 
-type CommentItemProps = {
-  comment: Comment;
-};
+interface CommentItemProps {
+  comment: CommentWithProfile;
+  currentUserId: string | undefined;
+}
 
-export default function CommentItem({ comment }: CommentItemProps) {
-  const { userId } = useAuth();
+export default function CommentItem({ comment, currentUserId }: CommentItemProps) {
   const [isEditing, setIsEditing] = useState(false);
   const [editedContent, setEditedContent] = useState(comment.content);
-  const [isPending, setIsPending] = useState(false);
+  const [isPending, startTransition] = useTransition();
 
-  const handleUpdate = async () => {
-    setIsPending(true);
-    const result = await updateComment(comment.id, editedContent);
-    if (result?.error) {
-      alert(result.error);
-    } else {
-      setIsEditing(false);
-    }
-    setIsPending(false);
+  const isAuthor = currentUserId === comment.user_id;
+
+  const handleUpdate = () => {
+    startTransition(async () => {
+      const result = await updateComment(comment.id, editedContent);
+      if (result?.error) {
+        toast.error(result.error);
+      } else {
+        toast.success("댓글이 성공적으로 수정되었습니다.");
+        setIsEditing(false);
+      }
+    });
   };
 
   return (
-    <Card key={comment.id} className="bg-slate-50">
-      <CardHeader className="p-4">
-        <div className="flex justify-between items-center">
-          <div className="flex items-center gap-2">
-            <Avatar className="h-8 w-8">
-              <AvatarFallback>{comment.nickname.charAt(0)}</AvatarFallback>
-            </Avatar>
-            <span className="font-semibold">{comment.nickname}</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <span className="text-xs text-muted-foreground">
-              {new Date(comment.created_at).toLocaleString()}
+    <div className="flex items-start space-x-4 py-4">
+      <Avatar>
+        <AvatarImage src={comment.user_profile?.avatar_url || ''} alt={comment.user_profile?.nickname || '익명'} />
+        <AvatarFallback>{comment.user_profile?.nickname?.charAt(0) ?? '익'}</AvatarFallback>
+      </Avatar>
+      <div className="flex-1">
+        <div className="flex items-center justify-between">
+          <p className="font-semibold text-sm">
+            {comment.user_profile?.nickname ?? '익명'}
+          </p>
+          <div className="text-xs text-gray-500 flex items-center space-x-2">
+            <span>
+              {formatDistanceToNow(new Date(comment.created_at), { addSuffix: true, locale: ko })}
             </span>
-            {comment.user_id === userId && !isEditing && (
+            {isAuthor && !isEditing && (
               <CommentActionButtons
                 commentId={comment.id}
+                authorId={comment.user_id}
+                currentUserId={currentUserId}
                 onEdit={() => setIsEditing(true)}
               />
             )}
           </div>
         </div>
-      </CardHeader>
-      <CardContent className="p-4 pt-0">
+
         {!isEditing ? (
-          <p className="whitespace-pre-wrap">{comment.content}</p>
+          <p className="text-gray-700 whitespace-pre-wrap mt-1">{comment.content}</p>
         ) : (
-          <div className="space-y-2">
+          <div className="mt-2 space-y-2">
             <Textarea
               value={editedContent}
               onChange={(e) => setEditedContent(e.target.value)}
               rows={3}
-              disabled={isPending}
+              className="resize-none"
             />
-            <div className="flex justify-end gap-2">
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => setIsEditing(false)}
-                disabled={isPending}
-              >
+            <div className="flex justify-end space-x-2">
+              <Button variant="ghost" size="sm" onClick={() => setIsEditing(false)} disabled={isPending}>
                 취소
               </Button>
               <Button size="sm" onClick={handleUpdate} disabled={isPending}>
-                {isPending ? '저장 중...' : '저장'}
+                {isPending ? "저장 중..." : "저장"}
               </Button>
             </div>
           </div>
         )}
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 } 

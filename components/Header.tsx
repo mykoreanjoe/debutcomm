@@ -1,108 +1,95 @@
 "use client";
 
-import React from 'react';
-// import Image from 'next/image';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Menu } from 'lucide-react';
-import AuthButton from './AuthButton';
-// import {
-//   SignInButton,
-//   SignedIn,
-//   SignedOut,
-//   UserButton,
-// } from "@clerk/nextjs";
-// import UserProfile from './UserProfile'; // UserProfile 컴포넌트 import
+import { usePathname } from 'next/navigation';
+import { Menu, X } from 'lucide-react';
 
-const navItems = [
-  { name: '스토리', href: '/story' },
-  { name: 'WHY DEBUT', href: '/why-debut' },
-  { name: '커리큘럼', href: '/curriculum' },
-  { name: '시간표', href: '/timetable' },
-  { name: '학사일정', href: '/news' },
-  // { name: '학습경험', href: '/learning-experience' }, // 이 링크는 현재 404, 필요시 복원
-  { name: '데뷰데이', href: '/debut-day' },
-  { name: '데뷰인', href: '/debutian' },
-  { name: '스터디룸', href: '/study-room' },
-  { name: '데뷰후기', href: '/reviews' },
-  { name: '파트너스', href: '/partners' },
-  { name: '같이완성 커뮤니티', href: '/community' },
+const navLinks = [
+  { href: '/story', label: '스토리' },
+  { href: '/why-debut', label: 'WHY DEBUT' },
+  { href: '/curriculum', label: '커리큘럼' },
+  { href: '/timetable', label: '시간표' },
+  { href: '/news', label: '학사일정' },
+  { href: '/debut-day', label: '데뷰데이' },
+  { href: '/debutian', label: '데뷰인' },
+  { href: '/study-room', label: '스터디룸' },
+  { href: '/reviews', label: '데뷰후기' },
+  { href: '/partners', label: '파트너스' },
+  { href: '/community', label: '같이완성 커뮤니티' },
 ];
 
 export default function Header({ children }: { children: React.ReactNode }) {
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const pathname = usePathname();
+
+  useEffect(() => {
+    setIsOpen(false);
+  }, [pathname]);
 
   return (
-    <>
-      <header className="bg-white shadow-md sticky top-0 z-40">
-      <nav className="container relative mx-auto flex h-16 items-center justify-between px-6">
-        {/* Left side: Menu button on mobile */}
-        <div className="flex items-center">
-          <div className="md:hidden">
-            <button
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className=""
-            >
-              <Menu className="h-6 w-6 text-gray-500 transition-colors duration-300 hover:text-indigo-600" />
-            </button>
-          </div>
-          {/* Desktop Logo */}
-            <div className="hidden md:flex items-center gap-2">
-            <Link href="/">
-                <span className="text-xl font-bold text-blue-800">목동데뷰영어</span>
+    <header className="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-sm border-b border-gray-200">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-16">
+          <div className="flex-shrink-0">
+            <Link href="/" className="text-xl font-bold text-blue-800">
+              목동데뷰영어
             </Link>
           </div>
-        </div>
 
-        {/* Center: Logo (mobile only, absolutely centered) */}
-          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center gap-2 md:hidden">
-          <Link href="/">
-              <span className="text-xl font-bold text-blue-800">목동데뷰영어</span>
-          </Link>
-        </div>
-
-        {/* Right side: Auth buttons and Nav links on desktop */}
-        <div className="flex items-center gap-4">
-          
-          {/* Desktop Nav Links */}
-          <div className="hidden md:flex items-center space-x-1">
-            {navItems.map((item) => (
+          <nav className="hidden md:flex items-center space-x-4">
+            {navLinks.map((link) => (
               <Link
-                key={item.name}
-                href={item.href}
-                className="py-2 px-3 text-sm text-gray-500 hover:text-blue-700 hover:underline rounded transition-all duration-300"
+                key={link.href}
+                href={link.href}
+                className={`text-sm font-medium transition-colors whitespace-nowrap ${
+                  pathname === link.href
+                    ? "text-blue-600"
+                    : "text-gray-600 hover:text-gray-900"
+                }`}
               >
-                {item.name}
+                {link.label}
+              </Link>
+            ))}
+          </nav>
+
+          <div className="hidden md:block flex-shrink-0">
+            {children}
+          </div>
+
+          <div className="md:hidden flex items-center">
+            <button onClick={() => setIsOpen(!isOpen)} aria-label="메뉴 열기">
+              {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+            </button>
+          </div>
+        </div>
+      </div>
+      
+      {/* Mobile Menu */}
+      {isOpen && (
+        <div className="md:hidden" id="mobile-menu">
+          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+            {navLinks.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className={`block px-3 py-2 rounded-md text-base font-medium ${
+                  pathname === link.href
+                    ? "text-white bg-blue-600"
+                    : "text-gray-700 hover:text-white hover:bg-blue-500"
+                }`}
+              >
+                {link.label}
               </Link>
             ))}
           </div>
-
-          {/* Auth Buttons */}
-          <div className="hidden md:flex items-center gap-2">
-            {children}
+          <div className="pt-4 pb-3 border-t border-gray-200">
+            <div className="px-5">
+              {children}
+            </div>
           </div>
         </div>
-      </nav>
-      </header>
-
-      {/* Mobile Menu Dropdown */}
-      <div className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out ${isMobileMenuOpen ? 'max-h-[500px]' : 'max-h-0'}`}>
-        <ul className="mt-2 space-y-2 px-2 py-3 flex flex-col items-start">
-          {navItems.map((item) => (
-            <li key={item.name} className="w-full">
-              <Link 
-                href={item.href} 
-                className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-blue-700 hover:bg-gray-50 hover:shadow-md transition-all duration-300 text-left"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                {item.name}
-              </Link>
-            </li>
-          ))}
-          <li className="w-full mt-4 border-t pt-4 px-3 py-2">
-            {children}
-          </li>
-        </ul>
-      </div>
-    </>
+      )}
+    </header>
   );
 } 

@@ -17,7 +17,7 @@ import { ReportDialog } from './ReportDialog';
 type CommentActionButtonsProps = {
   commentId: number;
   authorId: string;
-  currentUserId: string | null;
+  currentUserId: string | undefined;
   onEdit: () => void; // 수정 모드로 전환하는 함수
 };
 

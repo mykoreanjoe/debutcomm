@@ -1,51 +1,64 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useTransition } from 'react';
+import { createClient } from '@/lib/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Heart } from 'lucide-react';
-import { toggleLike } from '../actions';
-import { useAuth } from '@clerk/nextjs';
+import { toast } from 'sonner';
+import { useRouter } from 'next/navigation';
+import { likePost, unlikePost } from '../actions';
 
-type LikeButtonProps = {
+interface LikeButtonProps {
   postId: number;
   initialLikes: number;
   initialHasLiked: boolean;
-};
+}
 
 export default function LikeButton({ postId, initialLikes, initialHasLiked }: LikeButtonProps) {
-  const { userId } = useAuth();
+  const router = useRouter();
   const [likes, setLikes] = useState(initialLikes);
   const [hasLiked, setHasLiked] = useState(initialHasLiked);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isPending, startTransition] = useTransition();
 
   const handleLike = async () => {
-    if (!userId) {
-      // 로그인하지 않은 경우, 로그인 페이지로 유도할 수 있습니다.
-      alert('로그인이 필요합니다.');
-      return;
-    }
+    const supabase = createClient();
+    const { data: { user } } = await supabase.auth.getUser();
 
-    setIsLoading(true);
-
-    // Optimistic UI Update
-    setHasLiked(!hasLiked);
-    setLikes(likes + (!hasLiked ? 1 : -1));
-
-    const result = await toggleLike(postId);
-
-    if (result?.error) {
-      // 에러 발생 시 원래 상태로 롤백
-      setHasLiked(hasLiked);
-      setLikes(likes);
-      alert(result.error);
+    if (!user) {
+      return router.push('/login?redirectTo=/community/' + postId);
     }
     
-    setIsLoading(false);
+    startTransition(async () => {
+      if (hasLiked) {
+        setLikes(likes - 1);
+        setHasLiked(false);
+        const result = await unlikePost(postId);
+        if (result.error) {
+          toast.error(result.error);
+          setLikes(likes);
+          setHasLiked(true);
+        }
+      } else {
+        setLikes(likes + 1);
+        setHasLiked(true);
+        const result = await likePost(postId);
+        if (result.error) {
+          toast.error(result.error);
+          setLikes(likes);
+          setHasLiked(false);
+        }
+      }
+    });
   };
 
   return (
-    <Button variant="ghost" size="sm" onClick={handleLike} disabled={isLoading}>
-      <Heart className={`h-5 w-5 mr-2 ${hasLiked ? 'text-red-500 fill-red-500' : 'text-muted-foreground'}`} />
+    <Button
+      variant="ghost"
+      onClick={handleLike}
+      disabled={isPending}
+      className="flex items-center space-x-2"
+    >
+      <Heart className={`w-5 h-5 ${hasLiked ? 'text-red-500 fill-current' : ''}`} />
       <span>{likes}</span>
     </Button>
   );
