@@ -1,47 +1,68 @@
-import { getPointHistory } from './actions';
-import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
+import { format } from 'date-fns';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { Badge } from '@/components/ui/badge';
 
-export default async function PointHistory() {
-  const pointHistory = await getPointHistory();
+type Point = {
+  id: number;
+  created_at: string;
+  reason: string | null;
+  amount: number;
+};
+
+interface PointHistoryProps {
+  points: Point[];
+}
+
+function getBadgeVariant(amount: number): "default" | "destructive" | "outline" {
+    if (amount > 0) return "default";
+    if (amount < 0) return "destructive";
+    return "outline";
+}
+
+export default function PointHistory({ points }: PointHistoryProps) {
+  if (!points || points.length === 0) {
+    return (
+      <Card>
+        <CardContent className="pt-6">
+          <p className="text-center text-gray-500">포인트 내역이 없습니다.</p>
+        </CardContent>
+      </Card>
+    );
+  }
+
+  const totalPoints = points.reduce((acc, p) => acc + p.amount, 0);
 
   return (
-    <div>
-      <h2 className="text-2xl font-semibold mb-4">포인트 내역</h2>
-      {pointHistory.length > 0 ? (
+    <Card>
+      <CardHeader className="flex flex-row items-center justify-between">
+        <CardTitle>포인트 내역</CardTitle>
+        <p className="text-xl font-bold">{totalPoints.toLocaleString()} P</p>
+      </CardHeader>
+      <CardContent>
         <Table>
-          <TableCaption>총 {pointHistory.length}개의 내역이 있습니다.</TableCaption>
           <TableHeader>
             <TableRow>
-              <TableHead>날짜</TableHead>
+              <TableHead>일시</TableHead>
               <TableHead>내용</TableHead>
               <TableHead className="text-right">포인트</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
-            {pointHistory.map((entry) => (
-              <TableRow key={entry.id}>
-                <TableCell>{new Date(entry.created_at).toLocaleString()}</TableCell>
-                <TableCell>{entry.reason}</TableCell>
-                <TableCell className={`text-right font-bold ${entry.amount > 0 ? 'text-blue-500' : 'text-red-500'}`}>
-                  {entry.amount > 0 ? `+${entry.amount}` : entry.amount}
+            {points.map((p) => (
+              <TableRow key={p.id}>
+                <TableCell>{format(new Date(p.created_at), 'yyyy-MM-dd HH:mm')}</TableCell>
+                <TableCell>{p.reason || '기타'}</TableCell>
+                <TableCell className="text-right">
+                  <Badge variant={getBadgeVariant(p.amount)}>
+                    {p.amount > 0 ? `+${p.amount}` : p.amount}
+                  </Badge>
                 </TableCell>
               </TableRow>
             ))}
           </TableBody>
         </Table>
-      ) : (
-        <div className="py-10 text-center text-muted-foreground">
-          <p>아직 포인트 내역이 없습니다.</p>
-        </div>
-      )}
-    </div>
+      </CardContent>
+    </Card>
   );
 } 

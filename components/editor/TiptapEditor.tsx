@@ -40,10 +40,10 @@ const EditorToolbar = ({ editor }: { editor: Editor | null }) => {
             const compressedFile = await imageCompression(file, options);
             
             toast.info('업로드 주소를 받고 있습니다...');
-            const { success, error, signedUrl, path, publicUrl } = await getSignedUploadUrl(compressedFile.name, compressedFile.type);
+            const { success, error, signedUrl, publicUrl } = await getSignedUploadUrl(compressedFile.name, compressedFile.type);
             
-            if (error || !success) {
-                toast.error(`업로드 실패: ${error}`);
+            if (error || !success || !signedUrl || !publicUrl) {
+                toast.error(`업로드 실패: ${error || 'URL을 받아오지 못했습니다.'}`);
                 return;
             }
             
@@ -92,7 +92,7 @@ const EditorToolbar = ({ editor }: { editor: Editor | null }) => {
 
 interface TiptapEditorProps {
     content: string;
-    onChange: (richText: string) => void;
+    onChange: (richText: string, textLength: number) => void;
     placeholder?: string;
 }
 
@@ -110,7 +110,7 @@ export default function TiptapEditor({ content, onChange, placeholder }: TiptapE
         ],
         content: content,
         onUpdate: ({ editor }) => {
-            onChange(editor.getHTML());
+            onChange(editor.getHTML(), editor.state.doc.textContent.length);
         },
         editorProps: {
             attributes: {

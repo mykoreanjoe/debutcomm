@@ -10,6 +10,7 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Suspense } from 'react';
 import CommentSection from "./CommentSection";
 import { CommentSectionSkeleton } from "./CommentSectionSkeleton";
+import { Metadata } from 'next';
 
 export type CommentWithChildren = {
   id: number;
@@ -28,7 +29,46 @@ type PostPageProps = {
   params: {
     id: string;
   };
+  searchParams: { [key: string]: string | string[] | undefined };
 };
+
+export async function generateMetadata({ params }: PostPageProps): Promise<Metadata> {
+  const supabase = createClient();
+  const postId = Number(params.id);
+
+  if (isNaN(postId)) {
+    return {
+      title: "게시글을 찾을 수 없음",
+      description: "요청하신 게시글을 찾을 수 없습니다."
+    }
+  }
+
+  const { data: post } = await supabase
+    .from('posts')
+    .select('title, content')
+    .eq('id', postId)
+    .single();
+
+  if (!post) {
+    return {
+      title: "게시글을 찾을 수 없음",
+      description: "요청하신 게시글을 찾을 수 없습니다."
+    }
+  }
+
+  const plainTextContent = post.content.replace(/<[^>]*>?/gm, '').substring(0, 150);
+
+  return {
+    title: post.title,
+    description: `${plainTextContent}...`,
+    openGraph: {
+      title: post.title,
+      description: `${plainTextContent}...`,
+      url: `/community/${postId}`,
+      type: 'article',
+    },
+  };
+}
 
 export default async function PostPage({ params }: PostPageProps) {
   const supabase = createClient();
@@ -143,7 +183,7 @@ export default async function PostPage({ params }: PostPageProps) {
       <hr className="my-8" />
       
       <Suspense fallback={<CommentSectionSkeleton />}>
-        <CommentSection postId={post.id} />
+        <CommentSection postId={post.id} userId={user.id} />
       </Suspense>
 
       <div className="mt-8 text-center">

@@ -343,16 +343,45 @@ export async function getSignedUploadUrl(fileName: string, fileType: string) {
 }
 
 const CreatePostSchema = z.object({
-  title: z.string().min(5, "제목은 5자 이상 입력해주세요."),
-  content: z.string().min(20, "내용은 20자 이상 입력해주세요."),
-  boardId: z.coerce.number().min(1, "게시판을 선택해주세요."),
+  title: z.string().min(3, '제목은 3자 이상이어야 합니다.'),
+  content: z.string().min(10, '내용은 10자 이상이어야 합니다.'),
+  boardId: z.coerce.number().min(1, '게시판을 선택해주세요.'),
 });
-export async function createPost(previousState: unknown, formData: FormData) {
-  const supabase = createClient();
-  const { data: { user } } = await supabase.auth.getUser();
 
+const postFormSchema = z.object({
+  title: z.string().min(3, "제목은 3자 이상 입력해주세요."),
+  content: z.string().min(10, '내용은 10자 이상 입력해주세요.'),
+  boardId: z.coerce.number().min(1, "게시판을 선택해주세요."),
+  comment: z.string().min(1, '댓글을 입력해주세요.'),
+});
+
+export type PostState = {
+  success: boolean;
+  message: string;
+  errors?: {
+    title?: string[];
+    content?: string[];
+    boardId?: string[];
+  };
+};
+
+export async function createPost(prevState: PostState, formData: FormData): Promise<PostState> {
+  const supabase = createClient();
+
+  const { data: { user } } = await supabase.auth.getUser();
   if (!user) {
-    return redirect('/login');
+    return { success: false, message: '로그인이 필요합니다.' };
+  }
+
+  // 활동 정지 사용자 확인
+  const { data: profile } = await supabase
+    .from('user_profile')
+    .select('is_suspended')
+    .eq('id', user.id)
+    .single();
+
+  if (profile?.is_suspended) {
+    return { success: false, message: '활동이 정지된 사용자입니다. 관리자에게 문의하세요.' };
   }
 
   const validatedFields = CreatePostSchema.safeParse({
@@ -363,19 +392,19 @@ export async function createPost(previousState: unknown, formData: FormData) {
 
   if (!validatedFields.success) {
     return {
-      error: '입력값이 올바르지 않습니다.',
-      fieldErrors: validatedFields.error.flatten().fieldErrors,
+      success: false,
+      message: '입력값을 확인해주세요.',
+      errors: validatedFields.error.flatten().fieldErrors,
     };
   }
-  
+
   const { title, content, boardId } = validatedFields.data;
-  const sanitizedContent = sanitize(content);
-  
-  const { data: post, error } = await supabase
+
+  const { data: postData, error } = await supabase
     .from('posts')
-    .insert({ 
-      title, 
-      content: sanitizedContent,
+    .insert({
+      title,
+      content,
       user_id: user.id,
       board_id: boardId,
     })
@@ -383,72 +412,84 @@ export async function createPost(previousState: unknown, formData: FormData) {
     .single();
 
   if (error) {
-    return { error: '게시글 생성에 실패했습니다.' };
+    return { success: false, message: `게시물 생성 중 오류가 발생했습니다: ${error.message}` };
   }
+  
+  // 글 작성 포인트 지급 (트리거 또는 여기서 RPC 호출)
+  await supabase.rpc('change_user_points', {
+      p_user_id: user.id,
+      p_amount: 10,
+      p_reason: `'${postData.title}' 글 작성`,
+  });
 
   revalidatePath('/community');
-  return { success: true, redirectTo: `/community/${post.id}` };
+  revalidatePath(`/community?board=${boardId}`);
+  
+  // 성공 시 메시지와 함께 리디렉션을 위한 정보 전달 가능
+  return { success: true, message: '게시물이 성공적으로 등록되었습니다.' };
 }
 
 export type CommentState = {
-  success?: boolean;
-  error?: string;
-  fieldErrors?: {
+  success: boolean;
+  message: string;
+  errors?: {
     content?: string[];
+    postId?: string[];
   };
 };
 
-export const createComment = async (prevState: unknown, formData: FormData): Promise<CommentState> => {
-    'use server';
-    const supabase = createClient();
-    
-    const {
-        data: { user },
-    } = await supabase.auth.getUser();
+const CreateCommentSchema = z.object({
+  content: z.string().min(1, '댓글을 입력해주세요.'),
+  postId: z.string().uuid('유효하지 않은 게시물 ID입니다.'),
+});
 
-    if (!user) {
-        return { error: '로그인이 필요합니다.' };
-    }
+export async function createComment(prevState: CommentState, formData: FormData): Promise<CommentState> {
+  const supabase = createClient();
+  const { data: { user } } = await supabase.auth.getUser();
 
-    const schema = z.object({
-        content: z.string().min(1, "댓글 내용을 입력해주세요."),
-        postId: z.coerce.number(),
-        parentId: z.coerce.number().optional().nullable(),
-    });
+  if (!user) {
+    return { success: false, message: '로그인이 필요합니다.' };
+  }
+  
+  // 활동 정지 사용자 확인
+  const { data: profile } = await supabase
+    .from('user_profile')
+    .select('is_suspended')
+    .eq('id', user.id)
+    .single();
 
-    const validatedFields = schema.safeParse({
-        content: formData.get('content'),
-        postId: formData.get('postId'),
-        parentId: formData.get('parentId'),
-    });
+  if (profile?.is_suspended) {
+    return { success: false, message: '활동이 정지된 사용자입니다. 관리자에게 문의하세요.' };
+  }
+  
+  const validatedFields = CreateCommentSchema.safeParse({
+    content: formData.get('content'),
+    postId: formData.get('postId'),
+  });
 
-    if (!validatedFields.success) {
-        return {
-            error: '입력값이 올바르지 않습니다.',
-            fieldErrors: validatedFields.error.flatten().fieldErrors,
-        };
-    }
-    
-    const { content, postId, parentId } = validatedFields.data;
+  if (!validatedFields.success) {
+    return {
+      success: false,
+      message: '입력값을 확인해주세요.',
+      errors: validatedFields.error.flatten().fieldErrors,
+    };
+  }
 
-    // DB 함수를 호출하여 댓글 생성, 포인트 지급, 알림 생성을 한번에 처리
-    const { data: newComment, error: rpcError } = await supabase
-        .rpc('create_comment_and_notification', {
-            p_post_id: postId,
-            p_user_id: user.id,
-            p_content: content,
-            p_parent_id: parentId,
-        });
+  const { content, postId } = validatedFields.data;
 
-    if (rpcError) {
-        console.error('Error creating comment:', rpcError);
-        return { error: '댓글을 작성하는 중 오류가 발생했습니다.' };
-    }
+  const { error } = await supabase.from('comments').insert({
+    content: content,
+    post_id: parseInt(postId),
+    user_id: user.id,
+  });
 
-    revalidatePath(`/community/${postId}`);
-    revalidatePath(`/community/[id]`, 'layout');
-    return { success: true };
-};
+  if (error) {
+    return { success: false, message: `댓글 작성 중 오류가 발생했습니다: ${error.message}` };
+  }
+  
+  revalidatePath(`/community/${postId}`);
+  return { success: true, message: '댓글이 성공적으로 등록되었습니다.' };
+}
 
 export async function likePost(postId: number) {
   const supabase = createClient();

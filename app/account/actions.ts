@@ -70,22 +70,68 @@ export async function getUserPosts() {
     return userPosts || [];
 }
 
-export async function getProfileData() {
-    const supabase = createClient();
-    const { data: { user } } = await supabase.auth.getUser();
+export async function getAccountPageData() {
+  const supabase = createClient();
 
-    if (!user) {
-        redirect('/login');
-    }
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) {
+    redirect('/login');
+  }
 
-    const { data: profile } = await supabase
-        .from('user_profile')
-        .select('*')
-        .eq('id', user.id)
-        .single();
+  const profilePromise = supabase
+    .from('user_profile')
+    .select('*')
+    .eq('id', user.id)
+    .single();
 
-    // The rest of the data will be fetched by their respective components.
-    return { user, profile: profile || null };
+  const postsPromise = supabase
+    .from('posts')
+    .select('id, title, created_at, board(name)')
+    .eq('user_id', user.id)
+    .order('created_at', { ascending: false });
+
+  const commentsPromise = supabase
+    .from('comments')
+    .select('id, content, created_at, posts(id, title)')
+    .eq('user_id', user.id)
+    .order('created_at', { ascending: false });
+  
+  const pointsPromise = supabase
+    .from('point_history')
+    .select('*')
+    .eq('user_id', user.id)
+    .order('created_at', { ascending: false });
+
+  const [
+    { data: profile, error: profileError },
+    { data: posts, error: postsError },
+    { data: comments, error: commentsError },
+    { data: points, error: pointsError }
+  ] = await Promise.all([
+    profilePromise,
+    postsPromise,
+    commentsPromise,
+    pointsPromise
+  ]);
+  
+  if (profileError || !profile) {
+    // 프로필이 없는 경우 추가 정보 페이지로 리디렉션 할 수 있습니다.
+    redirect('/additional-info');
+  }
+  
+  // 다른 에러들도 콘솔에 로그하여 디버깅을 돕습니다.
+  if (postsError) console.error("Error fetching posts:", postsError.message);
+  if (commentsError) console.error("Error fetching comments:", commentsError.message);
+  if (pointsError) console.error("Error fetching points:", pointsError.message);
+
+
+  return {
+    user,
+    profile,
+    posts: posts || [],
+    comments: comments || [],
+    points: points || [],
+  };
 }
 
 export async function updateProfile(

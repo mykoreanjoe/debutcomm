@@ -6,7 +6,6 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import PageTransitionWrapper from '@/components/PageTransitionWrapper';
 import FloatingInquiryButton from "@/components/FloatingInquiryButton";
-import AuthButton from '@/components/AuthButton';
 import { createClient } from '@/lib/supabase/server';
 import { Analytics } from "@vercel/analytics/react"
 
@@ -20,7 +19,7 @@ const pretendard = localFont({
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.debutenglish.com'),
   title: {
-    default: '목동데뷰영어 | 대한민국 최상위 1% 영어',
+    default: '같이 완성하는 목동데뷰영어',
     template: '%s | 목동데뷰영어',
   },
   description: '대한민국 최상위 1%의 영어 학습법, 데뷰영어에서 만나보세요.',
@@ -43,23 +42,37 @@ export const metadata: Metadata = {
 
 export default async function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   const supabase = createClient();
-  const { data: { user } } = await supabase.auth.getUser();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  let { data: profile } = user
+    ? await supabase.from("user_profile").select("id, nickname, avatar_url, points").eq("id", user.id).single()
+    : { data: null };
+  
+  // 사용자는 있는데 프로필이 아직 없는 경우 (ex: 이메일 인증 직후)
+  // AuthButton에 기본값을 전달하기 위한 임시 프로필 객체 생성
+  if (user && !profile) {
+    profile = {
+      id: user.id,
+      nickname: '신규 사용자',
+      avatar_url: null,
+      points: 0
+    };
+  }
 
   return (
-    <html lang="ko" className={pretendard.variable} suppressHydrationWarning>
-      <body className={`${pretendard.className} flex flex-col min-h-screen`} suppressHydrationWarning>
-        <Header user={user} />
-        <main className="flex-grow">
-          {children}
-        </main>
+    <html lang="ko" className={pretendard.variable}>
+      <body className={`${pretendard.className} flex flex-col min-h-screen`}>
+        <Header user={user} profile={profile} />
+        <main className="flex-grow">{children}</main>
         <Footer />
-        <FloatingInquiryButton />
         <Toaster />
-        <Analytics />
+        <FloatingInquiryButton />
       </body>
     </html>
   );

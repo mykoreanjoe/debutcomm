@@ -141,16 +141,16 @@ const ElementaryRegularCourseDetails = () => (
         <div>
             <h3 className="text-3xl font-bold text-cyan-700 text-center mb-8">초등 정규 과정 로드맵 및 레벨 구성</h3>
             <div className="space-y-8">
-                <div className="bg-white p-6 md:p-8 rounded-2xl shadow-lg border border-gray-100">
+                <div className="bg-white p-6 md:p-8 rounded-2xl shadow-lg border border-gray-100 overflow-x-auto">
                     <h4 className="text-xl font-semibold text-gray-800 mb-4">초등부 레벨 구성</h4>
                     <p className="mb-4 text-sm text-gray-600">데뷰의 초등부 레벨은 학생의 성장 단계에 맞춰 체계적으로 구성되어 있습니다.</p>
                     <ElementaryLevelChart />
                 </div>
-                <div className="bg-white p-6 md:p-8 rounded-2xl shadow-lg border border-gray-100">
+                <div className="bg-white p-6 md:p-8 rounded-2xl shadow-lg border border-gray-100 overflow-x-auto">
                     <h4 className="text-xl font-semibold text-gray-800 mb-4">DK ~ D3 로드맵</h4>
                     <ElementaryRoadmapTableDKtoD3 />
                 </div>
-                <div className="bg-white p-6 md:p-8 rounded-2xl shadow-lg border border-gray-100">
+                <div className="bg-white p-6 md:p-8 rounded-2xl shadow-lg border border-gray-100 overflow-x-auto">
                     <h4 className="text-xl font-semibold text-gray-800 mb-4">D4 ~ Creator 로드맵</h4>
                     <ElementaryRoadmapTableD4toDCreator />
                 </div>

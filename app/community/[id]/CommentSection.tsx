@@ -15,20 +15,19 @@ async function getComments(postId: number): Promise<CommentWithChildren[]> {
     return comments || [];
 }
 
-export default async function CommentSection({ postId }: { postId: number }) {
-    const supabase = createClient();
-    const { data: { user } } = await supabase.auth.getUser();
-
+export default async function CommentSection({ postId, userId }: { postId: number, userId: string | undefined }) {
     const comments = await getComments(postId);
 
     return (
         <div className="mt-8">
             <h2 className="text-2xl font-bold mb-4">댓글 ({comments.length})</h2>
-            <CommentForm postId={postId} userId={user?.id} />
+            <CommentForm postId={postId} userId={userId} />
             <div className="mt-6 space-y-6">
                 {comments.length > 0 ? (
                     comments.map((comment) => (
-                        <CommentItem key={comment.id} comment={comment} currentUserId={user?.id} />
+                        <div key={comment.id}>
+                            <CommentItem comment={comment} postId={postId} currentUserId={userId} />
+                        </div>
                     ))
                 ) : (
                     <div className="py-10 text-center text-muted-foreground">

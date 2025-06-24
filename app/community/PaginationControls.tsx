@@ -14,12 +14,15 @@ interface PaginationControlsProps {
   currentPage: number;
   totalCount: number;
   postsPerPage: number;
+  path?: string;
 }
 
-export default function PaginationControls({ currentPage, totalCount, postsPerPage }: PaginationControlsProps) {
+export default function PaginationControls({ currentPage, totalCount, postsPerPage, path }: PaginationControlsProps) {
   const router = useRouter();
-  const pathname = usePathname();
+  const pathnameFromHook = usePathname();
   const searchParams = useSearchParams();
+
+  const pathname = path || pathnameFromHook;
 
   const totalPages = Math.ceil(totalCount / postsPerPage);
 

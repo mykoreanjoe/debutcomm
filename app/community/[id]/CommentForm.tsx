@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useRef } from 'react';
-import { useFormState, useFormStatus } from 'react-dom';
+import { useActionState } from 'react';
+import { useFormStatus } from 'react-dom';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { toast } from 'sonner';
@@ -32,7 +33,7 @@ function SubmitButton() {
 
 export default function CommentForm({ postId, userId, parentId, onReplySuccess }: CommentFormProps) {
   const router = useRouter();
-  const [state, formAction] = useFormState(createComment, initialState);
+  const [state, formAction] = useActionState(createComment, initialState);
   const formRef = useRef<HTMLFormElement>(null);
 
   useEffect(() => {
@@ -57,6 +58,16 @@ export default function CommentForm({ postId, userId, parentId, onReplySuccess }
     }
     formAction(formData);
   };
+
+  if (!userId) {
+    return (
+      <div className="mt-6 text-center p-4 border rounded-lg bg-gray-50">
+        <p className="text-sm text-gray-600">
+          댓글을 작성하려면 <a href="/login" className="font-semibold text-blue-600 hover:underline">로그인</a>이 필요합니다.
+        </p>
+      </div>
+    );
+  }
 
   return (
     <form ref={formRef} action={handleFormAction} className="mt-6">

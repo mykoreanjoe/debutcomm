@@ -12,14 +12,15 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Badge } from '@/components/ui/badge';
-import { getNotifications, markNotificationAsRead } from '@/app/actions';
+import { getNotifications, markNotificationsAsRead } from '@/app/actions';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
+// 새로운 테이블 스키마에 맞는 타입 정의
 type Notification = {
   id: number;
-  message: string;
-  link_url: string | null;
+  content: string; // message -> content
+  link_to: string | null; // link_url -> link_to
   is_read: boolean;
   created_at: string;
 };
@@ -33,33 +34,36 @@ export default function NotificationBell() {
 
   const fetchNotifications = () => {
     startTransition(async () => {
-      const { data } = await getNotifications();
-      if (data) {
+      // 서버 액션 호출
+      const { data, error } = await getNotifications();
+      if (data && !error) {
         setNotifications(data as Notification[]);
       }
     });
   };
 
+  // 1분마다 알림을 새로고침합니다.
   useEffect(() => {
     fetchNotifications();
-    const interval = setInterval(fetchNotifications, 60000); // 1분에 한번씩 폴링
+    const interval = setInterval(fetchNotifications, 60000); 
     return () => clearInterval(interval);
   }, []);
 
-  const handleNotificationClick = async (notification: Notification) => {
-    if (notification.link_url) {
-      router.push(notification.link_url);
-    }
-    if (!notification.is_read) {
-      await markNotificationAsRead(notification.id);
-      setNotifications(prev =>
-        prev.map(n => (n.id === notification.id ? { ...n, is_read: true } : n))
-      );
+  // 드롭다운 메뉴를 열 때 모든 알림을 '읽음'으로 처리하는 함수
+  const handleOpenChange = (isOpen: boolean) => {
+    if (isOpen && unreadCount > 0) {
+      startTransition(async () => {
+        await markNotificationsAsRead();
+        // UI 즉시 반영
+        setNotifications(prev =>
+          prev.map(n => ({ ...n, is_read: true }))
+        );
+      });
     }
   };
 
   return (
-    <DropdownMenu onOpenChange={fetchNotifications}>
+    <DropdownMenu onOpenChange={handleOpenChange}>
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" size="icon" className="relative">
           <Bell className="h-5 w-5" />
@@ -78,15 +82,16 @@ export default function NotificationBell() {
         <DropdownMenuSeparator />
         {notifications.length > 0 ? (
           notifications.map(notification => (
-            <DropdownMenuItem
-              key={notification.id}
-              className={`flex flex-col items-start gap-1 p-2 ${!notification.is_read ? 'bg-blue-50 dark:bg-blue-900/50' : ''}`}
-              onClick={() => handleNotificationClick(notification)}
-            >
-              <p className="text-sm font-medium whitespace-normal">{notification.message}</p>
-              <p className="text-xs text-muted-foreground">
-                {new Date(notification.created_at).toLocaleString()}
-              </p>
+            <DropdownMenuItem key={notification.id} asChild>
+              <Link
+                href={notification.link_to || '#'}
+                className={`flex flex-col items-start gap-1 p-2 ${!notification.is_read ? 'bg-blue-50 dark:bg-blue-900/50' : ''}`}
+              >
+                <p className="text-sm font-medium whitespace-normal">{notification.content}</p>
+                <p className="text-xs text-muted-foreground">
+                  {new Date(notification.created_at).toLocaleString()}
+                </p>
+              </Link>
             </DropdownMenuItem>
           ))
         ) : (

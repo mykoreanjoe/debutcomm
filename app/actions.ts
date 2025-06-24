@@ -8,40 +8,43 @@ export async function getNotifications() {
     const { data: { user } } = await supabase.auth.getUser();
 
     if (!user) {
-        return { success: false, error: 'User not authenticated', data: null };
+        return { error: 'User not authenticated' };
     }
 
     const { data, error } = await supabase
         .from('notifications')
         .select('*')
         .eq('user_id', user.id)
-        .order('created_at', { ascending: false });
+        .order('created_at', { ascending: false })
+        .limit(20);
 
     if (error) {
-        return { success: false, error: error.message, data: null };
+        console.error('Error fetching notifications:', error);
+        return { error: error.message };
     }
-
-    return { success: true, error: null, data };
+    
+    return { data };
 }
 
-export async function markNotificationAsRead(notificationId: number) {
+export async function markNotificationsAsRead() {
     const supabase = createClient();
-     const { data: { user } } = await supabase.auth.getUser();
+    const { data: { user } } = await supabase.auth.getUser();
 
     if (!user) {
-        return { success: false, error: 'User not authenticated' };
+        return { error: 'User not authenticated' };
     }
 
     const { error } = await supabase
         .from('notifications')
         .update({ is_read: true })
-        .eq('id', notificationId)
-        .eq('user_id', user.id); // Ensure user can only update their own notifications
+        .eq('user_id', user.id)
+        .eq('is_read', false);
 
     if (error) {
-        return { success: false, error: error.message };
+        console.error('Error marking notifications as read:', error);
+        return { error: error.message };
     }
-    
-    revalidatePath('/any'); // Revalidate a path to update UI, or handle on client
+
+    revalidatePath('/app/layout.tsx', 'layout'); // 레이아웃 캐시를 무효화하여 모든 페이지에 반영
     return { success: true };
 } 

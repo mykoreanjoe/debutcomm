@@ -4,7 +4,7 @@ import { redirect } from 'next/navigation';
 import { createClient } from '@/lib/supabase/server';
 import { Button } from '@/components/ui/button';
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { Info, Lock, MessageCircle, FileText, Star } from 'lucide-react';
+import { Info, Lock, MessageCircle, FileText, Star, MessageSquare } from 'lucide-react';
 import { getBoards, getPosts } from './actions';
 import BoardTabs from './BoardTabs';
 import HallOfFame from './HallOfFame';
@@ -119,17 +119,17 @@ function PageHeader() {
     <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
       <h1 className="text-3xl font-bold">커뮤니티</h1>
       <div className="flex gap-2">
-        <Button asChild variant="outline">
-          <a href="https://pf.kakao.com/_xgTMxexl/chat" target="_blank" rel="noopener noreferrer">
-            <MessageCircle className="mr-2 h-4 w-4" />
+        <Button asChild className="bg-[#FEE500] text-black hover:bg-[#FEE500]/90">
+          <a href="http://pf.kakao.com/_pGxkPn/chat" target="_blank" rel="noopener noreferrer">
+            <MessageSquare className="mr-2 h-4 w-4" />
             카카오톡 상담
           </a>
         </Button>
-        <Button asChild>
-          <Link href="/debut-day">
+        <Button asChild variant="outline" className="border-green-500 text-green-600 hover:bg-green-50 hover:text-green-700">
+          <a href="https://booking.naver.com/booking/13/bizes/1068331" target="_blank" rel="noopener noreferrer">
             <FileText className="mr-2 h-4 w-4" />
             테스트 예약
-          </Link>
+          </a>
         </Button>
       </div>
     </div>

@@ -22,7 +22,7 @@ type CommentItemProps = {
 };
 
 const EditCommentForm = ({ comment, onCancel }: { comment: CommentWithChildren, onCancel: () => void }) => {
-  const [state, formAction, isPending] = useActionState(updateComment.bind(null, comment.id), { success: false, message: null, errors: null });
+  const [state, formAction, isPending] = useActionState<any, FormData>(updateComment.bind(null, comment.id), { success: false, message: null, errors: null });
 
   useEffect(() => {
     if (state.message) {
@@ -59,29 +59,33 @@ const EditCommentForm = ({ comment, onCancel }: { comment: CommentWithChildren, 
 export default function CommentItem({ comment, currentUserId, boardSlug, postId }: CommentItemProps) {
   const [isEditing, setIsEditing] = useState(false);
   const [isReplyFormOpen, setIsReplyFormOpen] = useState(false);
-  const isAnonymous = comment.nickname === '익명';
+  const isAnonymousBoard = boardSlug === 'anonymous';
 
   const isAuthor = currentUserId === comment.user_id;
+
+  const displayTime = comment.created_at 
+    ? formatDistanceToNow(new Date(comment.created_at), { addSuffix: true, locale: ko })
+    : "방금 전";
 
   return (
     <div className="flex flex-col">
       <div className="flex items-start space-x-4">
         <Avatar>
-          {boardSlug !== 'anonymous' && (
-            <AvatarImage src={!isAnonymous ? comment.avatar_url ?? undefined : undefined} alt={comment.nickname ?? "익명"} />
+          {!isAnonymousBoard && (
+            <AvatarImage src={comment.avatar_url ?? undefined} alt={comment.nickname ?? "익명"} />
           )}
           <AvatarFallback>
-            {isAnonymous ? '익' : (comment.nickname?.[0] || '익')}
+            {isAnonymousBoard ? '익' : (comment.nickname?.[0] || '익')}
           </AvatarFallback>
         </Avatar>
         <div className="flex-1">
           <div className="flex items-center justify-between">
             <p className="font-semibold">
-              {boardSlug === 'anonymous' ? '익명' : (comment.nickname || '익명')}
+              {isAnonymousBoard ? '익명' : (comment.nickname || '익명')}
             </p>
             <div className="text-xs text-gray-500 flex items-center space-x-2">
               <span>
-                {formatDistanceToNow(new Date(comment.created_at), { addSuffix: true, locale: ko })}
+                {displayTime}
               </span>
               {isAuthor && (
                 <CommentActionButtons
@@ -131,7 +135,9 @@ export default function CommentItem({ comment, currentUserId, boardSlug, postId 
       {comment.children && comment.children.length > 0 && (
         <div className="ml-12 mt-4 space-y-4 border-l-2 pl-4">
           {comment.children.map((childComment) => (
-            <CommentItem key={childComment.id} comment={childComment} currentUserId={currentUserId} postId={postId} boardSlug={boardSlug} />
+            <div key={childComment.id}>
+              <CommentItem comment={childComment} currentUserId={currentUserId} postId={postId} boardSlug={boardSlug} />
+            </div>
           ))}
         </div>
       )}

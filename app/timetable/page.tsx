@@ -86,7 +86,7 @@ export default function TimetablePage() {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                         <div>
                             <h3 className="text-xl font-semibold text-sky-700 mb-5">정규</h3>
-                            <div className="bg-sky-50/30 rounded-lg p-4">
+                            <div className="bg-sky-50/30 rounded-lg p-4 overflow-x-auto">
                                 <Table>
                                     <TableCaption className="caption-top text-base font-medium text-sky-700 mb-3">초등부 정규반</TableCaption>
                                     <TableHeader>
@@ -111,7 +111,7 @@ export default function TimetablePage() {
                         
                         <div>
                             <h3 className="text-xl font-semibold text-purple-700 mb-5">인텐시브</h3>
-                            <div className="bg-purple-50/30 rounded-lg p-4">
+                            <div className="bg-purple-50/30 rounded-lg p-4 overflow-x-auto">
                                 <Table>
                                     <TableCaption className="caption-top text-base font-medium text-purple-700 mb-3">초등부 인텐시브반</TableCaption>
                                     <TableHeader>
@@ -160,7 +160,7 @@ export default function TimetablePage() {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                         <div>
                             <h3 className="text-xl font-semibold text-indigo-700 mb-5">정규</h3>
-                            <div className="bg-indigo-50/30 rounded-lg p-4">
+                            <div className="bg-indigo-50/30 rounded-lg p-4 overflow-x-auto">
                                 <Table>
                                     <TableCaption className="caption-top text-base font-medium text-indigo-700 mb-3">중등부 정규반</TableCaption>
                                     <TableHeader>
@@ -185,7 +185,7 @@ export default function TimetablePage() {
 
                         <div>
                             <h3 className="text-xl font-semibold text-red-700 mb-5">클리닉</h3>
-                            <div className="bg-red-50/30 rounded-lg p-4">
+                            <div className="bg-red-50/30 rounded-lg p-4 overflow-x-auto">
                                 <Table>
                                     <TableCaption className="caption-top text-base font-medium text-red-700 mb-3">중등부 클리닉반</TableCaption>
                                     <TableHeader>
@@ -243,7 +243,7 @@ export default function TimetablePage() {
                         </p>
                     </div>
 
-                    <div className="bg-emerald-50/30 rounded-lg p-4">
+                    <div className="bg-emerald-50/30 rounded-lg p-4 overflow-x-auto">
                         <Table>
                             <TableCaption className="caption-top text-base font-medium text-emerald-700 mb-3">완성학습 시간</TableCaption>
                             <TableHeader>

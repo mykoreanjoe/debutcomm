@@ -2,7 +2,8 @@
 
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { useFormState, useFormStatus } from 'react-dom';
+import { useActionState } from 'react';
+import { useFormStatus } from 'react-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
@@ -11,6 +12,8 @@ import { toast } from 'sonner';
 import TiptapEditor from '@/components/editor/TiptapEditor';
 import { Loader2 } from 'lucide-react';
 import { PostForList } from '@/app/community/actions';
+
+const POST_FORM_TOAST_ID = "post-form-toast";
 
 type Board = {
     id: number;
@@ -41,29 +44,42 @@ interface PostFormProps {
 
 function SubmitButton({ isUpdate }: { isUpdate: boolean }) {
     const { pending } = useFormStatus();
+
+    useEffect(() => {
+        if (pending) {
+            toast.loading(isUpdate ? '게시글을 수정하고 있습니다...' : '새 게시글을 등록하고 있습니다...', {
+                id: POST_FORM_TOAST_ID,
+            });
+        }
+    }, [pending, isUpdate]);
+
     return (
         <Button type="submit" disabled={pending}>
             {pending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-            {pending ? (isUpdate ? '수정 중...' : '등록 중...') : (isUpdate ? '수정' : '등록')}
+            {isUpdate ? '수정' : '등록'}
         </Button>
     );
 }
 
 export default function NewPostForm({ boards, formAction, initialState, initialData }: PostFormProps) {
     const router = useRouter();
-    const [state, dispatch] = useFormState(formAction, initialState);
+    const [state, dispatch] = useActionState(formAction, initialState);
     const [content, setContent] = useState(initialData?.content || '');
 
     useEffect(() => {
-        if (state.message) {
-          if(state.success) {
-            toast.success(initialData ? '수정 성공' : '등록 성공', { description: state.message });
-          } else {
-            toast.error('오류 발생', { description: state.message });
-          }
-        }
         if (state.success && state.redirectTo) {
-          router.push(state.redirectTo);
+          toast.success(initialData ? '수정 성공' : '등록 성공', {
+            id: POST_FORM_TOAST_ID,
+            description: state.message,
+          });
+          setTimeout(() => {
+            router.push(state.redirectTo!);
+          }, 1000);
+        } else if (state.message && !state.success) {
+          toast.error('오류 발생', {
+            id: POST_FORM_TOAST_ID,
+            description: state.message,
+          });
         }
       }, [state, router, initialData]);
 
@@ -84,6 +100,7 @@ export default function NewPostForm({ boards, formAction, initialState, initialD
                                 required
                                 defaultValue={initialData?.title}
                             />
+                            <p className="text-sm text-muted-foreground">제목은 3자 이상 입력해주세요.</p>
                              {state.errors?.title && <p className="text-red-500 text-sm">{state.errors.title[0]}</p>}
                         </div>
                         <div className="space-y-2">
@@ -110,6 +127,7 @@ export default function NewPostForm({ boards, formAction, initialState, initialD
                                  onChange={setContent}
                                  placeholder="내용을 입력하세요..."
                              />
+                             <p className="text-sm text-muted-foreground">내용은 5자 이상 입력해주세요.</p>
                              {state.errors?.content && <p className="text-red-500 text-sm">{state.errors.content[0]}</p>}
                         </div>
                         <div className="flex justify-end">

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import type { User } from '@supabase/supabase-js';
 import { Menu } from 'lucide-react';
@@ -21,18 +21,37 @@ const navItems = [
   { name: '커뮤니티', href: '/community' },
 ];
 
-interface HeaderProps {
-  user: User | null;
+interface UserProfile {
+  id: string;
+  nickname: string | null;
+  avatar_url: string | null;
+  points: number | null;
 }
 
-export default function Header({ user }: HeaderProps) {
+interface HeaderProps {
+  user: User | null;
+  profile: UserProfile | null;
+}
+
+export default function Header({ user, profile }: HeaderProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const closeMobileMenu = () => setIsMobileMenuOpen(false);
 
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, [isMobileMenuOpen]);
+
   return (
     <>
-      <header className="bg-white shadow-sm sticky top-0 z-40">
+      <header className="bg-white shadow-sm sticky top-0 z-50">
         <div className="container relative mx-auto flex h-16 items-center justify-between px-4 sm:px-6">
           {/* Left: Mobile Menu Toggle / Desktop Logo */}
           <div className="flex items-center">
@@ -72,14 +91,14 @@ export default function Header({ user }: HeaderProps) {
             </nav>
             <div className="flex items-center gap-4">
               {user && <NotificationBell />}
-              <AuthButton />
+              <AuthButton user={user} profile={profile} />
             </div>
           </div>
         </div>
       </header>
 
       {/* Mobile Menu Dropdown */}
-      <div className={`md:hidden overflow-y-auto bg-white shadow-lg transition-all duration-300 ease-in-out ${isMobileMenuOpen ? 'max-h-[calc(100vh-4rem)]' : 'max-h-0'}`}>
+      <div className={`md:hidden overflow-y-auto bg-white shadow-lg transition-all duration-300 ease-in-out fixed top-16 left-0 right-0 z-50 ${isMobileMenuOpen ? 'max-h-[calc(100vh-4rem)]' : 'max-h-0'}`}>
         <nav className="p-4">
           <ul>
             {navItems.map((item) => (
@@ -99,7 +118,7 @@ export default function Header({ user }: HeaderProps) {
               <div className="flex items-center gap-4">
                 {user && <NotificationBell />}
               </div>
-              <AuthButton />
+              <AuthButton user={user} profile={profile} />
             </div>
           </div>
         </nav>

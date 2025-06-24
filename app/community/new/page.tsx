@@ -1,6 +1,7 @@
 import { createClient } from '@/lib/supabase/server';
 import NewPostForm from './NewPostForm';
 import { redirect } from 'next/navigation';
+import { createPost } from '@/app/community/actions';
 
 export const revalidate = 0;
 
@@ -48,5 +49,5 @@ export default async function NewPostPage() {
 
     const boards = await getBoards(isAdmin);
 
-    return <NewPostForm boards={boards} />;
+    return <NewPostForm boards={boards} formAction={createPost} initialState={{}} />;
 } 
